@@ -3,7 +3,13 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Robot1
+  - Robot2
+  - Robot3
+  - Robot4
+  - Robot5
+  - Robot6
   layers:
   - Default
   - TransparentFX

@@ -1,22 +1,23 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using static UnityEngine.Rendering.DebugUI;
+
 
 
 public class PlayerController : MonoBehaviour
 {
     public InputManager InputManager;
 
-    private InputAction move;
-    private InputAction jump;
-    private InputAction switchRobot;
-    
-    private Rigidbody rb;
+    public Rigidbody rb;
 
-     Vector2 moveDirection = Vector2.zero;
+    Vector2 moveDirection = Vector2.zero;
     [SerializeField] float moveSpeed;
+
+    public Boolean isActive;
 
     private void Awake()
     {
@@ -25,33 +26,47 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        
     }
 
     private void OnEnable()
     {
-        move = InputManager.Player.Move;
-        move.Enable();
+        InputManager.Enable();
+        InputManager.Player.Move.performed += OnMovePerformed;
+        InputManager.Player.Move.canceled += OnMoveCancelled;
+       
 
-        jump = InputManager.Player.Jump;
-        jump.Enable();
-
-        switchRobot = InputManager.Player.SwitchRobot;
-        switchRobot.Enable();
     }
 
     private void OnDisable()
     {
-        move.Disable();
-        jump.Disable();
-        switchRobot.Disable();
+        InputManager.Disable();
+        InputManager.Player.Move.performed -= OnMovePerformed;
+        InputManager.Player.Move.canceled -= OnMoveCancelled;
     }
     private void Update()
     {
-        moveDirection = move.ReadValue<Vector2>();
 
+        
     }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector3(moveDirection.x * moveSpeed, 0, moveDirection.y * moveSpeed);
+        // Ensure that the moveDirection is normalized so diagonal movement isn't faster
+        Vector3 movement = new Vector3(moveDirection.x, 0.0f, moveDirection.y).normalized;
+
+        // Apply movement to the Rigidbody
+        rb.velocity = movement * moveSpeed;
     }
+
+    private void OnMovePerformed(InputAction.CallbackContext context)
+    {
+        moveDirection = context.ReadValue<Vector2>();
+    }
+    private void OnMoveCancelled(InputAction.CallbackContext context)
+    {
+        moveDirection = Vector2.zero;
+    }
+
+
 }
