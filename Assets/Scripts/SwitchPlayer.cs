@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,12 +36,23 @@ public class SwitchPlayer : MonoBehaviour
     {
         string keyName = context.control.displayName;
         Debug.Log("Pressed key: " + keyName);
-        int robotNumber = int.Parse(keyName);
-        ActivateRobot(robotNumber);
+        try
+        {
+            int robotNumber = int.Parse(keyName);
+            ActivateRobot(robotNumber);
+        }catch(Exception e)
+        {
+            Debug.Log("Inavlid Robot Number: " + e);
+        }
+
     }
 
     void ActivateRobot(int robotNumber)
     {
+        if (robotNumber > robots.Length)
+        {
+            return;
+        }
         DisableAllRobots();
         activeRobot = robots[robotNumber - 1];
         PlayerController script = activeRobot.GetComponent<PlayerController>();

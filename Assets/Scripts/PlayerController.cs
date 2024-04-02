@@ -33,9 +33,13 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         InputManager.Enable();
+
         InputManager.Player.Move.performed += OnMovePerformed;
         InputManager.Player.Move.canceled += OnMoveCancelled;
-       
+
+        InputManager.Player.Jump.performed += OnJumpPerformed;
+        InputManager.Player.Jump.canceled += OnJumpCancelled;
+
 
     }
 
@@ -44,6 +48,9 @@ public class PlayerController : MonoBehaviour
         InputManager.Disable();
         InputManager.Player.Move.performed -= OnMovePerformed;
         InputManager.Player.Move.canceled -= OnMoveCancelled;
+
+        InputManager.Player.Jump.performed -= OnJumpPerformed;
+        InputManager.Player.Jump.canceled -= OnJumpCancelled;
     }
     private void Update()
     {
@@ -66,6 +73,14 @@ public class PlayerController : MonoBehaviour
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
+    }
+    void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+
+    }
+    void OnJumpCancelled(InputAction.CallbackContext context)
+    {
+
     }
 
 
