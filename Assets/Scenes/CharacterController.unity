@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 33747513}
   - component: {fileID: 33747512}
   - component: {fileID: 33747511}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2593,7 +2593,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28750
+  m_Name: pb_Mesh28536
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3248,6 +3248,16 @@ PrefabInstance:
       propertyPath: isActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: jumpForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: playerHeight
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
@@ -3443,7 +3453,7 @@ GameObject:
   - component: {fileID: 1608103515}
   - component: {fileID: 1608103514}
   - component: {fileID: 1608103513}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3694,6 +3704,16 @@ PrefabInstance:
       propertyPath: camera
       value: 
       objectReference: {fileID: 638711150}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: jumpForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: playerHeight
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder

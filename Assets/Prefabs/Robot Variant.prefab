@@ -114,7 +114,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
   moveSpeed: 10
-  isActive: 1
+  camera: {fileID: 0}
+  playerHeight: 6
+  jumpForce: 7
+  jumpCooldown: 0.2
+  ground:
+    serializedVersion: 2
+    m_Bits: 64
+  groundCheckDistance: 10
 --- !u!114 &4565355514706575749
 MonoBehaviour:
   m_ObjectHideFlags: 0

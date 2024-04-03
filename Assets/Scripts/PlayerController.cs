@@ -15,11 +15,22 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
 
     Vector2 moveDirection = Vector2.zero;
+    
+    [Header("Movement")]
     [SerializeField] float moveSpeed;
 
-   
-
+    [Header("Camera")]
     [SerializeField] Camera camera;
+    
+    [Header("Jumping")]
+    [SerializeField] float playerHeight;
+    [SerializeField] float jumpForce;
+    [SerializeField] float jumpCooldown = .2f;
+    Boolean readyToJump;
+
+    [Header("Ground Check")]
+    [SerializeField] LayerMask ground;
+    [SerializeField] float groundCheckDistance = 0.1f;
     private void Awake()
     {
         InputManager = new InputManager();
@@ -27,8 +38,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        ResetJump();
 
-        
     }
 
     private void OnEnable()
@@ -39,7 +50,6 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.performed += OnJumpPerformed;
-        InputManager.Player.Jump.canceled += OnJumpCancelled;
 
 
     }
@@ -51,7 +61,6 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
         InputManager.Player.Jump.performed -= OnJumpPerformed;
-        InputManager.Player.Jump.canceled -= OnJumpCancelled;
     }
     private void Update()   
     {
@@ -83,13 +92,33 @@ public class PlayerController : MonoBehaviour
         var targetPosition = transform.position + targetVector * speed;
         transform.position = targetPosition;
     }
-    void OnJumpPerformed(InputAction.CallbackContext context)
+
+    bool IsGrounded()
     {
+        return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + groundCheckDistance, ground);
 
     }
-    void OnJumpCancelled(InputAction.CallbackContext context)
+    void OnJumpPerformed(InputAction.CallbackContext context)
     {
+        Debug.Log(IsGrounded());
 
+        if (readyToJump && IsGrounded())
+        {
+            readyToJump = false;
+            Jump();
+            Invoke(nameof(ResetJump), jumpCooldown);
+        }
+    }
+
+    private void ResetJump()
+    {
+        readyToJump = true;
+    }
+    void Jump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
 
 
