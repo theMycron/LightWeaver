@@ -20,10 +20,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed;
 
     [Header("Camera")]
-    [SerializeField] Camera camera;
+    [SerializeField] Camera mainCamera;
     
     [Header("Jumping")]
-    [SerializeField] float playerHeight;
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCooldown = .2f;
     Boolean readyToJump;
@@ -87,7 +86,7 @@ public class PlayerController : MonoBehaviour
         //Player Movement Speed
         var speed = moveSpeed * Time.deltaTime;
 
-        targetVector = Quaternion.Euler(0, camera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
 
         var targetPosition = transform.position + targetVector * speed;
         transform.position = targetPosition;
@@ -95,8 +94,11 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + groundCheckDistance, ground);
-
+        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red, 2, true);
+        // transform.position is at the very bottom of the robot
+        // add a vertical offset to the raycast position to avoid creating it inside the ground
+        Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
+        return Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
