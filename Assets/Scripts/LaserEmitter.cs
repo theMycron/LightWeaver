@@ -13,6 +13,7 @@ public class LaserEmitter : MonoBehaviour
     [Header("Laser Distance")]
     [SerializeField]
     private int laserDistance;
+    private Vector3 direction;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
     //[Header("Directions")]
@@ -22,17 +23,17 @@ public class LaserEmitter : MonoBehaviour
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.SetPosition(0, startPoint.position);
+        direction = -transform.forward;
     }
 
     // Update is called once per frame
     void Update()
     {
         //Debug.Log(startPoint.position);
-        lineRenderer.SetPosition(0, startPoint.position);
         //lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
         RaycastHit hit;
         // this will be for north by default
-        Vector3 direction = -transform.forward;
 
         //if (directions == Directions.south)
         //{
