@@ -14,9 +14,9 @@ public class LaserEmitter : MonoBehaviour
     [SerializeField]
     private int laserDistance;
 
-    enum Directions { north = 0, east = 90, south = 180, west  = 270 }
-    [Header("Directions")]
-    [SerializeField] private Directions directions; 
+    //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
+    //[Header("Directions")]
+    //[SerializeField] private Directions directions; 
 
     // Start is called before the first frame update
     void Start()
@@ -28,21 +28,22 @@ public class LaserEmitter : MonoBehaviour
     void Update()
     {
         //Debug.Log(startPoint.position);
-        lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
+        lineRenderer.SetPosition(0, startPoint.position);
+        //lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
         RaycastHit hit;
         // this will be for north by default
         Vector3 direction = -transform.forward;
 
-        if (directions == Directions.south)
-        {
-            direction = transform.forward;
-        } else if (directions == Directions.east)
-        {
-            direction = transform.right;
-        } else if  (directions == Directions.west)
-        {
-            direction = -transform.right;
-        }
+        //if (directions == Directions.south)
+        //{
+        //    direction = transform.forward;
+        //} else if (directions == Directions.east)
+        //{
+        //    direction = transform.right;
+        //} else if  (directions == Directions.west)
+        //{
+        //    direction = -transform.right;
+        //}
 
         if (Physics.Raycast(transform.position, direction, out hit))
         {
