@@ -118,6 +118,7 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   jumpForce: 10
   jumpCooldown: 0.2
+  fallSpeed: 50
   ground:
     serializedVersion: 2
     m_Bits: 64

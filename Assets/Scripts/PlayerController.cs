@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCooldown = .2f;
+    [SerializeField] float fallSpeed = 50f;
     Boolean readyToJump;
 
     [Header("Ground Check")]
@@ -75,6 +76,7 @@ public class PlayerController : MonoBehaviour
 
         //rotate the player based on movement direction
         RotatePlayer(movementVector);
+        ApplyGravity();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -140,5 +142,12 @@ public class PlayerController : MonoBehaviour
     }
 
 
-
+    void ApplyGravity()
+    {
+        // If the player is not grounded, apply gravity
+        if (!IsGrounded() && rb.velocity.y <= 0)
+        {
+            rb.velocity += Vector3.down * fallSpeed * Time.deltaTime;
+        }
+    }
 }

@@ -3252,6 +3252,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: fallSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
@@ -3563,6 +3568,11 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: fallSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
@@ -3808,6 +3818,11 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: fallSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
@@ -3875,6 +3890,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Robot1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993694809480805076, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_Mass
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
