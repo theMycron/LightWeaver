@@ -3,7 +3,22 @@ guid: 366d6260754b90f43947b68b521550be
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: EmittedLight
+    second: {fileID: 2100000, guid: b583c0daf0fefee4b9228d8553554a9a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FaceMaterial
+    second: {fileID: 2100000, guid: 3d6566b1910a0174fa827129eb4d50d7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: RoboMetal
+    second: {fileID: 2100000, guid: cf74cff224fa5334fb0968d3c293020c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
