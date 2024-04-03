@@ -191,7 +191,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 3195737258080365257}
   laserDistance: 1000
-  directions: 0
 --- !u!120 &2470846032205302396
 LineRenderer:
   serializedVersion: 2
@@ -293,7 +292,7 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
 --- !u!4 &8837616038239284466 stripped
