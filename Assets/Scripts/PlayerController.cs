@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
+    [SerializeField] float rotateSpeed;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -68,8 +69,12 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        //move the player to target direction
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
-        MovePlayer(targetVector);
+        var movementVector = MovePlayer(targetVector);
+
+        //rotate the player based on movement direction
+        RotatePlayer(movementVector);
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -81,7 +86,7 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = Vector2.zero;
     }
-    void MovePlayer(Vector3 targetVector)
+    Vector3 MovePlayer(Vector3 targetVector)
     {
         //Player Movement Speed
         var speed = moveSpeed * Time.deltaTime;
@@ -90,6 +95,17 @@ public class PlayerController : MonoBehaviour
 
         var targetPosition = transform.position + targetVector * speed;
         transform.position = targetPosition;
+        return targetVector;
+    }
+
+    void RotatePlayer(Vector3 movementVector)
+    {
+        if(movementVector.magnitude == 0)
+        {
+            return;
+        }
+        var rotation = Quaternion.LookRotation(movementVector);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);
     }
 
     bool IsGrounded()
@@ -122,6 +138,7 @@ public class PlayerController : MonoBehaviour
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
     }
+
 
 
 }

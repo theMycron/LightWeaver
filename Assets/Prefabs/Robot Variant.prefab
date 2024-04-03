@@ -114,7 +114,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
   moveSpeed: 10
-  camera: {fileID: 0}
+  rotateSpeed: 5
+  mainCamera: {fileID: 0}
   jumpForce: 10
   jumpCooldown: 0.2
   ground:
