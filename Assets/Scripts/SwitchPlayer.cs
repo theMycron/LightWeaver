@@ -55,6 +55,7 @@ public class SwitchPlayer : MonoBehaviour
         }
         DisableAllRobots();
         activeRobot = robots[robotNumber - 1];
+        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
         PlayerController script = activeRobot.GetComponent<PlayerController>();
         script.enabled = true;
     }
@@ -63,6 +64,7 @@ public class SwitchPlayer : MonoBehaviour
         foreach (var robot in robots)
         {
             PlayerController script = robot.GetComponent<PlayerController>();
+            robot.GetComponent<Rigidbody>().isKinematic = true;
             script.enabled = false;
         }
     }
