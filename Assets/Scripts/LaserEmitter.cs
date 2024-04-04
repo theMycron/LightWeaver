@@ -48,6 +48,7 @@ public class LaserEmitter : MonoBehaviour
 
         if (Physics.Raycast(transform.position, direction, out hit))
         {
+            
             if (hit.collider)
             {
                 lineRenderer.SetPosition(1, hit.point);
@@ -59,10 +60,10 @@ public class LaserEmitter : MonoBehaviour
                 Debug.Log("Open Gate Logic!");
             }
 
-            //if (hit.transform.tag == "Player")
-            //{
-            //    Debug.Log("Laser Pointing logic!");
-            //}
+            if (hit.transform.tag.StartsWith("Robot"))
+            {
+                Debug.Log("Laser Pointing logic!");
+            }
         }
         else
         {   
