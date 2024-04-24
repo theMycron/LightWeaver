@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] float rotateSpeed;
+    [SerializeField] float groundDrag;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -65,15 +66,24 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()   
     {
+        if (IsGrounded())
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
 
-        
     }
     private void FixedUpdate()
     {
-        MovePlayer();
+        // Move the player and get the movement vector
+        Vector3 movementVector = MovePlayer();
 
-        //rotate the player based on movement direction
-        RotatePlayer();
+        // Rotate the player based on movement direction
+        RotatePlayer(movementVector);
+
         ApplyGravity();
     }
 
@@ -86,27 +96,34 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = Vector2.zero;
     }
-    void MovePlayer()
+    Vector3 MovePlayer()
     {
-        // Player Movement Speed
-        var speed = moveSpeed * Time.deltaTime;
-
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
 
-        // Apply movement force to the rigidbody
-        rb.AddForce(targetVector * speed, ForceMode.VelocityChange);
+        // Calculate target velocity
+        Vector3 targetVelocity = targetVector * moveSpeed;
+
+        // Adjust velocity only if the player is grounded
+        if (IsGrounded())
+        {
+            // Smoothly change velocity to the target velocity
+            rb.AddForce(targetVector.normalized * moveSpeed * 10f,ForceMode.Force);
+        }
+
+        // Return the movement vector
+        return targetVector;
     }
 
-    void RotatePlayer()
+    void RotatePlayer(Vector3 movementVector)
     {
-        if (moveDirection.magnitude > 0)
+        if (movementVector.magnitude == 0)
         {
-            Vector3 moveDirection3D = new Vector3(moveDirection.x, 0, moveDirection.y);
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection3D);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
+            return;
         }
+        var rotation = Quaternion.LookRotation(movementVector);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);
     }
 
     bool IsGrounded()

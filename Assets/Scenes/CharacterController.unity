@@ -2593,7 +2593,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33374
+  m_Name: pb_Mesh28556
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3258,6 +3258,11 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: moveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: groundDrag
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
@@ -3268,7 +3273,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: rotateSpeed
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3584,6 +3589,11 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: moveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: groundDrag
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
@@ -3594,7 +3604,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: rotateSpeed
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3839,6 +3849,11 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: moveSpeed
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: groundDrag
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
@@ -3849,7 +3864,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: rotateSpeed
-      value: 100
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
