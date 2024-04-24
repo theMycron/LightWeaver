@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
+    [SerializeField] float airMultiplier = .2f;
     Boolean readyToJump;
 
     [Header("Ground Check")]
@@ -102,15 +103,16 @@ public class PlayerController : MonoBehaviour
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
 
-        // Calculate target velocity
-        Vector3 targetVelocity = targetVector * moveSpeed;
-
-        // Adjust velocity only if the player is grounded
-        if (IsGrounded())
+        // Adjust velocity if the player is grounded
+        if (IsGrounded() )
         {
-            // Smoothly change velocity to the target velocity
-            rb.AddForce(targetVector.normalized * moveSpeed * 10f,ForceMode.Force);
+            rb.AddForce(targetVector.normalized * moveSpeed * 10f, ForceMode.Force);
+        } else
+        {
+            rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
+            
+         
 
         // Return the movement vector
         return targetVector;
