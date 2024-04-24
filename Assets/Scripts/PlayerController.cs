@@ -70,12 +70,10 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //move the player to target direction
-        Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
-        var movementVector = MovePlayer(targetVector);
+        MovePlayer();
 
         //rotate the player based on movement direction
-        RotatePlayer(movementVector);
+        RotatePlayer();
         ApplyGravity();
     }
 
@@ -88,26 +86,27 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = Vector2.zero;
     }
-    Vector3 MovePlayer(Vector3 targetVector)
+    void MovePlayer()
     {
-        //Player Movement Speed
+        // Player Movement Speed
         var speed = moveSpeed * Time.deltaTime;
 
+        // Calculate movement vector
+        Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
 
-        var targetPosition = transform.position + targetVector * speed;
-        transform.position = targetPosition;
-        return targetVector;
+        // Apply movement force to the rigidbody
+        rb.AddForce(targetVector * speed, ForceMode.VelocityChange);
     }
 
-    void RotatePlayer(Vector3 movementVector)
+    void RotatePlayer()
     {
-        if(movementVector.magnitude == 0)
+        if (moveDirection.magnitude > 0)
         {
-            return;
+            Vector3 moveDirection3D = new Vector3(moveDirection.x, 0, moveDirection.y);
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection3D);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
         }
-        var rotation = Quaternion.LookRotation(movementVector);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);
     }
 
     bool IsGrounded()
