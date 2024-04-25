@@ -76,6 +76,8 @@ public class PlayerController : MonoBehaviour
             rb.drag = 0;
         }
 
+        SpeedControl();
+
     }
     private void FixedUpdate()
     {
@@ -117,7 +119,16 @@ public class PlayerController : MonoBehaviour
         // Return the movement vector
         return targetVector;
     }
+    void SpeedControl()
+    {
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
+        if (flatVelocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+        }
+    }
     void RotatePlayer(Vector3 movementVector)
     {
         if (movementVector.magnitude == 0)
