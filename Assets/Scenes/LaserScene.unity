@@ -2301,7 +2301,19 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 933963234}
+    - targetCorrespondingSourceObject: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 933963235}
+    - targetCorrespondingSourceObject: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 933963236}
   m_SourcePrefab: {fileID: 100100000, guid: dfcd6e3be212404499cb493706ac5c7f, type: 3}
 --- !u!1001 &539115632
 PrefabInstance:
@@ -2743,10 +2755,27 @@ PrefabInstance:
       propertyPath: directions
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6510446670793120061, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: onLaserBlocked
+      value: 
+      objectReference: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c,
+        type: 2}
+    - target: {fileID: 6510446670793120061, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: onLaserCollided
+      value: 
+      objectReference: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f,
+        type: 2}
     - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
       propertyPath: m_Name
       value: LaserEmitter Variant (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7980335739608285595, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
@@ -2813,6 +2842,80 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1, type: 3}
+--- !u!1 &933963231 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+    type: 3}
+  m_PrefabInstance: {fileID: 418893779}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &933963234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933963231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 624afbb60544cf74e95e4314792d2bee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &933963235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933963231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 933963234}
+        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
+        m_MethodName: LaserCollided
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &933963236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 933963231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 933963234}
+        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
+        m_MethodName: LaserBlocked
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1014391072
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3020,7 +3123,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1104757020}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
   m_Name: 

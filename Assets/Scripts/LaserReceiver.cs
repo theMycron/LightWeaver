@@ -16,8 +16,13 @@ public class LaserReceiver : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void LaserCollided()
     {
-        
+        Debug.Log("I have been hitten By Laser From unknown!");
+    }
+
+    public void LaserBlocked()
+    {
+        Debug.Log("Laser Blocked!");
     }
 }

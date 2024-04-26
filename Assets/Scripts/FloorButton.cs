@@ -11,7 +11,7 @@ public class FloorButton : MonoBehaviour
 
     [Header("Gates Attached")]
     [SerializeField]
-    private GameObject gate;
+    //private GameObject gate;
 
     [Header("Events")]
     public GameEvent onFloorButtonPressed;
@@ -21,7 +21,7 @@ public class FloorButton : MonoBehaviour
     void Start()
     {
         animator = GetComponentInParent<Animator>();
-        gateAnimator = gate.GetComponent<Animator>();
+        //gateAnimator = gate.GetComponent<Animator>();
     }
 
     // Update is called once per frame
