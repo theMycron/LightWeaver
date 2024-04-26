@@ -13,6 +13,10 @@ public class FloorButton : MonoBehaviour
     [SerializeField]
     private GameObject gate;
 
+    [Header("Events")]
+    public GameEvent onFloorButtonPressed;
+    public GameEvent onFloorButtonDePressed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,42 +35,33 @@ public class FloorButton : MonoBehaviour
 
         if (other.gameObject.tag == "cube")
         {
-            //animator.Play("Base Layer.Idle");
-            gateAnimator.Play("Door1.Doors1|Open1", 1);
-            gateAnimator.Play("Door2.Doors2|Open2", 2);
-            gateAnimator.SetBool("isOpened", true);
+            //gateAnimator.SetBool("isOpened", true);
             animator.SetBool("isObjectOver", true);
         }
 
         if (other.gameObject.tag.StartsWith("Robot"))
         {
             animator.SetBool("isObjectOver", true);
-            
-            gateAnimator.Play("Door1.Doors1|Open1", 1);
-            gateAnimator.Play("Door2.Doors2|Open2", 2);
-            gateAnimator.SetBool("isOpened", true);
+            //gateAnimator.SetBool("isOpened", true);
         }
+
+        onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"));
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "cube")
         {
-            //animator.Play("Base Layer.Idle");
-            //animator.Play("Base Layer.Press|PressAction");
-            gateAnimator.Play("Door1.Doors1|Close1", 1);
-            gateAnimator.Play("Door2.Doors2|Close2", 2);
-            gateAnimator.SetBool("isOpened", false);
-            
+            //gateAnimator.SetBool("isOpened", false);
+            animator.SetBool("isObjectOver", false);
         }
 
         if (other.gameObject.tag.StartsWith("Robot"))
         {
             animator.SetBool("isObjectOver", false);
-            gateAnimator.Play("Door1.Doors1|Close1", 1);
-            gateAnimator.Play("Door2.Doors2|Close2", 2);
-            gateAnimator.SetBool("isOpened", false);
-            //animator.Play("Base Layer.Idle");
+            //gateAnimator.SetBool("isOpened", false);
         }
+
+        onFloorButtonDePressed.Raise(this, animator.GetBool("isObjectOver"));
     }
 }
