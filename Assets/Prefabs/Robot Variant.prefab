@@ -15,11 +15,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
-      propertyPath: m_LocalScale.z
-      value: -1
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
-        type: 3}
       propertyPath: m_LocalPosition.x
       value: 3
       objectReference: {fileID: 0}
@@ -73,6 +68,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 366d6260754b90f43947b68b521550be, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: aff38453ad7a2864b93f30fae0f4bdd6, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -113,12 +123,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
-  moveSpeed: 10
+  moveSpeed: 25
   rotateSpeed: 5
+  groundDrag: 20
   mainCamera: {fileID: 0}
-  jumpForce: 10
+  jumpForce: 30
   jumpCooldown: 0.2
-  fallSpeed: 50
+  fallSpeed: 40
+  airMultiplier: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 64
