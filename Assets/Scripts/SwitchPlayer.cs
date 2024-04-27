@@ -10,7 +10,7 @@ public class SwitchPlayer : MonoBehaviour
 
     [SerializeField] private GameObject[] robots;
 
-    GameObject activeRobot; 
+    public GameObject activeRobot; 
 
     InputManager inputManager;
     private void Awake()
@@ -30,6 +30,7 @@ public class SwitchPlayer : MonoBehaviour
     private void OnDisable()
     {
         inputManager.Disable();
+        inputManager.Player.SwitchRobot.performed -= OnSwitchRobotPerformed;
     }
 
     private void OnSwitchRobotPerformed(InputAction.CallbackContext context)
@@ -56,6 +57,7 @@ public class SwitchPlayer : MonoBehaviour
         DisableAllRobots();
         activeRobot = robots[robotNumber - 1];
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        activeRobot.tag = "ActiveRobot";
         PlayerController script = activeRobot.GetComponent<PlayerController>();
         script.enabled = true;
     }
@@ -66,6 +68,7 @@ public class SwitchPlayer : MonoBehaviour
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
             script.enabled = false;
+            robot.tag = "Undefined";
         }
     }
 }
