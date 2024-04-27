@@ -76,6 +76,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8553364249227889500}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 454e2c61f15da0149a476bb80ee1f6b5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3547193466624028690}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 454e2c61f15da0149a476bb80ee1f6b5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4616640335436722643}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 454e2c61f15da0149a476bb80ee1f6b5,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3595347177508810171}
     - targetCorrespondingSourceObject: {fileID: 9047803212649275176, guid: 454e2c61f15da0149a476bb80ee1f6b5,
         type: 3}
       insertIndex: -1
@@ -232,6 +244,75 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3547193466624028690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640821527081572450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07fbe9d3d2c11b440af335a7e5532abd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gateNumber: 0
+--- !u!114 &4616640335436722643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640821527081572450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c5cdfa470f362645be02eba59c9015a, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3547193466624028690}
+        m_TargetAssemblyTypeName: Gate, Assembly-CSharp
+        m_MethodName: OpenGate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3595347177508810171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8640821527081572450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73c33978ae4e9424192d9183c460026b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3547193466624028690}
+        m_TargetAssemblyTypeName: Gate, Assembly-CSharp
+        m_MethodName: CloseGate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &9075861518598535344 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8729986796118598269, guid: 454e2c61f15da0149a476bb80ee1f6b5,

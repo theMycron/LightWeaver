@@ -6,6 +6,8 @@ public class Gate : MonoBehaviour
 {
     private Animator animator;
     // Start is called before the first frame update
+    [SerializeField]
+    private int gateNumber;
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -17,30 +19,43 @@ public class Gate : MonoBehaviour
         
     }
 
-    public void ManageGate(Component sender, object data)
+    //public void ManageGate(Component sender, object data, int gateNumber)
+    //{
+    //    if (data is bool)
+    //    {
+    //        bool isObjectOver = (bool)data;
+    //        Debug.Log("Event recevied" + isObjectOver + " " + gateNumber);
+    //        if (isObjectOver)
+    //        {
+    //            OpenGate();
+    //        } else
+    //        {
+    //            CloseGate();
+    //        }
+    //    }
+        
+    //}
+
+    public void CloseGate(Component sender, object data, int gateNumber)
     {
-        if (data is bool)
+        if (CheckGateNumber(gateNumber))
         {
-            bool isObjectOver = (bool)data;
-            Debug.Log("Event recevied" + isObjectOver);
-            if (isObjectOver)
-            {
-                OpenGate();
-            } else
-            {
-                CloseGate();
-            }
+            animator.SetBool("isOpened", false);
         }
         
     }
 
-    public void CloseGate()
+    public void OpenGate(Component sender, object data, int gateNumber)
     {
-        animator.SetBool("isOpened", false);
+        if (CheckGateNumber(gateNumber))
+        {
+            animator.SetBool("isOpened", true);
+        }
+        
     }
 
-    public void OpenGate()
+    private bool CheckGateNumber(int gateNumber)
     {
-        animator.SetBool("isOpened", true);
+        return this.gateNumber == gateNumber;
     }
 }

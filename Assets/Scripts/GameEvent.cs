@@ -10,11 +10,17 @@ public class GameEvent : ScriptableObject
     public List<GameEventListener> listeners = new List<GameEventListener>();
 
     // Raise Event through different methods signatures
+
     public void Raise(Component sender, object data)
+    {
+        Raise(sender, data, -1);
+    }
+
+    public void Raise(Component sender, object data, int gateNumber)
     {
         foreach (GameEventListener listener in listeners)
         {
-            listener.onEventRaised(sender, data);
+            listener.onEventRaised(sender, data, gateNumber);
         }
     }
 

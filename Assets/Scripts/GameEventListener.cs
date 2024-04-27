@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 // to see it in the inspector
 [System.Serializable]
-public class CustomGameEvent : UnityEvent<Component, object> {}
+public class CustomGameEvent : UnityEvent<Component, object, int> {}
 
 public class GameEventListener : MonoBehaviour
 {
@@ -27,8 +27,8 @@ public class GameEventListener : MonoBehaviour
         gameEvent.UnregisterListener(this);
     }
 
-    public void onEventRaised(Component sender, object data)
+    public void onEventRaised(Component sender, object data, int gateNumber)
     {
-        response.Invoke(sender, data);
+        response.Invoke(sender, data, gateNumber);
     }
 }
