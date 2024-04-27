@@ -17,9 +17,13 @@ public class LaserEmitter : MonoBehaviour
 
     [Header("Gates Attached")]
     [SerializeField]
-    private GameObject gate;
+    //private GameObject gate;
 
     private Animator gateAnimator;
+
+    [Header("Events")]
+    public GameEvent onLaserCollided;
+    public GameEvent onLaserBlocked;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
     //[Header("Directions")]
@@ -31,7 +35,7 @@ public class LaserEmitter : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
         direction = -transform.forward;
-        gateAnimator = gate.GetComponent<Animator>();
+        //gateAnimator = gate.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -64,19 +68,21 @@ public class LaserEmitter : MonoBehaviour
 
             if (hit.transform.tag == "LaserReceiver")
             {
-                gateAnimator.Play("Doors1|Open1", 1);
-                gateAnimator.Play("Doors2|Open2", 2);
+                //gateAnimator.Play("Doors1|Open1", 1);
+                //gateAnimator.Play("Doors2|Open2", 2);
                 //gateAnimator.ResetTrigger("open");
-                gateAnimator.SetBool("isOpened", true);
+                //gateAnimator.SetBool("isOpened", true);
                 //Debug.Log("Open Gate Logic!");
+                onLaserCollided.Raise(this, null);
             }
             else
             {
-                gateAnimator.Play("Doors1|Close1", 1);
-                gateAnimator.Play("Doors2|Close2", 2);
-                gateAnimator.SetBool("isOpened", false);
+                //gateAnimator.Play("Doors1|Close1", 1);
+                //gateAnimator.Play("Doors2|Close2", 2);
+                //gateAnimator.SetBool("isOpened", false);
                 //gateAnimator.SetTrigger("open");
                 //Debug.Log("Close Gate Logic!");
+                onLaserBlocked.Raise(this, null);
             }
 
 

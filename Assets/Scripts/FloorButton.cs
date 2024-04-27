@@ -6,18 +6,22 @@ public class FloorButton : MonoBehaviour
 
 {
 
-    //private Animator animator;
+    private Animator animator;
     private Animator gateAnimator;
 
     [Header("Gates Attached")]
     [SerializeField]
-    private GameObject gate;
+    //private GameObject gate;
+
+    [Header("Events")]
+    public GameEvent onFloorButtonPressed;
+    public GameEvent onFloorButtonDePressed;
 
     // Start is called before the first frame update
     void Start()
     {
-        //animator = GetComponentInParent<Animator>();
-        gateAnimator = gate.GetComponent<Animator>();
+        animator = GetComponentInParent<Animator>();
+        //gateAnimator = gate.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,23 +35,33 @@ public class FloorButton : MonoBehaviour
 
         if (other.gameObject.tag == "cube")
         {
-            //animator.Play("Base Layer.Idle");
-            gateAnimator.Play("Door1.Doors1|Open1", 1);
-            gateAnimator.Play("Door2.Doors2|Open2", 2);
-            gateAnimator.SetBool("isOpened", true);
-            //animator.SetBool("isObjectOver", true);
+            //gateAnimator.SetBool("isOpened", true);
+            animator.SetBool("isObjectOver", true);
         }
+
+        if (other.gameObject.tag.StartsWith("Robot"))
+        {
+            animator.SetBool("isObjectOver", true);
+            //gateAnimator.SetBool("isOpened", true);
+        }
+
+        onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"));
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "cube")
         {
-            //animator.Play("Base Layer.Press|PressAction");
-            gateAnimator.Play("Door1.Doors1|Close1", 1);
-            gateAnimator.Play("Door2.Doors2|Close2", 2);
-            gateAnimator.SetBool("isOpened", false);
-            //animator.SetBool("isObjectOver", false);
+            //gateAnimator.SetBool("isOpened", false);
+            animator.SetBool("isObjectOver", false);
         }
+
+        if (other.gameObject.tag.StartsWith("Robot"))
+        {
+            animator.SetBool("isObjectOver", false);
+            //gateAnimator.SetBool("isOpened", false);
+        }
+
+        onFloorButtonDePressed.Raise(this, animator.GetBool("isObjectOver"));
     }
 }
