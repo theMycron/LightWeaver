@@ -101,6 +101,18 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7777354740391071229}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8495158860195195582}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 9070377830024031835}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 788476909177116648}
   m_SourcePrefab: {fileID: 100100000, guid: 716953d07e36ebf42b74da47be0d07dc, type: 3}
 --- !u!1 &2700533954677620472 stripped
 GameObject:
@@ -129,3 +141,72 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 4, z: 1}
   m_Center: {x: 0, y: 0, z: 1.5}
+--- !u!114 &8495158860195195582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700533954677620472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 624afbb60544cf74e95e4314792d2bee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gateNumber: 0
+--- !u!114 &9070377830024031835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700533954677620472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8495158860195195582}
+        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
+        m_MethodName: LaserCollided
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &788476909177116648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2700533954677620472}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8495158860195195582}
+        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
+        m_MethodName: LaserBlocked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

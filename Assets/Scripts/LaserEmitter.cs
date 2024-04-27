@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
@@ -59,7 +60,7 @@ public class LaserEmitter : MonoBehaviour
 
         if (Physics.Raycast(transform.position, direction, out hit))
         {
-
+            int laserReceiverGateNumber = -1;
             if (hit.collider)
             {
                 lineRenderer.SetPosition(1, hit.point);
@@ -73,7 +74,8 @@ public class LaserEmitter : MonoBehaviour
                 //gateAnimator.ResetTrigger("open");
                 //gateAnimator.SetBool("isOpened", true);
                 //Debug.Log("Open Gate Logic!");
-                onLaserCollided.Raise(this, null);
+                laserReceiverGateNumber = hit.transform.gameObject.GetComponent<LaserReceiver>().gateNumber;
+                onLaserCollided.Raise(this, null, laserReceiverGateNumber);
             }
             else
             {
@@ -81,8 +83,8 @@ public class LaserEmitter : MonoBehaviour
                 //gateAnimator.Play("Doors2|Close2", 2);
                 //gateAnimator.SetBool("isOpened", false);
                 //gateAnimator.SetTrigger("open");
-                //Debug.Log("Close Gate Logic!");
-                onLaserBlocked.Raise(this, null);
+                Debug.Log("Close Gate Logic!" + laserReceiverGateNumber);
+                onLaserBlocked.Raise(this, null, laserReceiverGateNumber);
             }
 
 
