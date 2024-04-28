@@ -207,6 +207,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Move Cube"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a638ac5-ee63-48c2-a226-824b3627f504"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }

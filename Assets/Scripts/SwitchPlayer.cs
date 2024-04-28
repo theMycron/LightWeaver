@@ -10,17 +10,17 @@ public class SwitchPlayer : MonoBehaviour
 
     [SerializeField] private GameObject[] robots;
 
-    public GameObject activeRobot; 
+    public static GameObject activeRobot; 
 
     InputManager inputManager;
     private void Awake()
     {
         inputManager = new InputManager();
+        ActivateRobot(1);
     }
     private void Start()
     {
-       activeRobot = robots[0];
-        ActivateRobot(1);
+/*        activeRobot = robots[0];*/
     }
     private void OnEnable()
     {
