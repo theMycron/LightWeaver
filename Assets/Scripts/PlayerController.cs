@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
-    [SerializeField] float rotateSpeed;
+    [SerializeField] public float rotateSpeed;
     [SerializeField] float groundDrag;
 
     [Header("Camera")]

@@ -14,7 +14,8 @@ public class CubeController : MonoBehaviour
     Transform CubeDes;
     InputManager inputManager;
     GameObject activeRobot;
-    [SerializeField]LayerMask CubeLayer;
+    [SerializeField] LayerMask CubeLayer;
+    [SerializeField] float pickupDistance = 10f;
     private void Awake()
     {
         inputManager = new InputManager();
@@ -30,6 +31,7 @@ public class CubeController : MonoBehaviour
         // use AddForce to move cube to desired position so that physics collisions work
         if (isRaised)
         {
+/*            FindCubePosition();*/
             Vector3 desiredPosition = CubeDes.position;
 
             // get the direction to the desired position and multiple by strength variable
@@ -48,6 +50,7 @@ public class CubeController : MonoBehaviour
             //Debug.Log($"Desired position: {desiredPosition}, RB Position: {rb.position}, Movement Vector: {forceVector}");
             Debug.DrawRay(rb.position, forceVector, Color.blue, 3);
             rb.AddForce(forceVector);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, activeRobot.transform.rotation,5f);
         }
     }
     private void OnEnable()
@@ -71,15 +74,16 @@ public class CubeController : MonoBehaviour
             // Perform a raycast from the mouse position
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, CubeLayer))
             {
-                Debug.Log("Collider :" + hit.collider.gameObject);
-                HandleClick();
+                if (hit.collider.gameObject == gameObject)
+                {
+                    // Handle the click only if the cube itself is clicked
+                    HandleClick();
+                }
             }
         } else
         {
-            HandleClick();
+            PlaceCube();
         }
-
-
     }
 
     void HandleClick()
@@ -111,6 +115,12 @@ public class CubeController : MonoBehaviour
     {
         if (!isRaised)
         {
+            float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
+            Debug.Log("distance: " + distance);
+            if (distance > pickupDistance)
+            {
+                return;
+            }
             FindCubePosition();
             // Raise the cube
             //bx.enabled = false;
