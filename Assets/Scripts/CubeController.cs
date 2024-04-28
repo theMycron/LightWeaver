@@ -16,6 +16,7 @@ public class CubeController : MonoBehaviour
     GameObject activeRobot;
     [SerializeField] LayerMask CubeLayer;
     [SerializeField] float pickupDistance = 10f;
+    Vector2 RotateValue;
     private void Awake()
     {
         inputManager = new InputManager();
@@ -85,6 +86,11 @@ public class CubeController : MonoBehaviour
             PlaceCube();
         }
     }
+    public void OnRotateCubePerformed(InputAction.CallbackContext context)
+    {
+        RotateValue = context.ReadValue<Vector2>();
+        transform.Rotate(Vector3.up * 10.0f * RotateValue * Time.deltaTime);
+    }
 
     void HandleClick()
     {
@@ -141,7 +147,6 @@ public class CubeController : MonoBehaviour
 
         CubeDes = activeRobot.transform.Find("CubePosition");
     }
-
 
 }
 

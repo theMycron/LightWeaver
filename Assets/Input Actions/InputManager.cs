@@ -62,6 +62,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Cube"",
+                    ""type"": ""Button"",
+                    ""id"": ""93a2d78f-cac8-432d-b8e7-2d17ab4a5663"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -218,6 +227,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Move Cube"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""075ca4b5-c873-43ab-80c9-de97fcd3b6d4"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -230,6 +250,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchRobot = m_Player.FindAction("Switch Robot", throwIfNotFound: true);
         m_Player_MoveCube = m_Player.FindAction("Move Cube", throwIfNotFound: true);
+        m_Player_RotateCube = m_Player.FindAction("Rotate Cube", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -295,6 +316,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchRobot;
     private readonly InputAction m_Player_MoveCube;
+    private readonly InputAction m_Player_RotateCube;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -303,6 +325,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchRobot => m_Wrapper.m_Player_SwitchRobot;
         public InputAction @MoveCube => m_Wrapper.m_Player_MoveCube;
+        public InputAction @RotateCube => m_Wrapper.m_Player_RotateCube;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -324,6 +347,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @MoveCube.started += instance.OnMoveCube;
             @MoveCube.performed += instance.OnMoveCube;
             @MoveCube.canceled += instance.OnMoveCube;
+            @RotateCube.started += instance.OnRotateCube;
+            @RotateCube.performed += instance.OnRotateCube;
+            @RotateCube.canceled += instance.OnRotateCube;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -340,6 +366,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @MoveCube.started -= instance.OnMoveCube;
             @MoveCube.performed -= instance.OnMoveCube;
             @MoveCube.canceled -= instance.OnMoveCube;
+            @RotateCube.started -= instance.OnRotateCube;
+            @RotateCube.performed -= instance.OnRotateCube;
+            @RotateCube.canceled -= instance.OnRotateCube;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -363,5 +392,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchRobot(InputAction.CallbackContext context);
         void OnMoveCube(InputAction.CallbackContext context);
+        void OnRotateCube(InputAction.CallbackContext context);
     }
 }

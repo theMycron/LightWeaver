@@ -53,8 +53,6 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.performed += OnJumpPerformed;
-
-
     }
 
     private void OnDisable()
@@ -77,7 +75,6 @@ public class PlayerController : MonoBehaviour
         }
 
         SpeedControl();
-
     }
     private void FixedUpdate()
     {
@@ -114,8 +111,6 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
             
-         
-
         // Return the movement vector
         return targetVector;
     }
