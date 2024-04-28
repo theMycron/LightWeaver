@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static Cinemachine.CinemachineFreeLook;
+using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CubeController : MonoBehaviour
 {
@@ -16,7 +17,9 @@ public class CubeController : MonoBehaviour
     GameObject activeRobot;
     [SerializeField] LayerMask CubeLayer;
     [SerializeField] float pickupDistance = 10f;
-    Vector2 RotateValue;
+    float RotationValue;
+    [SerializeField] float rotateSpeed =4f;
+    private Vector3 cubeRotation;
     private void Awake()
     {
         inputManager = new InputManager();
@@ -26,6 +29,7 @@ public class CubeController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 /*        bx = GetComponent<BoxCollider>();*/
         FindCubePosition();
+        cubeRotation = gameObject.transform.eulerAngles;
     }
     private void FixedUpdate()
     {
@@ -51,18 +55,21 @@ public class CubeController : MonoBehaviour
             //Debug.Log($"Desired position: {desiredPosition}, RB Position: {rb.position}, Movement Vector: {forceVector}");
             Debug.DrawRay(rb.position, forceVector, Color.blue, 3);
             rb.AddForce(forceVector);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, activeRobot.transform.rotation,5f);
         }
     }
     private void OnEnable()
     {
         inputManager.Enable();
         inputManager.Player.MoveCube.performed += OnMoveCubePerformed;
+        inputManager.Player.RotateCube.performed += OnRotateCubePerformed;
+        inputManager.Player.RotateCubeUp.performed += OnRotateCubeUpPerformed;
     }
     private void OnDisable()
     {
         inputManager.Disable();
         inputManager.Player.MoveCube.performed -= OnMoveCubePerformed;
+        inputManager.Player.RotateCube.performed -= OnRotateCubePerformed;
+        inputManager.Player.RotateCubeUp.performed -= OnRotateCubeUpPerformed;
     }
     public void OnMoveCubePerformed(InputAction.CallbackContext context)
     {
@@ -88,8 +95,22 @@ public class CubeController : MonoBehaviour
     }
     public void OnRotateCubePerformed(InputAction.CallbackContext context)
     {
-        RotateValue = context.ReadValue<Vector2>();
-        transform.Rotate(Vector3.up * 10.0f * RotateValue * Time.deltaTime);
+
+            RotationValue = context.ReadValue<float>() * rotateSpeed * Time.deltaTime;
+            
+            if (RotationValue != 0)
+            {
+                transform.Rotate(Vector3.up * RotationValue);
+            }
+         
+
+    }
+    public void OnRotateCubeUpPerformed(InputAction.CallbackContext context)
+    {
+        if (isRaised)
+        {
+            transform.Rotate(Vector3.right, 90f, Space.Self);
+        }
     }
 
     void HandleClick()

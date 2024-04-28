@@ -43,8 +43,17 @@
                 },
                 {
                     "name": "Rotate Cube",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "93a2d78f-cac8-432d-b8e7-2d17ab4a5663",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Rotate Cube Up",
+                    "type": "Button",
+                    "id": "6976d0de-9b31-4d7a-abd0-b768809f01ba",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -208,12 +217,23 @@
                 },
                 {
                     "name": "",
-                    "id": "075ca4b5-c873-43ab-80c9-de97fcd3b6d4",
-                    "path": "<Mouse>/middleButton",
+                    "id": "60832410-5104-479c-8ec0-bb9d62c1ccae",
+                    "path": "<Mouse>/scroll/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Rotate Cube",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "369d1432-a281-4060-91ed-712277ae1ee9",
+                    "path": "<Keyboard>/c",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Cube Up",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

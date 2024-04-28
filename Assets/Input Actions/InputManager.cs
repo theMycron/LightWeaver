@@ -65,8 +65,17 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Rotate Cube"",
-                    ""type"": ""Button"",
+                    ""type"": ""Value"",
                     ""id"": ""93a2d78f-cac8-432d-b8e7-2d17ab4a5663"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate Cube Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""6976d0de-9b31-4d7a-abd0-b768809f01ba"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -230,12 +239,23 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""075ca4b5-c873-43ab-80c9-de97fcd3b6d4"",
-                    ""path"": ""<Mouse>/middleButton"",
+                    ""id"": ""60832410-5104-479c-8ec0-bb9d62c1ccae"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Rotate Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""369d1432-a281-4060-91ed-712277ae1ee9"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Cube Up"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -251,6 +271,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_SwitchRobot = m_Player.FindAction("Switch Robot", throwIfNotFound: true);
         m_Player_MoveCube = m_Player.FindAction("Move Cube", throwIfNotFound: true);
         m_Player_RotateCube = m_Player.FindAction("Rotate Cube", throwIfNotFound: true);
+        m_Player_RotateCubeUp = m_Player.FindAction("Rotate Cube Up", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -317,6 +338,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_SwitchRobot;
     private readonly InputAction m_Player_MoveCube;
     private readonly InputAction m_Player_RotateCube;
+    private readonly InputAction m_Player_RotateCubeUp;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -326,6 +348,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @SwitchRobot => m_Wrapper.m_Player_SwitchRobot;
         public InputAction @MoveCube => m_Wrapper.m_Player_MoveCube;
         public InputAction @RotateCube => m_Wrapper.m_Player_RotateCube;
+        public InputAction @RotateCubeUp => m_Wrapper.m_Player_RotateCubeUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -350,6 +373,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @RotateCube.started += instance.OnRotateCube;
             @RotateCube.performed += instance.OnRotateCube;
             @RotateCube.canceled += instance.OnRotateCube;
+            @RotateCubeUp.started += instance.OnRotateCubeUp;
+            @RotateCubeUp.performed += instance.OnRotateCubeUp;
+            @RotateCubeUp.canceled += instance.OnRotateCubeUp;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -369,6 +395,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @RotateCube.started -= instance.OnRotateCube;
             @RotateCube.performed -= instance.OnRotateCube;
             @RotateCube.canceled -= instance.OnRotateCube;
+            @RotateCubeUp.started -= instance.OnRotateCubeUp;
+            @RotateCubeUp.performed -= instance.OnRotateCubeUp;
+            @RotateCubeUp.canceled -= instance.OnRotateCubeUp;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -393,5 +422,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnSwitchRobot(InputAction.CallbackContext context);
         void OnMoveCube(InputAction.CallbackContext context);
         void OnRotateCube(InputAction.CallbackContext context);
+        void OnRotateCubeUp(InputAction.CallbackContext context);
     }
 }
