@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
@@ -18,13 +17,13 @@ public class LaserEmitter : MonoBehaviour
 
     [Header("Gates Attached")]
     [SerializeField]
-    //private GameObject gate;
+    private GameObject gate;
+
+    [Header("receivers attached")]
+    [SerializeField]
+    private List<GameObject> laserReceivers;
 
     private Animator gateAnimator;
-
-    [Header("Events")]
-    public GameEvent onLaserCollided;
-    public GameEvent onLaserBlocked;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
     //[Header("Directions")]
@@ -36,7 +35,7 @@ public class LaserEmitter : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
         direction = -transform.forward;
-        //gateAnimator = gate.GetComponent<Animator>();
+        gateAnimator = gate.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -60,7 +59,7 @@ public class LaserEmitter : MonoBehaviour
 
         if (Physics.Raycast(transform.position, direction, out hit))
         {
-            int laserReceiverGateNumber = -1;
+
             if (hit.collider)
             {
                 lineRenderer.SetPosition(1, hit.point);
@@ -69,22 +68,20 @@ public class LaserEmitter : MonoBehaviour
 
             if (hit.transform.tag == "LaserReceiver")
             {
-                //gateAnimator.Play("Doors1|Open1", 1);
-                //gateAnimator.Play("Doors2|Open2", 2);
+                gateAnimator.Play("Doors1|Open1", 1);
+                gateAnimator.Play("Doors2|Open2", 2);
                 //gateAnimator.ResetTrigger("open");
-                //gateAnimator.SetBool("isOpened", true);
+                gateAnimator.SetBool("isOpened", true);
                 //Debug.Log("Open Gate Logic!");
-                laserReceiverGateNumber = hit.transform.gameObject.GetComponent<LaserReceiver>().gateNumber;
-                onLaserCollided.Raise(this, null, laserReceiverGateNumber);
             }
             else
             {
-                //gateAnimator.Play("Doors1|Close1", 1);
-                //gateAnimator.Play("Doors2|Close2", 2);
-                //gateAnimator.SetBool("isOpened", false);
+                gateAnimator.Play("Doors1|Close1", 1);
+                gateAnimator.Play("Doors2|Close2", 2);
+                gateAnimator.SetBool("isOpened", false);
                 //gateAnimator.SetTrigger("open");
-                Debug.Log("Close Gate Logic!" + laserReceiverGateNumber);
-                onLaserBlocked.Raise(this, null, laserReceiverGateNumber);
+                //Debug.Log("Close Gate Logic!");
+                Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
             }
 
 

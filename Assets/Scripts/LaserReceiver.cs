@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class LaserReceiver : MonoBehaviour
 {
+    public int GateNumber { get { return gateNumber; } }
     [Header("Gate Attached")]
     [SerializeField]
-    public int gateNumber;
+    private int gateNumber;
     // Start is called before the first frame update
     void Start()
     {
