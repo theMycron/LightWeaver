@@ -9,6 +9,7 @@ using static UnityEngine.Rendering.DebugUI.Table;
 public class CubeController : MonoBehaviour
 {
     public bool isRaised =false; // Flag to track if the cube is raised or not
+    [SerializeField]
     public float strength = 5f;
     private Rigidbody rb;
     Transform CubeDes;
@@ -53,7 +54,7 @@ public class CubeController : MonoBehaviour
 
             //Debug.Log($"Desired position: {desiredPosition}, RB Position: {rb.position}, Movement Vector: {forceVector}");
             Debug.DrawRay(rb.position, forceVector, Color.blue, 3);
-            rb.AddForce(forceVector);
+            rb.AddForce(forceVector * strength);
         }
     }
     private void OnEnable()
