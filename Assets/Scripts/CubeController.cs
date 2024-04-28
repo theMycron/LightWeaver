@@ -11,7 +11,6 @@ public class CubeController : MonoBehaviour
     public bool isRaised =false; // Flag to track if the cube is raised or not
     public float strength = 5f;
     private Rigidbody rb;
-/*    private BoxCollider bx;*/
     Transform CubeDes;
     InputManager inputManager;
     GameObject activeRobot;
@@ -20,6 +19,7 @@ public class CubeController : MonoBehaviour
     float RotationValue;
     [SerializeField] float rotateSpeed =4f;
     private Vector3 cubeRotation;
+    private BoxCollider bx;
     private void Awake()
     {
         inputManager = new InputManager();
@@ -27,9 +27,8 @@ public class CubeController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-/*        bx = GetComponent<BoxCollider>();*/
-        FindCubePosition();
         cubeRotation = gameObject.transform.eulerAngles;
+        bx = GetComponent<BoxCollider>();
     }
     private void FixedUpdate()
     {
@@ -95,21 +94,22 @@ public class CubeController : MonoBehaviour
     }
     public void OnRotateCubePerformed(InputAction.CallbackContext context)
     {
-
+        if (isRaised)
+        {
             RotationValue = context.ReadValue<float>() * rotateSpeed * Time.deltaTime;
-            
+
             if (RotationValue != 0)
             {
                 transform.Rotate(Vector3.up * RotationValue);
             }
-         
+        }
 
     }
     public void OnRotateCubeUpPerformed(InputAction.CallbackContext context)
     {
         if (isRaised)
         {
-            transform.Rotate(Vector3.right, 90f, Space.Self);
+            transform.Rotate(Vector3.right, 180f, Space.Self);
         }
     }
 
@@ -129,12 +129,10 @@ public class CubeController : MonoBehaviour
         if (isRaised)
         {
             Debug.Log("Placing Cube ");
-            //this.transform.parent = null;
             rb.useGravity = true;
-            /*rb.isKinematic = false;*/
             rb.drag = 0;
-            //bx.enabled = true;
             isRaised = false;
+            bx.excludeLayers = LayerMask.GetMask("Nothing");
         }
 
     }
@@ -142,31 +140,27 @@ public class CubeController : MonoBehaviour
     {
         if (!isRaised)
         {
+            FindCubePosition();
             float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
             Debug.Log("distance: " + distance);
             if (distance > pickupDistance)
             {
                 return;
             }
-            FindCubePosition();
-            // Raise the cube
-            //bx.enabled = false;
             rb.useGravity = false;
-            /*            rb.isKinematic = true;*/
-            //this.transform.position = CubeDes.position;
-            //  changing transform parent works but causes clipping when rotating robot into a wall
-            //this.transform.parent = CubeDes;
             rb.drag = 12; // drag helps with dampening
             isRaised = true;
+            bx.excludeLayers = LayerMask.GetMask("Robot");
             Debug.Log("Cube is Raised" + isRaised);
         }
 
     }
     void FindCubePosition()
     {
-        activeRobot = SwitchPlayer.activeRobot;
+        activeRobot = SwitchPlayer.GetActiveRobot();
 
         CubeDes = activeRobot.transform.Find("CubePosition");
+        Debug.Log("Active Robot" + activeRobot.name);
     }
 
 }

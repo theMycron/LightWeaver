@@ -10,7 +10,7 @@ public class SwitchPlayer : MonoBehaviour
 
     [SerializeField] private GameObject[] robots;
 
-    public static GameObject activeRobot; 
+    static GameObject activeRobot; 
 
     InputManager inputManager;
     private void Awake()
@@ -70,5 +70,10 @@ public class SwitchPlayer : MonoBehaviour
             script.enabled = false;
             robot.tag = "Undefined";
         }
+    }
+
+    public static GameObject GetActiveRobot()
+    {
+        return activeRobot;
     }
 }
