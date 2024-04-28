@@ -8,6 +8,7 @@ using static Cinemachine.CinemachineFreeLook;
 public class CubeController : MonoBehaviour
 {
     public bool isRaised =false; // Flag to track if the cube is raised or not
+    public float strength = 5f;
     private Rigidbody rb;
     private BoxCollider bx;
     Transform CubeDes;
@@ -87,22 +88,52 @@ public class CubeController : MonoBehaviour
         {
             setCubePosition();
             // Raise the cube
-            bx.enabled = false;
+            //bx.enabled = false;
             rb.useGravity = false;
-            rb.isKinematic = true;
-            this.transform.position = CubeDes.position;
-            this.transform.parent = CubeDes.transform;
+            //rb.isKinematic = true;
+            //this.transform.position = CubeDes.position;
+            //  changing transform parent works but causes clipping when rotating robot into a wall
+            //this.transform.parent = CubeDes;
+            rb.drag = 12; // drag helps with dampening
             isRaised = true;
             Debug.Log("Cube is Raised" + isRaised);
         }
         else
         {
             Debug.Log("Placing Cube ");
-            this.transform.parent = null;
+            //this.transform.parent = null;
             rb.useGravity = true;
-            rb.isKinematic = false;
-            bx.enabled = true;
+            //rb.isKinematic = false;
+            rb.drag = 0;
+            //bx.enabled = true;
             isRaised = false;
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // use AddForce to move cube to desired position so that physics collisions work
+        if (isRaised)
+        {
+            Vector3 desiredPosition = CubeDes.position;
+
+            // get the direction to the desired position and multiple by strength variable
+            // this will move the cube towards the destination
+            Vector3 dirToDesiredPos = (desiredPosition - rb.position).normalized;
+            Vector3 forceVector = dirToDesiredPos * strength;
+
+            // apply some dampening if the cube is close to the destination
+            float distToDesiredPos = Vector3.Distance(desiredPosition, rb.position)/10;
+            distToDesiredPos = Mathf.Clamp01(distToDesiredPos);
+            Debug.Log($"Clamped: {distToDesiredPos}, Distance: {Vector3.Distance(desiredPosition, rb.position)}");
+            forceVector *= distToDesiredPos;
+
+
+            //Vector3 forceVector = desiredPosition - Vector3.Lerp(rb.position, desiredPosition, movementSpeed);
+
+            //Debug.Log($"Desired position: {desiredPosition}, RB Position: {rb.position}, Movement Vector: {forceVector}");
+            Debug.DrawRay(rb.position, forceVector, Color.blue, 3);
+            rb.AddForce(forceVector);
         }
     }
 }
