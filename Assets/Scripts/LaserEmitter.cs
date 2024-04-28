@@ -23,6 +23,10 @@ public class LaserEmitter : MonoBehaviour
     [SerializeField]
     private List<GameObject> laserReceivers;
 
+    [Header("Events")]
+    public GameEvent onLaserCollided;
+    public GameEvent onLaserBlocked;
+
     private Animator gateAnimator;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
@@ -73,6 +77,8 @@ public class LaserEmitter : MonoBehaviour
                 //gateAnimator.ResetTrigger("open");
                 gateAnimator.SetBool("isOpened", true);
                 //Debug.Log("Open Gate Logic!");
+                onLaserCollided.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
+
             }
             else
             {
@@ -82,6 +88,7 @@ public class LaserEmitter : MonoBehaviour
                 //gateAnimator.SetTrigger("open");
                 //Debug.Log("Close Gate Logic!");
                 Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
+                onLaserBlocked.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
             }
 
 
