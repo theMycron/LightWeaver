@@ -41,19 +41,35 @@ public class Gate : MonoBehaviour
 
     public void CloseGate(Component sender, object data, int gateNumber)
     {
-        activationsRequired++;
-        if (CheckGateNumber(gateNumber) && activationsRequired != 0)
+        //activationsRequired++;
+        //if (CheckGateNumber(gateNumber) && activationsRequired != 0)
+        //{
+        //    animator.SetBool("isOpened", false);
+        //}
+        if (CheckGateNumber(gateNumber))
         {
-            animator.SetBool("isOpened", false);
+            activationsRequired++;
+            if (activationsRequired != 0)
+            {
+                animator.SetBool("isOpened", false);
+            }
         }
     }
 
     public void OpenGate(Component sender, object data, int gateNumber)
     {
-        activationsRequired--;
-        if (CheckGateNumber(gateNumber) && activationsRequired == 0)
+        //activationsRequired--;
+        //if (CheckGateNumber(gateNumber) && activationsRequired == 0)
+        //{
+        //    animator.SetBool("isOpened", true);
+        //}
+        if (CheckGateNumber(gateNumber))
         {
-            animator.SetBool("isOpened", true);
+            activationsRequired--;
+            if (activationsRequired == 0)
+            {
+                animator.SetBool("isOpened", true);
+            }
         }
     }
 

@@ -129,7 +129,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh28582
+  m_Name: pb_Mesh29052
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -1926,10 +1926,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1075369496254897474, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af5bd04c696762e44ba52b208e3fba1a, type: 2}
+    - target: {fileID: 1484487743371771243, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af5bd04c696762e44ba52b208e3fba1a, type: 2}
     - target: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
       propertyPath: m_Name
       value: LaserReceiver Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_TagString
+      value: RedLaserReceiver
       objectReference: {fileID: 0}
     - target: {fileID: 3328698878793933890, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
@@ -1985,6 +2000,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5104353657044454191, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d7dbaa09baa975449aebec9c9536c231, type: 2}
+    - target: {fileID: 8495158860195195582, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: gateNumber
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2269,10 +2294,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1075369496254897474, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af5bd04c696762e44ba52b208e3fba1a, type: 2}
+    - target: {fileID: 1484487743371771243, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: af5bd04c696762e44ba52b208e3fba1a, type: 2}
     - target: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
       propertyPath: m_Name
       value: LaserReceiver Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2700533954677620472, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_TagString
+      value: BlueLaserReceiver
       objectReference: {fileID: 0}
     - target: {fileID: 3328698878793933890, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
@@ -2329,6 +2369,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5104353657044454191, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d7dbaa09baa975449aebec9c9536c231, type: 2}
     - target: {fileID: 7777354740391071229, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
       propertyPath: m_IsTrigger
@@ -2847,6 +2892,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: m_TagString
+      value: BlueLaserEmitter
+      objectReference: {fileID: 0}
     - target: {fileID: 7980335739608285595, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
       propertyPath: m_RootOrder
@@ -3177,6 +3227,18 @@ PrefabInstance:
       propertyPath: gate
       value: 
       objectReference: {fileID: 1085958284}
+    - target: {fileID: 6510446670793120061, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: onLaserBlocked
+      value: 
+      objectReference: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c,
+        type: 2}
+    - target: {fileID: 6510446670793120061, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: onLaserCollided
+      value: 
+      objectReference: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f,
+        type: 2}
     - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
       propertyPath: m_Name
@@ -3185,7 +3247,12 @@ PrefabInstance:
     - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: m_TagString
+      value: BlueLaserEmitter
       objectReference: {fileID: 0}
     - target: {fileID: 7980335739608285595, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
@@ -3463,6 +3530,11 @@ PrefabInstance:
       propertyPath: gateNumber
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3547193466624028690, guid: b1ebda4b783b8ac42bb56115d4bbada3,
+        type: 3}
+      propertyPath: activationsRequired
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8640821527081572450, guid: b1ebda4b783b8ac42bb56115d4bbada3,
         type: 3}
       propertyPath: m_Name
@@ -3476,7 +3548,7 @@ PrefabInstance:
     - target: {fileID: 8980615027514835672, guid: b1ebda4b783b8ac42bb56115d4bbada3,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 96.45
+      value: 94.3
       objectReference: {fileID: 0}
     - target: {fileID: 8980615027514835672, guid: b1ebda4b783b8ac42bb56115d4bbada3,
         type: 3}

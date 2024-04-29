@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LaserEmitter : MonoBehaviour
@@ -15,19 +16,17 @@ public class LaserEmitter : MonoBehaviour
     private int laserDistance;
     private Vector3 direction;
 
-    [Header("Gates Attached")]
-    [SerializeField]
-    private GameObject gate;
+    //[Header("Gates Attached")]
+    //[SerializeField]
+    //private GameObject gate;
 
-    [Header("receivers attached")]
-    [SerializeField]
-    private List<GameObject> laserReceivers;
+    //[Header("receivers attached")]
+    //[SerializeField]
+    private GameObject[] laserReceivers;
 
     [Header("Events")]
     public GameEvent onLaserCollided;
     public GameEvent onLaserBlocked;
-
-    private Animator gateAnimator;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
     //[Header("Directions")]
@@ -39,7 +38,8 @@ public class LaserEmitter : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
         direction = -transform.forward;
-        gateAnimator = gate.GetComponent<Animator>();
+        //gateAnimator = gate.GetComponent<Animator>();
+        GetSimilarReceviers();
     }
 
     // Update is called once per frame
@@ -61,6 +61,11 @@ public class LaserEmitter : MonoBehaviour
         //    direction = -transform.right;
         //}
 
+        if (laserReceivers.Length == 0)
+        {
+            return;
+        }
+
         if (Physics.Raycast(transform.position, direction, out hit))
         {
 
@@ -69,26 +74,23 @@ public class LaserEmitter : MonoBehaviour
                 lineRenderer.SetPosition(1, hit.point);
 
             }
-
-            if (hit.transform.tag == "LaserReceiver")
+            if (hit.transform.tag.EndsWith("LaserReceiver"))
             {
-                gateAnimator.Play("Doors1|Open1", 1);
-                gateAnimator.Play("Doors2|Open2", 2);
-                //gateAnimator.ResetTrigger("open");
-                gateAnimator.SetBool("isOpened", true);
-                //Debug.Log("Open Gate Logic!");
-                onLaserCollided.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
+                if (laserReceivers.Contains(hit.transform.gameObject))
+                {
+                    Debug.Log("Open Gate Logic!");
+                    onLaserCollided.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
+                } else
+                {
+                    Debug.Log("Wrong receiver color");
+                }
 
             }
             else
-            {
-                gateAnimator.Play("Doors1|Close1", 1);
-                gateAnimator.Play("Doors2|Close2", 2);
-                gateAnimator.SetBool("isOpened", false);
-                //gateAnimator.SetTrigger("open");
-                //Debug.Log("Close Gate Logic!");
+            {                
+                Debug.Log("Close Gate Logic!");
                 Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
-                onLaserBlocked.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
+                onLaserBlocked.Raise(this, null, laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
             }
 
 
@@ -101,5 +103,23 @@ public class LaserEmitter : MonoBehaviour
         {
             lineRenderer.SetPosition(1, direction * laserDistance);
         }
+
     }
+
+    private void GetSimilarReceviers()
+    {
+        if (this.tag.StartsWith("Blue"))
+        {
+            laserReceivers = GameObject.FindGameObjectsWithTag("BlueLaserReceiver");
+
+        } else
+        {
+            laserReceivers = GameObject.FindGameObjectsWithTag("RedLaserReceiver");
+        }
+        //foreach (var lr in laserReceivers)
+        //{
+        //    Debug.Log(lr.tag + " " + laserReceivers.Length);
+        //}
+    }
+
 }
