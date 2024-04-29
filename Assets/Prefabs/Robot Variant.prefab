@@ -52,17 +52,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
@@ -104,6 +104,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 9000000, guid: 366d6260754b90f43947b68b521550be, type: 3}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: aff38453ad7a2864b93f30fae0f4bdd6, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -116,6 +131,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5010648146445686769}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7661870445795561008}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
       insertIndex: -1
@@ -154,11 +173,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
-  moveSpeed: 10
+  moveSpeed: 25
   rotateSpeed: 5
   groundDrag: 0
   mainCamera: {fileID: 0}
-  jumpForce: 10
+  jumpForce: 30
   jumpCooldown: 0.2
   fallSpeed: 50
   airMultiplier: 0.2
@@ -166,6 +185,18 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   groundCheckDistance: 0.5
+--- !u!114 &-7661870445795561008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6568201181500823786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e690b1f786b3269438457ab1f6f09b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4565355514706575749
 MonoBehaviour:
   m_ObjectHideFlags: 0
