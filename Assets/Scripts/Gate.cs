@@ -9,11 +9,15 @@ public class Gate : MonoBehaviour
     [SerializeField]
     private int gateNumber;
 
+    private bool hasLaserDetectedBefore;
+    private bool hasLaserBlockedBefore;
+
     [SerializeField]
     private int activationsRequired;
     void Start()
     {
         animator = GetComponent<Animator>();
+        hasLaserDetectedBefore = false;
     }
 
     // Update is called once per frame
@@ -46,13 +50,27 @@ public class Gate : MonoBehaviour
         //{
         //    animator.SetBool("isOpened", false);
         //}
+        Debug.Log("close sender: " + sender);
         if (CheckGateNumber(gateNumber))
         {
-            activationsRequired++;
+            if (sender.tag.EndsWith("Emitter"))
+            {
+                if (!hasLaserBlockedBefore)
+                {
+                    hasLaserBlockedBefore = true;
+                    activationsRequired++;
+                }
+                hasLaserDetectedBefore = false;
+            } else
+            {
+                activationsRequired++;
+            }
+            
             if (activationsRequired != 0)
             {
                 animator.SetBool("isOpened", false);
             }
+            
         }
     }
 
@@ -65,7 +83,20 @@ public class Gate : MonoBehaviour
         //}
         if (CheckGateNumber(gateNumber))
         {
-            activationsRequired--;
+            if (sender.tag.EndsWith("Emitter"))
+            {
+                if (!hasLaserDetectedBefore)
+                {
+                    activationsRequired--;
+                    hasLaserDetectedBefore = true;
+                    hasLaserBlockedBefore = false;
+                }
+                
+            } else
+            {
+                activationsRequired--;
+            }
+                
             if (activationsRequired == 0)
             {
                 animator.SetBool("isOpened", true);
@@ -77,4 +108,9 @@ public class Gate : MonoBehaviour
     {
         return this.gateNumber == gateNumber;
     }
+
+    //private void ResetGateParameters()
+    //{
+    //    hasLaserDetectedBefore = false;
+    //}
 }
