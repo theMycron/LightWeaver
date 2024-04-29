@@ -34,6 +34,29 @@ public class PlayerController : MonoBehaviour
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
+
+    private enum AnimationState
+    {
+        disabled = 0,
+        idle = 1,
+        walking = 2,
+        jumping = 3,
+        falling = 4,
+        landing = 5
+    }
+    private enum UpperAnimationState
+    {
+        none = 0,
+        carryObject = 1,
+        carryRobot = 2
+    }
+    private enum LowerAnimationState
+    {
+        none = 0,
+        carriedByRobot = 1
+    }
+
+
     private void Awake()
     {
         InputManager = new InputManager();

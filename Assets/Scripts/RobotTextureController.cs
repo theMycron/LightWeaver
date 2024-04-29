@@ -15,7 +15,6 @@ public class RobotTextureController : MonoBehaviour
     private void Start()
     {
         renderers = GetComponentsInChildren<Renderer>();
-        SetRobotColor(ROBOT_RED);
     }
 
     public void SetRobotColor(float robotColor)
