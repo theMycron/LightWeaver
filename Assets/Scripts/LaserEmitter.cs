@@ -16,13 +16,9 @@ public class LaserEmitter : MonoBehaviour
     private int laserDistance;
     private Vector3 direction;
 
-    //[Header("Gates Attached")]
-    //[SerializeField]
-    //private GameObject gate;
-
-    //[Header("receivers attached")]
-    //[SerializeField]
     private GameObject[] laserReceivers;
+    private GameObject lastHittedRecevier;
+    private bool hasLaserBlockedBefore = false;
 
     [Header("Events")]
     public GameEvent onLaserCollided;
@@ -61,36 +57,52 @@ public class LaserEmitter : MonoBehaviour
         //    direction = -transform.right;
         //}
 
-        if (laserReceivers.Length == 0)
-        {
-            return;
-        }
+        //if (laserReceivers.Length == 0)
+        //{
+        //    Debug.Log("No lasers found;");
+        //    return;
+        //}
+
+        
 
         if (Physics.Raycast(transform.position, direction, out hit))
         {
-
+            
             if (hit.collider)
             {
                 lineRenderer.SetPosition(1, hit.point);
-
             }
             if (hit.transform.tag.EndsWith("LaserReceiver"))
             {
+
                 if (laserReceivers.Contains(hit.transform.gameObject))
                 {
+                    lastHittedRecevier = hit.transform.gameObject;
                     Debug.Log("Open Gate Logic!");
-                    onLaserCollided.Raise(this, null, hit.transform.gameObject.GetComponent<LaserReceiver>().GateNumber);
+                    onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
+                    hasLaserBlockedBefore = false;
+                    Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
+                   
                 } else
                 {
-                    Debug.Log("Wrong receiver color");
+                    lastHittedRecevier = null;
+                    Debug.Log("Wrong receiver color" + lastHittedRecevier);
                 }
 
             }
             else
-            {                
-                Debug.Log("Close Gate Logic!");
-                Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
-                onLaserBlocked.Raise(this, null, laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
+            {
+                //Debug.Log("Close Gate Logic!");
+                //Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
+                
+                if (!hasLaserBlockedBefore && lastHittedRecevier != null)
+                {
+                    
+                    onLaserBlocked.Raise(this, null, 1);
+                    lastHittedRecevier = null;
+                    hasLaserBlockedBefore = true;
+                }
+                
             }
 
 
