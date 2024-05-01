@@ -41,10 +41,7 @@ public class SwitchPlayer : MonoBehaviour
         {
             int robotNumber = int.Parse(keyName);
             GameObject selectedRobot = robots[robotNumber - 1];
-            if (selectedRobot.gameObject.GetComponent<PlayerController>().enabled)
-            {
-                ActivateRobot(robotNumber);
-            }
+            ActivateRobot(robotNumber);
         }catch(Exception e)
         {
             Debug.Log("Inavlid Robot Number: " + e);

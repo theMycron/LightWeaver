@@ -3765,7 +3765,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: isActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3805,17 +3805,17 @@ PrefabInstance:
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -368.7
+      value: -365
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 202.1
+      value: 194.2
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -533.5
+      value: -550.2
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3876,6 +3876,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_TagString
+      value: Robot1
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4215,6 +4220,11 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: fallSpeed
       value: 50
       objectReference: {fileID: 0}
@@ -4322,6 +4332,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_TagString
+      value: Robot1
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4701,7 +4716,7 @@ PrefabInstance:
     - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_TagString
-      value: ActiveRobot
+      value: Robot1
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
