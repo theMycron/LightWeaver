@@ -8,7 +8,8 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CubeController : MonoBehaviour
 {
-    public bool isRaised =false; // Flag to track if the cube is raised or not
+    public bool isRaised =false;
+    // Flag to track if the cube is raised or not
     [SerializeField]
     public float strength = 5f;
     private Rigidbody rb;
@@ -19,7 +20,6 @@ public class CubeController : MonoBehaviour
     [SerializeField] float pickupDistance = 10f;
     float RotationValue;
     [SerializeField] float rotateSpeed =4f;
-    private Vector3 cubeRotation;
     private BoxCollider bx;
     private void Awake()
     {
@@ -28,7 +28,6 @@ public class CubeController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        cubeRotation = gameObject.transform.eulerAngles;
         bx = GetComponent<BoxCollider>();
     }
     private void FixedUpdate()
@@ -134,6 +133,7 @@ public class CubeController : MonoBehaviour
             rb.drag = 0;
             isRaised = false;
             bx.excludeLayers = LayerMask.GetMask("Nothing");
+            activeRobot.GetComponent<PlayerController>().isCarryingObject = false;
         }
 
     }
@@ -153,6 +153,8 @@ public class CubeController : MonoBehaviour
             isRaised = true;
             bx.excludeLayers = LayerMask.GetMask("Robot");
             Debug.Log("Cube is Raised" + isRaised);
+            Debug.Log("Cube is by:" + activeRobot.name);
+            activeRobot.GetComponent<PlayerController>().isCarryingObject = true;
         }
 
     }

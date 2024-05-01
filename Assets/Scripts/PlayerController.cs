@@ -35,6 +35,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
 
+
+    private Animator anim;
+    private bool isFalling;
+    public bool isCarryingObject;
     private enum AnimationState
     {
         disabled = 0,
@@ -64,7 +68,11 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         ResetJump();
+        //set the states at the begining
+        anim.SetInteger("BaseState", (int)AnimationState.idle);
+        anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
 
@@ -107,17 +115,27 @@ public class PlayerController : MonoBehaviour
         // Rotate the player based on movement direction
         RotatePlayer(movementVector);
 
-        ApplyGravity();
+        RobotFalling();
+        RobotLanding();
+        CarryObject();
+
+/*        //check if player is not moving
+        if (moveDirection == Vector2.zero && IsGrounded())
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.idle);
+        }*/
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>();
-        
+        anim.SetInteger("BaseState", (int)AnimationState.walking);
+
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
+        anim.SetInteger("BaseState", (int)AnimationState.idle);
     }
     Vector3 MovePlayer()
     {
@@ -129,11 +147,12 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded() )
         {
             rb.AddForce(targetVector.normalized * moveSpeed * 10f, ForceMode.Force);
+            
         } else
         {
             rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
-            
+        
         // Return the movement vector
         return targetVector;
     }
@@ -174,7 +193,9 @@ public class PlayerController : MonoBehaviour
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+            
         }
+        
     }
 
     private void ResetJump()
@@ -186,15 +207,42 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        anim.SetInteger("BaseState", (int)AnimationState.jumping);
     }
 
 
-    void ApplyGravity()
+    void RobotFalling()
     {
         // If the player is not grounded, apply gravity
         if (!IsGrounded() && rb.velocity.y <= 0)
         {
             rb.velocity += Vector3.down * fallSpeed * Time.deltaTime;
+            anim.SetInteger("BaseState", (int)AnimationState.falling);
+            isFalling = true;
+        }
+    }
+
+    void RobotLanding()
+    {
+        if (isFalling && IsGrounded())
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.landing);
+            isFalling = false;
+        }
+    }
+
+    void CarryObject()
+    {
+        
+        if (isCarryingObject)
+        {
+            anim.SetLayerWeight(1, 1f);
+            anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
+            Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
+        }else
+        {
+            anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
+            anim.SetLayerWeight(1, 0f);
         }
     }
 }
