@@ -44,9 +44,9 @@ public class PlayerController : MonoBehaviour
         disabled = 0,
         idle = 1,
         walking = 2,
-        jumping = 3,
-        falling = 4,
-        landing = 5
+        landing = 3,
+        jumping = 4,
+        falling = 5,
     }
     private enum UpperAnimationState
     {
@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
         if (IsGrounded() )
         {
             rb.AddForce(targetVector.normalized * moveSpeed * 10f, ForceMode.Force);
-            
+
         } else
         {
             rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
@@ -186,7 +186,7 @@ public class PlayerController : MonoBehaviour
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log(IsGrounded());
+        //Debug.Log(IsGrounded());
 
         if (readyToJump && IsGrounded())
         {
@@ -226,7 +226,12 @@ public class PlayerController : MonoBehaviour
     {
         if (isFalling && IsGrounded())
         {
-            anim.SetInteger("BaseState", (int)AnimationState.landing);
+            // only play the landing animation if the player isnt trying to move
+            // if the player is trying to move, play the walking animation
+            if (moveDirection == Vector2.zero)
+                anim.SetInteger("BaseState", (int)AnimationState.landing);
+            else
+                 anim.SetInteger("BaseState", (int)AnimationState.walking);
             isFalling = false;
         }
     }
