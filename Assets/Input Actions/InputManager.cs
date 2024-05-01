@@ -53,6 +53,33 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Move Cube"",
+                    ""type"": ""Button"",
+                    ""id"": ""a799965e-0781-48e0-b809-7cadd3c8e51a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Rotate Cube"",
+                    ""type"": ""Value"",
+                    ""id"": ""93a2d78f-cac8-432d-b8e7-2d17ab4a5663"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Rotate Cube Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""6976d0de-9b31-4d7a-abd0-b768809f01ba"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -187,6 +214,50 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""action"": ""Switch Robot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3e85b48-c48b-4581-b1e1-2ec7cbf2535c"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8a638ac5-ee63-48c2-a226-824b3627f504"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""60832410-5104-479c-8ec0-bb9d62c1ccae"",
+                    ""path"": ""<Mouse>/scroll/y"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Cube"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""369d1432-a281-4060-91ed-712277ae1ee9"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Rotate Cube Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -198,6 +269,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_SwitchRobot = m_Player.FindAction("Switch Robot", throwIfNotFound: true);
+        m_Player_MoveCube = m_Player.FindAction("Move Cube", throwIfNotFound: true);
+        m_Player_RotateCube = m_Player.FindAction("Rotate Cube", throwIfNotFound: true);
+        m_Player_RotateCubeUp = m_Player.FindAction("Rotate Cube Up", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -262,6 +336,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_SwitchRobot;
+    private readonly InputAction m_Player_MoveCube;
+    private readonly InputAction m_Player_RotateCube;
+    private readonly InputAction m_Player_RotateCubeUp;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -269,6 +346,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_Player_Move;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @SwitchRobot => m_Wrapper.m_Player_SwitchRobot;
+        public InputAction @MoveCube => m_Wrapper.m_Player_MoveCube;
+        public InputAction @RotateCube => m_Wrapper.m_Player_RotateCube;
+        public InputAction @RotateCubeUp => m_Wrapper.m_Player_RotateCubeUp;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -287,6 +367,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @SwitchRobot.started += instance.OnSwitchRobot;
             @SwitchRobot.performed += instance.OnSwitchRobot;
             @SwitchRobot.canceled += instance.OnSwitchRobot;
+            @MoveCube.started += instance.OnMoveCube;
+            @MoveCube.performed += instance.OnMoveCube;
+            @MoveCube.canceled += instance.OnMoveCube;
+            @RotateCube.started += instance.OnRotateCube;
+            @RotateCube.performed += instance.OnRotateCube;
+            @RotateCube.canceled += instance.OnRotateCube;
+            @RotateCubeUp.started += instance.OnRotateCubeUp;
+            @RotateCubeUp.performed += instance.OnRotateCubeUp;
+            @RotateCubeUp.canceled += instance.OnRotateCubeUp;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -300,6 +389,15 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @SwitchRobot.started -= instance.OnSwitchRobot;
             @SwitchRobot.performed -= instance.OnSwitchRobot;
             @SwitchRobot.canceled -= instance.OnSwitchRobot;
+            @MoveCube.started -= instance.OnMoveCube;
+            @MoveCube.performed -= instance.OnMoveCube;
+            @MoveCube.canceled -= instance.OnMoveCube;
+            @RotateCube.started -= instance.OnRotateCube;
+            @RotateCube.performed -= instance.OnRotateCube;
+            @RotateCube.canceled -= instance.OnRotateCube;
+            @RotateCubeUp.started -= instance.OnRotateCubeUp;
+            @RotateCubeUp.performed -= instance.OnRotateCubeUp;
+            @RotateCubeUp.canceled -= instance.OnRotateCubeUp;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -322,5 +420,8 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnSwitchRobot(InputAction.CallbackContext context);
+        void OnMoveCube(InputAction.CallbackContext context);
+        void OnRotateCube(InputAction.CallbackContext context);
+        void OnRotateCubeUp(InputAction.CallbackContext context);
     }
 }

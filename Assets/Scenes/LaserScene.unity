@@ -1844,7 +1844,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh93870
+  m_Name: pb_Mesh135098
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -2851,6 +2851,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: groundDrag
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 1488648527}
@@ -2867,7 +2872,7 @@ PrefabInstance:
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.3600044
+      value: -2.217
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}

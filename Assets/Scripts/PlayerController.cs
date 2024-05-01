@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
-    [SerializeField] float rotateSpeed;
+    [SerializeField] public float rotateSpeed;
+    [SerializeField] float groundDrag;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -27,11 +28,39 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
+    [SerializeField] float airMultiplier = .2f;
     Boolean readyToJump;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
+
+
+    private Animator anim;
+    private bool isFalling;
+    public bool isCarryingObject;
+    private enum AnimationState
+    {
+        disabled = 0,
+        idle = 1,
+        walking = 2,
+        landing = 3,
+        jumping = 4,
+        falling = 5,
+    }
+    private enum UpperAnimationState
+    {
+        none = 0,
+        carryObject = 1,
+        carryRobot = 2
+    }
+    private enum LowerAnimationState
+    {
+        none = 0,
+        carriedByRobot = 1
+    }
+
+
     private void Awake()
     {
         InputManager = new InputManager();
@@ -39,7 +68,11 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
         ResetJump();
+        //set the states at the begining
+        anim.SetInteger("BaseState", (int)AnimationState.idle);
+        anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
 
@@ -51,8 +84,6 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.performed += OnJumpPerformed;
-
-
     }
 
     private void OnDisable()
@@ -65,44 +96,79 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()   
     {
+        if (IsGrounded())
+        {
+            rb.drag = groundDrag;
+        }
+        else
+        {
+            rb.drag = 0;
+        }
 
-        
+        SpeedControl();
     }
     private void FixedUpdate()
     {
-        //move the player to target direction
-        Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
-        var movementVector = MovePlayer(targetVector);
+        // Move the player and get the movement vector
+        Vector3 movementVector = MovePlayer();
 
-        //rotate the player based on movement direction
+        // Rotate the player based on movement direction
         RotatePlayer(movementVector);
-        ApplyGravity();
+
+        RobotFalling();
+        RobotLanding();
+        CarryObject();
+
+/*        //check if player is not moving
+        if (moveDirection == Vector2.zero && IsGrounded())
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.idle);
+        }*/
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
         moveDirection = context.ReadValue<Vector2>();
-        
+        anim.SetInteger("BaseState", (int)AnimationState.walking);
+
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
+        anim.SetInteger("BaseState", (int)AnimationState.idle);
     }
-    Vector3 MovePlayer(Vector3 targetVector)
+    Vector3 MovePlayer()
     {
-        //Player Movement Speed
-        var speed = moveSpeed * Time.deltaTime;
-
+        // Calculate movement vector
+        Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
 
-        var targetPosition = transform.position + targetVector * speed;
-        transform.position = targetPosition;
+        // Adjust velocity if the player is grounded
+        if (IsGrounded() )
+        {
+            rb.AddForce(targetVector.normalized * moveSpeed * 10f, ForceMode.Force);
+
+        } else
+        {
+            rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+        }
+        
+        // Return the movement vector
         return targetVector;
     }
+    void SpeedControl()
+    {
+        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
+        if (flatVelocity.magnitude > moveSpeed)
+        {
+            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
+        }
+    }
     void RotatePlayer(Vector3 movementVector)
     {
-        if(movementVector.magnitude == 0)
+        if (movementVector.magnitude == 0)
         {
             return;
         }
@@ -120,14 +186,16 @@ public class PlayerController : MonoBehaviour
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
-        Debug.Log(IsGrounded());
+        //Debug.Log(IsGrounded());
 
         if (readyToJump && IsGrounded())
         {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
+            
         }
+        
     }
 
     private void ResetJump()
@@ -139,15 +207,47 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        anim.SetInteger("BaseState", (int)AnimationState.jumping);
     }
 
 
-    void ApplyGravity()
+    void RobotFalling()
     {
         // If the player is not grounded, apply gravity
         if (!IsGrounded() && rb.velocity.y <= 0)
         {
             rb.velocity += Vector3.down * fallSpeed * Time.deltaTime;
+            anim.SetInteger("BaseState", (int)AnimationState.falling);
+            isFalling = true;
+        }
+    }
+
+    void RobotLanding()
+    {
+        if (isFalling && IsGrounded())
+        {
+            // only play the landing animation if the player isnt trying to move
+            // if the player is trying to move, play the walking animation
+            if (moveDirection == Vector2.zero)
+                anim.SetInteger("BaseState", (int)AnimationState.landing);
+            else
+                 anim.SetInteger("BaseState", (int)AnimationState.walking);
+            isFalling = false;
+        }
+    }
+
+    void CarryObject()
+    {
+        
+        if (isCarryingObject)
+        {
+            anim.SetLayerWeight(1, 1f);
+            anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
+            Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
+        }else
+        {
+            anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
+            anim.SetLayerWeight(1, 0f);
         }
     }
 }

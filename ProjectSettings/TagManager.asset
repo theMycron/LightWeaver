@@ -12,11 +12,10 @@ TagManager:
   - Robot6
   - LaserReceiver
   - cube
-  - BlueLaserReceiver
-  - RedLaserReceiver
-  - BlueLaserEmitter
-  - RedLaserEmitter
-  - LaserCube
+  - Ground
+  - ActiveRobot
+  - Undefined
+  - Robots
   layers:
   - Default
   - TransparentFX
@@ -25,8 +24,8 @@ TagManager:
   - Water
   - UI
   - Ground
-  - 
-  - CollisionLayer
+  - Cube
+  - Robot
   - 
   - 
   - 
