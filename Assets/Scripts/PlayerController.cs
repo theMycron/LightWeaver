@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
 
     Vector2 moveDirection = Vector2.zero;
+
+    [Header("Activation")]
+    [SerializeField] public bool isActive = false;
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
@@ -70,14 +73,28 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         ResetJump();
-        //set the states at the begining
-        anim.SetInteger("BaseState", (int)AnimationState.idle);
+        //set the states at the begining, if isActive == false then disabled
+        if (!isActive)
+        {
+            //anim.SetInteger("BaseState", (int)AnimationState.disabled);
+            TurnOnRobot();
+        } else
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.idle);
+        }
+        
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
 
     private void OnEnable()
     {
+        // if the robot isn't active don't active the inputmanager
+        if (!isActive)
+        {
+            return;
+        }
+
         InputManager.Enable();
 
         InputManager.Player.Move.performed += OnMovePerformed;
@@ -249,5 +266,10 @@ public class PlayerController : MonoBehaviour
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
             anim.SetLayerWeight(1, 0f);
         }
+    }
+
+    public void TurnOnRobot()
+    {
+        anim.SetInteger("BaseState", (int)AnimationState.idle);
     }
 }

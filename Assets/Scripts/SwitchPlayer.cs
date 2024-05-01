@@ -40,7 +40,11 @@ public class SwitchPlayer : MonoBehaviour
         try
         {
             int robotNumber = int.Parse(keyName);
-            ActivateRobot(robotNumber);
+            GameObject selectedRobot = robots[robotNumber - 1];
+            if (selectedRobot.gameObject.GetComponent<PlayerController>().enabled)
+            {
+                ActivateRobot(robotNumber);
+            }
         }catch(Exception e)
         {
             Debug.Log("Inavlid Robot Number: " + e);
@@ -57,7 +61,7 @@ public class SwitchPlayer : MonoBehaviour
         DisableAllRobots();
         activeRobot = robots[robotNumber - 1];
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
-        activeRobot.tag = "ActiveRobot";
+        //activeRobot.tag = "ActiveRobot";
         PlayerController script = activeRobot.GetComponent<PlayerController>();
         script.enabled = true;
     }
@@ -68,7 +72,7 @@ public class SwitchPlayer : MonoBehaviour
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
             script.enabled = false;
-            robot.tag = "Undefined";
+            //robot.tag = "Undefined";
         }
     }
 

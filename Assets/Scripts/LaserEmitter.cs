@@ -111,10 +111,21 @@ public class LaserEmitter : MonoBehaviour
                 onLaserCollidedWithLaserCube.Raise(this, null, -1);
             }
 
-
+            // if hitted robot
             if (hit.transform.tag.StartsWith("Robot"))
             {
-                Debug.Log("Laser Pointing logic!");
+                // check if active
+                if (!hit.transform.gameObject.GetComponent<PlayerController>().isActive)
+                {
+                    hit.transform.gameObject.GetComponent<PlayerController>().enabled = true;
+                    hit.transform.gameObject.GetComponent<PlayerController>().isActive = true;
+                    hit.transform.gameObject.GetComponent<PlayerController>().TurnOnRobot();
+                    Debug.Log("Active robot please");
+                } else // if not active
+                {
+                    //Debug.Log("Laser Pointing logic!");
+                }
+                
             }
         }
         else
