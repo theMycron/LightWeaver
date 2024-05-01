@@ -115,7 +115,7 @@ public class LaserEmitter : MonoBehaviour
             if (hit.transform.tag.StartsWith("Robot"))
             {
                 // check if active
-                if (!hit.transform.gameObject.GetComponent<PlayerController>().isActive)
+                if (!hit.transform.gameObject.GetComponent<PlayerController>().enabled)
                 {
                     hit.transform.gameObject.GetComponent<PlayerController>().enabled = true;
                     hit.transform.gameObject.GetComponent<PlayerController>().isActive = true;
