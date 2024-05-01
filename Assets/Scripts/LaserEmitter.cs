@@ -23,6 +23,7 @@ public class LaserEmitter : MonoBehaviour
     [Header("Events")]
     public GameEvent onLaserCollided;
     public GameEvent onLaserBlocked;
+    public GameEvent onLaserCollidedWithLaserCube;
 
     //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
     //[Header("Directions")]
@@ -81,7 +82,7 @@ public class LaserEmitter : MonoBehaviour
                     Debug.Log("Open Gate Logic!");
                     onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
                     hasLaserBlockedBefore = false;
-                    Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
+                    //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
                    
                 } else
                 {
@@ -103,6 +104,11 @@ public class LaserEmitter : MonoBehaviour
                     hasLaserBlockedBefore = true;
                 }
                 
+            }
+
+            if (hit.transform.tag == "LaserCube")
+            {
+                onLaserCollidedWithLaserCube.Raise(this, null, -1);
             }
 
 
