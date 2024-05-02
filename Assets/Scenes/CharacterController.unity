@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2593,7 +2593,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh73412
+  m_Name: pb_Mesh28916
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3765,7 +3765,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: isActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3805,17 +3805,17 @@ PrefabInstance:
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -365
+      value: -368.7
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 194.2
+      value: 194.03
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -550.2
+      value: -544.76
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -3876,11 +3876,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: m_TagString
-      value: Robot1
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4220,11 +4215,6 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: isActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
       propertyPath: fallSpeed
       value: 50
       objectReference: {fileID: 0}
@@ -4332,11 +4322,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: m_TagString
-      value: Robot1
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4716,7 +4701,7 @@ PrefabInstance:
     - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_TagString
-      value: Robot1
+      value: ActiveRobot
       objectReference: {fileID: 0}
     - target: {fileID: 6860797285625627091, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
