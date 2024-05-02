@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class LaserReceiver : MonoBehaviour
 {
+    public int GateNumber { get { return gateNumber; } }
+    [Header("Gate Attached")]
+    [SerializeField]
+    private int gateNumber;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,13 +20,13 @@ public class LaserReceiver : MonoBehaviour
         
     }
 
-    public void LaserCollided()
+    public void LaserCollided(Component sender, object data, int gateNumber)
     {
-        Debug.Log("I have been hitten By Laser From unknown!");
+        Debug.Log("I have been hitten By Laser From unknown!" + sender);
     }
 
-    public void LaserBlocked()
+    public void LaserBlocked(Component sender, object data, int gateNumber)
     {
-        Debug.Log("Laser Blocked!");
+        Debug.Log("Laser Blocked!" + sender + " " + gateNumber);
     }
 }

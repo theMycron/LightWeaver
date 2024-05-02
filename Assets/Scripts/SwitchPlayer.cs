@@ -16,11 +16,11 @@ public class SwitchPlayer : MonoBehaviour
     private void Awake()
     {
         inputManager = new InputManager();
-        ActivateRobot(1);
     }
     private void Start()
     {
-/*        activeRobot = robots[0];*/
+        /*        activeRobot = robots[0];*/
+        ActivateRobot(1);
     }
     private void OnEnable()
     {
@@ -40,6 +40,7 @@ public class SwitchPlayer : MonoBehaviour
         try
         {
             int robotNumber = int.Parse(keyName);
+            //GameObject selectedRobot = robots[robotNumber - 1];
             ActivateRobot(robotNumber);
         }catch(Exception e)
         {
@@ -54,12 +55,17 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
-        DisableAllRobots();
         activeRobot = robots[robotNumber - 1];
-        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
-        activeRobot.tag = "ActiveRobot";
         PlayerController script = activeRobot.GetComponent<PlayerController>();
-        script.enabled = true;
+        // cant switch to robot if it is disabled
+        if (!script.isActive)
+        {
+            return;
+        }
+        DisableAllRobots();
+        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        //activeRobot.tag = "ActiveRobot";
+        script.EnableInput();
     }
     void DisableAllRobots()
     {
@@ -67,8 +73,8 @@ public class SwitchPlayer : MonoBehaviour
         {
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
-            script.enabled = false;
-            robot.tag = "Undefined";
+            script.DisableInput();
+            //robot.tag = "Undefined";
         }
     }
 

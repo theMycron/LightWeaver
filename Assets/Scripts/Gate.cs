@@ -6,9 +6,18 @@ public class Gate : MonoBehaviour
 {
     private Animator animator;
     // Start is called before the first frame update
+    [SerializeField]
+    private int gateNumber;
+
+    private bool hasLaserDetectedBefore;
+    private bool hasLaserBlockedBefore;
+
+    [SerializeField]
+    private int activationsRequired;
     void Start()
     {
         animator = GetComponent<Animator>();
+        hasLaserDetectedBefore = false;
     }
 
     // Update is called once per frame
@@ -17,30 +26,91 @@ public class Gate : MonoBehaviour
         
     }
 
-    public void ManageGate(Component sender, object data)
+    //public void ManageGate(Component sender, object data, int gateNumber)
+    //{
+    //    if (data is bool)
+    //    {
+    //        bool isObjectOver = (bool)data;
+    //        Debug.Log("Event recevied" + isObjectOver + " " + gateNumber);
+    //        if (isObjectOver)
+    //        {
+    //            OpenGate();
+    //        } else
+    //        {
+    //            CloseGate();
+    //        }
+    //    }
+        
+    //}
+
+    public void CloseGate(Component sender, object data, int gateNumber)
     {
-        if (data is bool)
+        //activationsRequired++;
+        //if (CheckGateNumber(gateNumber) && activationsRequired != 0)
+        //{
+        //    animator.SetBool("isOpened", false);
+        //}
+        Debug.Log("close sender: " + sender);
+        if (CheckGateNumber(gateNumber))
         {
-            bool isObjectOver = (bool)data;
-            Debug.Log("Event recevied" + isObjectOver);
-            if (isObjectOver)
+            if (sender.tag.EndsWith("Emitter"))
             {
-                OpenGate();
+                if (!hasLaserBlockedBefore)
+                {
+                    hasLaserBlockedBefore = true;
+                    activationsRequired++;
+                }
+                hasLaserDetectedBefore = false;
             } else
             {
-                CloseGate();
+                activationsRequired++;
+            }
+            
+            if (activationsRequired != 0)
+            {
+                animator.SetBool("isOpened", false);
+            }
+            
+        }
+    }
+
+    public void OpenGate(Component sender, object data, int gateNumber)
+    {
+        //activationsRequired--;
+        //if (CheckGateNumber(gateNumber) && activationsRequired == 0)
+        //{
+        //    animator.SetBool("isOpened", true);
+        //}
+        if (CheckGateNumber(gateNumber))
+        {
+            if (sender.tag.EndsWith("Emitter"))
+            {
+                if (!hasLaserDetectedBefore)
+                {
+                    activationsRequired--;
+                    hasLaserDetectedBefore = true;
+                    hasLaserBlockedBefore = false;
+                }
+                
+            } else
+            {
+                activationsRequired--;
+            }
+                
+            if (activationsRequired == 0)
+            {
+                animator.SetBool("isOpened", true);
             }
         }
-        
     }
 
-    public void CloseGate()
+    private bool CheckGateNumber(int gateNumber)
     {
-        animator.SetBool("isOpened", false);
+        return this.gateNumber == gateNumber;
     }
 
-    public void OpenGate()
-    {
-        animator.SetBool("isOpened", true);
-    }
+    //private void ResetGateParameters()
+    //{
+    //    hasLaserDetectedBefore = false;
+    //}
 }

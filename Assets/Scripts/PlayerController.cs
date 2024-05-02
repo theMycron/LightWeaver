@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     public Rigidbody rb;
 
     Vector2 moveDirection = Vector2.zero;
+
+    [Header("Activation")]
+    [SerializeField] public bool isActive = false;
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
@@ -35,7 +38,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
 
-
+    private RobotTextureController texture;
     private Animator anim;
     private bool isFalling;
     public bool isCarryingObject;
@@ -69,15 +72,23 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        texture = GetComponent<RobotTextureController>();
         ResetJump();
-        //set the states at the begining
-        anim.SetInteger("BaseState", (int)AnimationState.idle);
+        //set the states at the begining, if isActive == false then disabled
+        CheckIfActive();
+        
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
 
-    private void OnEnable()
+    public void EnableInput()
     {
+        // if the robot isn't active don't active the inputmanager
+        if (!isActive)
+        {
+            return;
+        }
+
         InputManager.Enable();
 
         InputManager.Player.Move.performed += OnMovePerformed;
@@ -86,7 +97,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Jump.performed += OnJumpPerformed;
     }
 
-    private void OnDisable()
+    public void DisableInput()
     {
         InputManager.Disable();
         InputManager.Player.Move.performed -= OnMovePerformed;
@@ -96,16 +107,6 @@ public class PlayerController : MonoBehaviour
     }
     private void Update()   
     {
-        if (IsGrounded())
-        {
-            rb.drag = groundDrag;
-        }
-        else
-        {
-            rb.drag = 0;
-        }
-
-        SpeedControl();
     }
     private void FixedUpdate()
     {
@@ -117,13 +118,18 @@ public class PlayerController : MonoBehaviour
 
         RobotFalling();
         RobotLanding();
-        CarryObject();
 
-/*        //check if player is not moving
-        if (moveDirection == Vector2.zero && IsGrounded())
-        {
-            anim.SetInteger("BaseState", (int)AnimationState.idle);
-        }*/
+        rb.drag = IsGrounded() ? groundDrag : 0;
+
+        //SpeedControl();
+
+        //CarryObject();
+
+        /*        //check if player is not moving
+                if (moveDirection == Vector2.zero && IsGrounded())
+                {
+                    anim.SetInteger("BaseState", (int)AnimationState.idle);
+                }*/
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -142,29 +148,24 @@ public class PlayerController : MonoBehaviour
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
-
+        Vector3 force;
         // Adjust velocity if the player is grounded
         if (IsGrounded() )
         {
-            rb.AddForce(targetVector.normalized * moveSpeed * 10f, ForceMode.Force);
+            // drag will be applied when grounded
+            force = targetVector.normalized * moveSpeed * 10f;
 
         } else
         {
-            rb.AddForce(targetVector.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
+            // no drag will be applied when airborne (because it messes with the jump height)
+            // so limit horizontal movement
+            force = targetVector.normalized * moveSpeed * 10f * airMultiplier;
         }
+
+        rb.AddForce(force, ForceMode.Force);
         
         // Return the movement vector
         return targetVector;
-    }
-    void SpeedControl()
-    {
-        Vector3 flatVelocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        if (flatVelocity.magnitude > moveSpeed)
-        {
-            Vector3 limitedVelocity = flatVelocity.normalized * moveSpeed;
-            rb.velocity = new Vector3(limitedVelocity.x, rb.velocity.y, limitedVelocity.z);
-        }
     }
     void RotatePlayer(Vector3 movementVector)
     {
@@ -213,6 +214,7 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
+        // reset y velocity then apply jump force
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
 
         rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
@@ -225,7 +227,7 @@ public class PlayerController : MonoBehaviour
         // If the player is not grounded, apply gravity
         if (!IsGrounded() && rb.velocity.y <= 0)
         {
-            rb.velocity += Vector3.down * fallSpeed * Time.deltaTime;
+            rb.AddForce(Vector3.down * fallSpeed * Time.deltaTime, ForceMode.VelocityChange);
             anim.SetInteger("BaseState", (int)AnimationState.falling);
             isFalling = true;
         }
@@ -250,13 +252,41 @@ public class PlayerController : MonoBehaviour
         
         if (isCarryingObject)
         {
-            anim.SetLayerWeight(1, 1f);
+            //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
             Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
         }else
         {
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
-            anim.SetLayerWeight(1, 0f);
+            //  layer weight is always set to 1, will do empty animation if not carrying
+            //  this is so that the animation transition (carrying > idle) plays 
+            //  if layer weight is immediately set to 0, the transition wont be seen
+            //anim.SetLayerWeight(1, 0f);
         }
+    }
+
+    private void CheckIfActive()
+    {
+        if (isActive)
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.idle);
+            texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+        }
+        else
+        {
+            texture.SetRobotColor(RobotTextureController.ROBOT_GREY);
+        }
+    }
+
+    public void SetCarryingObject(bool value)
+    {
+        isCarryingObject = value;
+        CarryObject();
+    }
+
+    public void ActivateRobot()
+    {
+        isActive = true;
+        CheckIfActive();
     }
 }
