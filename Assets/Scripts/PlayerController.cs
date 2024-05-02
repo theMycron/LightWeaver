@@ -182,7 +182,16 @@ public class PlayerController : MonoBehaviour
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
-        return Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        
+        Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
+        Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
+        
+        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck3 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        
+        return  groundedInCheck1 || groundedInCheck2 || groundedInCheck3;
+
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
