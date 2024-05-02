@@ -118,9 +118,8 @@ public class LaserEmitter : MonoBehaviour
                 // robot activation should have the same behaviour as opening a gate,
                 // either by floor button or laser receiver
                 // check if active
-                if (!hit.transform.gameObject.GetComponent<PlayerController>().enabled)
+                if (!hit.transform.gameObject.GetComponent<PlayerController>().isActive)
                 {
-                    hit.transform.gameObject.GetComponent<PlayerController>().enabled = true;
                     hit.transform.gameObject.GetComponent<PlayerController>().ActivateRobot();
                     Debug.Log("Active robot please");
                 } else // if not active

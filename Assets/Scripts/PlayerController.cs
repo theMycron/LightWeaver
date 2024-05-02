@@ -81,7 +81,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    private void OnEnable()
+    public void EnableInput()
     {
         // if the robot isn't active don't active the inputmanager
         if (!isActive)
@@ -97,7 +97,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Jump.performed += OnJumpPerformed;
     }
 
-    private void OnDisable()
+    public void DisableInput()
     {
         InputManager.Disable();
         InputManager.Player.Move.performed -= OnMovePerformed;
