@@ -82,12 +82,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Jump High"",
+                    ""name"": ""Super Jump"",
                     ""type"": ""Button"",
-                    ""id"": ""886e4ec1-9387-4327-8f3f-41251ca269c8"",
+                    ""id"": ""a71e4bb5-0577-4db7-9b79-abf51126f00b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 }
             ],
@@ -270,12 +270,12 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""40c70e89-8fcc-4134-b1e2-8a8d33744e99"",
+                    ""id"": ""909bfb47-14b1-479b-b6fd-c52aa287f4c6"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Jump High"",
+                    ""action"": ""Super Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -292,7 +292,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         m_Player_MoveCube = m_Player.FindAction("Move Cube", throwIfNotFound: true);
         m_Player_RotateCube = m_Player.FindAction("Rotate Cube", throwIfNotFound: true);
         m_Player_RotateCubeUp = m_Player.FindAction("Rotate Cube Up", throwIfNotFound: true);
-        m_Player_JumpHigh = m_Player.FindAction("Jump High", throwIfNotFound: true);
+        m_Player_SuperJump = m_Player.FindAction("Super Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -360,7 +360,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_MoveCube;
     private readonly InputAction m_Player_RotateCube;
     private readonly InputAction m_Player_RotateCubeUp;
-    private readonly InputAction m_Player_JumpHigh;
+    private readonly InputAction m_Player_SuperJump;
     public struct PlayerActions
     {
         private @InputManager m_Wrapper;
@@ -371,7 +371,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         public InputAction @MoveCube => m_Wrapper.m_Player_MoveCube;
         public InputAction @RotateCube => m_Wrapper.m_Player_RotateCube;
         public InputAction @RotateCubeUp => m_Wrapper.m_Player_RotateCubeUp;
-        public InputAction @JumpHigh => m_Wrapper.m_Player_JumpHigh;
+        public InputAction @SuperJump => m_Wrapper.m_Player_SuperJump;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -399,9 +399,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @RotateCubeUp.started += instance.OnRotateCubeUp;
             @RotateCubeUp.performed += instance.OnRotateCubeUp;
             @RotateCubeUp.canceled += instance.OnRotateCubeUp;
-            @JumpHigh.started += instance.OnJumpHigh;
-            @JumpHigh.performed += instance.OnJumpHigh;
-            @JumpHigh.canceled += instance.OnJumpHigh;
+            @SuperJump.started += instance.OnSuperJump;
+            @SuperJump.performed += instance.OnSuperJump;
+            @SuperJump.canceled += instance.OnSuperJump;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -424,9 +424,9 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
             @RotateCubeUp.started -= instance.OnRotateCubeUp;
             @RotateCubeUp.performed -= instance.OnRotateCubeUp;
             @RotateCubeUp.canceled -= instance.OnRotateCubeUp;
-            @JumpHigh.started -= instance.OnJumpHigh;
-            @JumpHigh.performed -= instance.OnJumpHigh;
-            @JumpHigh.canceled -= instance.OnJumpHigh;
+            @SuperJump.started -= instance.OnSuperJump;
+            @SuperJump.performed -= instance.OnSuperJump;
+            @SuperJump.canceled -= instance.OnSuperJump;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -452,6 +452,6 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
         void OnMoveCube(InputAction.CallbackContext context);
         void OnRotateCube(InputAction.CallbackContext context);
         void OnRotateCubeUp(InputAction.CallbackContext context);
-        void OnJumpHigh(InputAction.CallbackContext context);
+        void OnSuperJump(InputAction.CallbackContext context);
     }
 }

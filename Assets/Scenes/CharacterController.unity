@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2593,7 +2593,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh73412
+  m_Name: pb_Mesh31076
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3797,6 +3797,11 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: jumpStartTime
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
@@ -4253,6 +4258,11 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: jumpStartTime
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
@@ -4593,10 +4603,40 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4228088462332101879, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4228088462332101879, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307605447638489869, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4307605447638489869, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 4620496931287852269, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920326701703923887, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4920326701703923887, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4632,6 +4672,11 @@ PrefabInstance:
         type: 3}
       propertyPath: rotateSpeed
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: jumpStartTime
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4697,6 +4742,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6314095842493832995, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.7
       objectReference: {fileID: 0}
     - target: {fileID: 6556850589370826607, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}

@@ -60,12 +60,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Jump High",
+                    "name": "Super Jump",
                     "type": "Button",
-                    "id": "886e4ec1-9387-4327-8f3f-41251ca269c8",
+                    "id": "a71e4bb5-0577-4db7-9b79-abf51126f00b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -248,12 +248,12 @@
                 },
                 {
                     "name": "",
-                    "id": "40c70e89-8fcc-4134-b1e2-8a8d33744e99",
+                    "id": "909bfb47-14b1-479b-b6fd-c52aa287f4c6",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
-                    "action": "Jump High",
+                    "action": "Super Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

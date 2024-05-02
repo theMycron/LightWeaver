@@ -33,6 +33,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float fallSpeed = 50f;
     [SerializeField] float airMultiplier = .2f;
     Boolean readyToJump;
+    [SerializeField] float jumpStartTime;
+    float jumpTime;
+    bool isJumping;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
@@ -95,7 +98,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.performed += OnJumpPerformed;
-        InputManager.Player.JumpHigh.performed += onJumpHighPerformed;
+        InputManager.Player.SuperJump.performed += onSuperJumpPerformed;
     }
 
     public void DisableInput()
@@ -105,7 +108,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
         InputManager.Player.Jump.performed -= OnJumpPerformed;
-        InputManager.Player.JumpHigh.performed -= onJumpHighPerformed;
+        InputManager.Player.SuperJump.performed -= onSuperJumpPerformed;
     }
     private void Update()   
     {
@@ -188,43 +191,64 @@ public class PlayerController : MonoBehaviour
         
         Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
         Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
-        
+        Transform groundCheck3Trans = gameObject.transform.Find("GroundCheck3");
+        Transform groundCheck4Trans = gameObject.transform.Find("GroundCheck4");
+
         bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
         bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck3 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
         
-        return  groundedInCheck1 || groundedInCheck2 || groundedInCheck3;
+        return  groundedInCheck1 || groundedInCheck2 || groundedInCheck3 || groundedInCheck4 || groundedInCheck5;
 
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
         //Debug.Log(IsGrounded());
-
-        if (readyToJump && IsGrounded())
-        {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
-            
-        }
-
+        Jump(isSuperJump: false);
     }
-    void onJumpHighPerformed(InputAction.CallbackContext context)
+    void onSuperJumpPerformed(InputAction.CallbackContext context)
     {
-        if (!IsGrounded())
-        rb.AddForce(transform.up * 10f, ForceMode.Impulse);
+        Jump(isSuperJump: true);
+    }
+
+    void onSuperJumpCancelled(InputAction.CallbackContext context)
+    {
+        if (isJumping)
+        {
+            isJumping = false;
+        }
+        
     }
     private void ResetJump()
     {
         readyToJump = true;
     }
-    void Jump()
+    void Jump(bool isSuperJump)
     {
-        // reset y velocity then apply jump force
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        
+            // reset y velocity then apply jump force
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            if (!isSuperJump && IsGrounded())
+            {
+                isJumping = true;
+                jumpTime = jumpStartTime;
+                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            }
+            else if (isSuperJump && isJumping)
+            {
+                if (jumpTime > 0)
+                {
+                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                    jumpTime -= Time.deltaTime;
+                }
+            } else
+            {
+                isJumping = false;
+            }
+            anim.SetInteger("BaseState", (int)AnimationState.jumping);
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        anim.SetInteger("BaseState", (int)AnimationState.jumping);
     }
 
 
