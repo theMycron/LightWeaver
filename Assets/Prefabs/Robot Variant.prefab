@@ -173,11 +173,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
+  isActive: 0
   moveSpeed: 25
-  rotateSpeed: 5
-  groundDrag: 0
+  rotateSpeed: 7
+  groundDrag: 20
   mainCamera: {fileID: 0}
-  jumpForce: 30
+  jumpForce: 27.5
   jumpCooldown: 0.2
   fallSpeed: 50
   airMultiplier: 0.2

@@ -133,7 +133,7 @@ public class CubeController : MonoBehaviour
             rb.drag = 0;
             isRaised = false;
             bx.excludeLayers = LayerMask.GetMask("Nothing");
-            activeRobot.GetComponent<PlayerController>().isCarryingObject = false;
+            activeRobot.GetComponent<PlayerController>().SetCarryingObject(false);
         }
 
     }
@@ -154,7 +154,7 @@ public class CubeController : MonoBehaviour
             bx.excludeLayers = LayerMask.GetMask("Robot");
             Debug.Log("Cube is Raised" + isRaised);
             Debug.Log("Cube is by:" + activeRobot.name);
-            activeRobot.GetComponent<PlayerController>().isCarryingObject = true;
+            activeRobot.GetComponent<PlayerController>().SetCarryingObject(true);
         }
 
     }

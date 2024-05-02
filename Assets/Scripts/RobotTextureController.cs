@@ -5,10 +5,11 @@ using UnityEngine;
 public class RobotTextureController : MonoBehaviour
 {
     
-    public const float ROBOT_GREEN = 0f;
-    public const float ROBOT_BLUE = 0.17f;
-    public const float ROBOT_PURPLE = 0.37f;
-    public const float ROBOT_RED = 0.63f;
+    public const float ROBOT_GREEN = 0.075f;
+    public const float ROBOT_BLUE = 1.215f;
+    public const float ROBOT_PURPLE = 1.385f;
+    public const float ROBOT_RED = 0.67f;
+    public const float ROBOT_GREY = -0.47f;
 
     Renderer[] renderers;
 
