@@ -95,6 +95,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.performed += OnJumpPerformed;
+        InputManager.Player.JumpHigh.performed += onJumpHighPerformed;
     }
 
     public void DisableInput()
@@ -104,6 +105,7 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
         InputManager.Player.Jump.performed -= OnJumpPerformed;
+        InputManager.Player.JumpHigh.performed -= onJumpHighPerformed;
     }
     private void Update()   
     {
@@ -159,7 +161,7 @@ public class PlayerController : MonoBehaviour
         {
             // no drag will be applied when airborne (because it messes with the jump height)
             // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed * 10f * airMultiplier;
+            force = targetVector.normalized * moveSpeed  * airMultiplier;
         }
 
         rb.AddForce(force, ForceMode.Force);
@@ -205,9 +207,13 @@ public class PlayerController : MonoBehaviour
             Invoke(nameof(ResetJump), jumpCooldown);
             
         }
-        
-    }
 
+    }
+    void onJumpHighPerformed(InputAction.CallbackContext context)
+    {
+        if (!IsGrounded())
+        rb.AddForce(transform.up * 10f, ForceMode.Impulse);
+    }
     private void ResetJump()
     {
         readyToJump = true;
