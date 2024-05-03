@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
-    
+
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
@@ -26,15 +26,15 @@ public class PlayerController : MonoBehaviour
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
-    
+
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
     [SerializeField] float airMultiplier = .2f;
     Boolean readyToJump;
-    [SerializeField] float jumpStartTime;
-    float jumpTime;
+    [SerializeField] float JumpTime;
+    float jumpTimeCounter;
     bool isJumping;
 
     [Header("Ground Check")]
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         ResetJump();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
-        
+
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
@@ -97,8 +97,12 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.performed += OnMovePerformed;
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
-        InputManager.Player.Jump.performed += OnJumpPerformed;
-        InputManager.Player.SuperJump.performed += onSuperJumpPerformed;
+        InputManager.Player.Jump.started += OnJumpStarted;
+
+        InputManager.Player.Jump.canceled -= OnJumpCancelled;
+
+        InputManager.Player.SuperJump.started += onSuperJumpStarted;
+        InputManager.Player.SuperJump.canceled += onSuperJumpCancelled;
     }
 
     public void DisableInput()
@@ -107,11 +111,15 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.performed -= OnMovePerformed;
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
-        InputManager.Player.Jump.performed -= OnJumpPerformed;
-        InputManager.Player.SuperJump.performed -= onSuperJumpPerformed;
+        InputManager.Player.Jump.started -= OnJumpStarted;
+        InputManager.Player.Jump.canceled -= OnJumpCancelled;
+
+        InputManager.Player.SuperJump.started -= onSuperJumpStarted;
+        InputManager.Player.SuperJump.canceled -= onSuperJumpCancelled;
     }
-    private void Update()   
+    private void Update()
     {
+
     }
     private void FixedUpdate()
     {
@@ -155,20 +163,21 @@ public class PlayerController : MonoBehaviour
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
         Vector3 force;
         // Adjust velocity if the player is grounded
-        if (IsGrounded() )
+        if (IsGrounded())
         {
             // drag will be applied when grounded
             force = targetVector.normalized * moveSpeed * 10f;
 
-        } else
+        }
+        else
         {
             // no drag will be applied when airborne (because it messes with the jump height)
             // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed  * airMultiplier;
+            force = targetVector.normalized * moveSpeed * airMultiplier;
         }
 
         rb.AddForce(force, ForceMode.Force);
-        
+
         // Return the movement vector
         return targetVector;
     }
@@ -188,7 +197,7 @@ public class PlayerController : MonoBehaviour
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
-        
+
         Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
         Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
         Transform groundCheck3Trans = gameObject.transform.Find("GroundCheck3");
@@ -199,27 +208,29 @@ public class PlayerController : MonoBehaviour
         bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
         bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
         bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        
-        return  groundedInCheck1 || groundedInCheck2 || groundedInCheck3 || groundedInCheck4 || groundedInCheck5;
+
+        return groundedInCheck1 || groundedInCheck2 || /*groundedInCheck3 || groundedInCheck4 ||*/ groundedInCheck5;
 
     }
-    void OnJumpPerformed(InputAction.CallbackContext context)
+    void OnJumpStarted(InputAction.CallbackContext context)
     {
         //Debug.Log(IsGrounded());
         Jump(isSuperJump: false);
+        
     }
-    void onSuperJumpPerformed(InputAction.CallbackContext context)
+    void OnJumpCancelled(InputAction.CallbackContext context)
     {
+
+    }
+    void onSuperJumpStarted(InputAction.CallbackContext context)
+    {
+        
         Jump(isSuperJump: true);
     }
-
     void onSuperJumpCancelled(InputAction.CallbackContext context)
     {
-        if (isJumping)
-        {
-            isJumping = false;
-        }
-        
+        isJumping = false;
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
     }
     private void ResetJump()
     {
@@ -227,38 +238,39 @@ public class PlayerController : MonoBehaviour
     }
     void Jump(bool isSuperJump)
     {
-        
-            // reset y velocity then apply jump force
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-            if (!isSuperJump && IsGrounded())
+        // reset y velocity then apply jump force
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        if (!isSuperJump && IsGrounded())
+        {
+            jumpTimeCounter = JumpTime;
+            isJumping = true;
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+            anim.SetInteger("BaseState", (int)AnimationState.jumping);
+        }
+        else if (isSuperJump && isJumping)
+        {
+            if (jumpTimeCounter > 0)
             {
-                isJumping = true;
-                jumpTime = jumpStartTime;
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                jumpTimeCounter -= Time.deltaTime;
+                anim.SetInteger("BaseState", (int)AnimationState.jumping);
             }
-            else if (isSuperJump && isJumping)
-            {
-                if (jumpTime > 0)
-                {
-                    rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-                    jumpTime -= Time.deltaTime;
-                }
-            } else
+            else
             {
                 isJumping = false;
             }
-            anim.SetInteger("BaseState", (int)AnimationState.jumping);
-
+        }
+        
     }
-
-
     void RobotFalling()
     {
         // If the player is not grounded, apply gravity
         if (!IsGrounded() && rb.velocity.y <= 0)
         {
+            Debug.Log("Robot is Falling!!!");
             rb.AddForce(Vector3.down * fallSpeed * Time.deltaTime, ForceMode.VelocityChange);
             anim.SetInteger("BaseState", (int)AnimationState.falling);
+            Debug.Log("BaseState"+ (int)AnimationState.falling);
             isFalling = true;
         }
     }
@@ -267,25 +279,33 @@ public class PlayerController : MonoBehaviour
     {
         if (isFalling && IsGrounded())
         {
+            
             // only play the landing animation if the player isnt trying to move
             // if the player is trying to move, play the walking animation
             if (moveDirection == Vector2.zero)
+            {
+                Debug.Log("Robot is Landing!!!");
                 anim.SetInteger("BaseState", (int)AnimationState.landing);
+                Debug.Log("BaseState"+ (int)AnimationState.landing);
+                /*                anim.SetInteger("BaseState", (int)AnimationState.idle);*/
+            }
+                
             else
-                 anim.SetInteger("BaseState", (int)AnimationState.walking);
+                anim.SetInteger("BaseState", (int)AnimationState.walking);
             isFalling = false;
         }
     }
 
     void CarryObject()
     {
-        
+
         if (isCarryingObject)
         {
             //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
             Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
-        }else
+        }
+        else
         {
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
             //  layer weight is always set to 1, will do empty animation if not carrying

@@ -42,7 +42,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""id"": ""35e5b33b-24da-4e24-a0a7-0d092ef40f3a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -87,7 +87,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""id"": ""a71e4bb5-0577-4db7-9b79-abf51126f00b"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Hold"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -272,7 +272,7 @@ public partial class @InputManager: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""909bfb47-14b1-479b-b6fd-c52aa287f4c6"",
                     ""path"": ""<Keyboard>/space"",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Super Jump"",
