@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserCube : MonoBehaviour
+public class LaserCube : MonoBehaviour, IActivable, IDisable
 {
     [SerializeField]
     private Material redMaterial;
@@ -17,6 +17,9 @@ public class LaserCube : MonoBehaviour
     [SerializeField]
     private Transform startPoint;
     private Laser laserScript;
+
+    [SerializeField]
+    private bool isActive;
 
     // Start is called before the first frame update
     void Start()
@@ -81,6 +84,10 @@ public class LaserCube : MonoBehaviour
             lineRenderer.enabled = false;
             laserScript.enabled = false;
         }
+
+        //Debug.Log("is enabled: ");
+        //Debug.Log(lineRenderer.enabled);
+        //Debug.Log(laserScript.enabled);
     }
 
     private void ChangeInnerSphereColor(Component sender)
@@ -98,5 +105,33 @@ public class LaserCube : MonoBehaviour
             isBlue = false;
         }
         
+    }
+
+    public void Activate()
+    {
+        isActive = true;
+        if (!lineRenderer.enabled)
+        {
+            ToggleLaserCube(isActive);
+            laserScript.isBlue = isBlue;
+            laserScript.direction = transform.forward;
+            Debug.Log("Direction: "+laserScript.direction);
+            Debug.Log("Rotation: "+transform.forward);
+        }
+        //ChangeInnerSphereColor(sender);
+        
+
+    }
+
+    public void Deactivate()
+    {
+        isActive = false;
+        ToggleLaserCube(isActive);
+    }
+
+    private void ToggleLaserCube(bool isActive)
+    {
+        laserScript.enabled = isActive;
+        lineRenderer.enabled = isActive;
     }
 }

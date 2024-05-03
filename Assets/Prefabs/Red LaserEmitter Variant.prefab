@@ -153,11 +153,23 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6324847684691067536}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 8158842633305723307}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7583100215208878887}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7793051951923804312}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7488522669042450869}
   m_SourcePrefab: {fileID: 100100000, guid: d7df10d90ae18cc498ce2f60c491beed, type: 3}
 --- !u!1 &7346507605021596449 stripped
 GameObject:
@@ -290,6 +302,19 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &6324847684691067536
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346507605021596449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd058a7e3d0679b4f8f41a6b85ffb518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 0
 --- !u!114 &8158842633305723307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -321,6 +346,62 @@ MonoBehaviour:
   onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
   onLaserCollidedWithLaserCube: {fileID: 11400000, guid: a10e9bdce74bedd4c8007dd7271affa2,
     type: 2}
+--- !u!114 &7793051951923804312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346507605021596449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c5cdfa470f362645be02eba59c9015a, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6324847684691067536}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7488522669042450869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346507605021596449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73c33978ae4e9424192d9183c460026b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6324847684691067536}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Deactivate
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &8837616038239284466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1409878029710494338, guid: d7df10d90ae18cc498ce2f60c491beed,

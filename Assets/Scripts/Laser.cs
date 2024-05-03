@@ -86,6 +86,10 @@ public class Laser : MonoBehaviour
             if (hit.transform.tag == "LaserCube")
             {
                 onLaserCollidedWithLaserCube.Raise(this, null, -1);
+            } else
+            {
+                Debug.Log("onLaserBlocked should be raiserd");
+                onLaserBlocked.Raise(this, null,-1);
             }
 
             // if hitted robot

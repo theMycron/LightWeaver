@@ -12,6 +12,10 @@ public class FloorButton : MonoBehaviour
     [Header("Gates Attached")]
     [SerializeField]
     private int gateNumber;
+
+    [Header("Emitters Attached")]
+    [SerializeField]
+    private int emitterNumber;
     //private GameObject gate;
 
     [Header("Events")]
@@ -47,6 +51,7 @@ public class FloorButton : MonoBehaviour
         }
 
         onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"), gateNumber);
+        onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"), emitterNumber);
     }
 
     private void OnTriggerExit(Collider other)
@@ -64,5 +69,6 @@ public class FloorButton : MonoBehaviour
         }
 
         onFloorButtonDePressed.Raise(this, animator.GetBool("isObjectOver"), gateNumber);
+        onFloorButtonDePressed.Raise(this, animator.GetBool("isObjectOver"), emitterNumber);
     }
 }

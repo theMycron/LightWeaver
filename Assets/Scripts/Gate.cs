@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : MonoBehaviour, IActivable, IDisable
 {
     private Animator animator;
     // Start is called before the first frame update
@@ -107,6 +107,16 @@ public class Gate : MonoBehaviour
     private bool CheckGateNumber(int gateNumber)
     {
         return this.gateNumber == gateNumber;
+    }
+
+    public void Activate()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Deactivate()
+    {
+        throw new System.NotImplementedException();
     }
 
     //private void ResetGateParameters()
