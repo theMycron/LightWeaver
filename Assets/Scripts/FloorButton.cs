@@ -12,11 +12,6 @@ public class FloorButton : MonoBehaviour
     [Header("Gates Attached")]
     [SerializeField]
     private int gateNumber;
-
-    [Header("Laser Emitter Attached")]
-    [SerializeField]
-    private int laserEmitterNumber;
-
     //private GameObject gate;
 
     [Header("Events")]
