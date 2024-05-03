@@ -149,11 +149,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6510446670793120061}
+      addedObject: {fileID: 2470846032205302396}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2470846032205302396}
+      addedObject: {fileID: 8158842633305723307}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7583100215208878887}
   m_SourcePrefab: {fileID: 100100000, guid: d7df10d90ae18cc498ce2f60c491beed, type: 3}
 --- !u!1 &7346507605021596449 stripped
 GameObject:
@@ -182,22 +186,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4, y: 4, z: 2}
   m_Center: {x: 0, y: 0, z: 1}
---- !u!114 &6510446670793120061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7346507605021596449}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd058a7e3d0679b4f8f41a6b85ffb518, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPoint: {fileID: 3195737258080365257}
-  laserDistance: 1000
-  onLaserCollided: {fileID: 0}
-  onLaserBlocked: {fileID: 0}
 --- !u!120 &2470846032205302396
 LineRenderer:
   serializedVersion: 2
@@ -302,6 +290,37 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &8158842633305723307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346507605021596449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8b144dcbc73c074d8e99914577df1a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7583100215208878887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7346507605021596449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b086d9f4eb8d2347b39129e3e6dc0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPoint: {fileID: 3195737258080365257}
+  direction: {x: 0, y: 0, z: 0}
+  isBlue: 0
+  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
+  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  onLaserCollidedWithLaserCube: {fileID: 11400000, guid: a10e9bdce74bedd4c8007dd7271affa2,
+    type: 2}
 --- !u!4 &8837616038239284466 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1409878029710494338, guid: d7df10d90ae18cc498ce2f60c491beed,
