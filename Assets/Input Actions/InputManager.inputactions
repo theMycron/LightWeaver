@@ -20,7 +20,7 @@
                     "id": "35e5b33b-24da-4e24-a0a7-0d092ef40f3a",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": false
                 },
                 {
@@ -65,7 +65,7 @@
                     "id": "a71e4bb5-0577-4db7-9b79-abf51126f00b",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": false
                 }
             ],
@@ -129,7 +129,7 @@
                     "name": "",
                     "id": "cc83a5c4-d5e4-4cdf-8ce5-e3c0ee55cb56",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
@@ -250,7 +250,7 @@
                     "name": "",
                     "id": "909bfb47-14b1-479b-b6fd-c52aa287f4c6",
                     "path": "<Keyboard>/space",
-                    "interactions": "",
+                    "interactions": "Hold(duration=0.2)",
                     "processors": "",
                     "groups": "",
                     "action": "Super Jump",

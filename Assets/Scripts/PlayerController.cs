@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float JumpTime;
     float jumpTimeCounter;
     bool isJumping;
+    bool isSuperJumping;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
@@ -98,11 +99,8 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
         InputManager.Player.Jump.started += OnJumpStarted;
-
-        InputManager.Player.Jump.canceled -= OnJumpCancelled;
-
-        InputManager.Player.SuperJump.started += onSuperJumpStarted;
-        InputManager.Player.SuperJump.canceled += onSuperJumpCancelled;
+        InputManager.Player.Jump.performed += OnJumpPerformed;
+        InputManager.Player.Jump.canceled += OnJumpCancelled;
     }
 
     public void DisableInput()
@@ -112,10 +110,9 @@ public class PlayerController : MonoBehaviour
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
         InputManager.Player.Jump.started -= OnJumpStarted;
+        InputManager.Player.Jump.performed -= OnJumpPerformed;
         InputManager.Player.Jump.canceled -= OnJumpCancelled;
 
-        InputManager.Player.SuperJump.started -= onSuperJumpStarted;
-        InputManager.Player.SuperJump.canceled -= onSuperJumpCancelled;
     }
     private void Update()
     {
@@ -138,11 +135,10 @@ public class PlayerController : MonoBehaviour
 
         //CarryObject();
 
-        /*        //check if player is not moving
-                if (moveDirection == Vector2.zero && IsGrounded())
-                {
-                    anim.SetInteger("BaseState", (int)AnimationState.idle);
-                }*/
+        if (isSuperJumping)
+        {
+            Jump(isSuperJumping);
+        } 
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -214,24 +210,28 @@ public class PlayerController : MonoBehaviour
     }
     void OnJumpStarted(InputAction.CallbackContext context)
     {
-        //Debug.Log(IsGrounded());
-        Jump(isSuperJump: false);
-        
+        isSuperJumping = false;
+        Jump(isSuperJumping);
+        Debug.Log("Simple Jump Started!!!");
+
+    }
+    void OnJumpPerformed(InputAction.CallbackContext context)
+    {
+        isSuperJumping = true;
+       
+        Debug.Log("Simple Jump Performed!!!");
     }
     void OnJumpCancelled(InputAction.CallbackContext context)
     {
-
-    }
-    void onSuperJumpStarted(InputAction.CallbackContext context)
-    {
-        
-        Jump(isSuperJump: true);
-    }
-    void onSuperJumpCancelled(InputAction.CallbackContext context)
-    {
+        Debug.Log("Simple Jump Cancelled!!!"); 
+        if (isSuperJumping)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        }
         isJumping = false;
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        isSuperJumping = false;
     }
+    
     private void ResetJump()
     {
         readyToJump = true;
@@ -243,6 +243,7 @@ public class PlayerController : MonoBehaviour
         if (!isSuperJump && IsGrounded())
         {
             jumpTimeCounter = JumpTime;
+            Debug.Log("Jump Time is set");
             isJumping = true;
             rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
             anim.SetInteger("BaseState", (int)AnimationState.jumping);
@@ -253,14 +254,16 @@ public class PlayerController : MonoBehaviour
             {
                 rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
+                Debug.Log("JUmp time counter: " + jumpTimeCounter);
                 anim.SetInteger("BaseState", (int)AnimationState.jumping);
             }
             else
             {
                 isJumping = false;
+                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+                isSuperJumping = false;
             }
-        }
-        
+        }  
     }
     void RobotFalling()
     {
