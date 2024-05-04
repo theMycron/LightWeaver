@@ -29,6 +29,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
+    float jumpForceCounter;
     [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
     [SerializeField] float airMultiplier = .2f;
@@ -216,6 +217,7 @@ public class PlayerController : MonoBehaviour
         }
         anim.SetInteger("BaseState", (int)AnimationState.jumping);
         jumpTimeCounter = JumpTime;
+        jumpForceCounter = jumpForce;
 
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
@@ -224,14 +226,19 @@ public class PlayerController : MonoBehaviour
     void OnJumpCancelled(InputAction.CallbackContext context)
     {
         Debug.Log("Jump Cancelled!!!");
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        isJumping = false;
+        Debug.Log("Robot Y Velocity:" + rb.velocity.y);
+        Debug.Log("Robot is Grounded:" + IsGrounded());
+
+        if (!isFalling)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        }
         if (IsGrounded())
         {
             anim.SetInteger("BaseState", (int)AnimationState.idle);
         }
-        Debug.Log("Robot Y Velocity:"+rb.velocity.y);
-        Debug.Log("Robot is Grounded:"+IsGrounded());
+        isJumping = false;
+
     }
     
     private void ResetJump()
@@ -244,16 +251,18 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);*/
             if (jumpTimeCounter > 0)
             {
-                /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
-                rb.AddForce(transform.up* jumpForce, ForceMode.Impulse);
+            /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
+            jumpForceCounter = jumpForce - 1f;
+            rb.AddForce(transform.up* jumpForceCounter, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
-                Debug.Log("Jump time counter: " + jumpTimeCounter);
+                Debug.Log("Jump!! ");
             }
-            else
-            { 
-                rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                isJumping = false;
-        }   
+        else if (jumpTimeCounter < 0 || jumpForceCounter < 0f) { }
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            isJumping = false;
+            Debug.Log("Jump time finish ");
+        }
     }
     void RobotFalling()
     {
