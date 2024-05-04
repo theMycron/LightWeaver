@@ -58,15 +58,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "Super Jump",
-                    "type": "Button",
-                    "id": "a71e4bb5-0577-4db7-9b79-abf51126f00b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -129,7 +120,7 @@
                     "name": "",
                     "id": "cc83a5c4-d5e4-4cdf-8ce5-e3c0ee55cb56",
                     "path": "<Keyboard>/space",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
@@ -243,17 +234,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotate Cube Up",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "909bfb47-14b1-479b-b6fd-c52aa287f4c6",
-                    "path": "<Keyboard>/space",
-                    "interactions": "Hold(duration=0.2)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Super Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

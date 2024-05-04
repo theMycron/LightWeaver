@@ -35,8 +35,7 @@ public class PlayerController : MonoBehaviour
     Boolean readyToJump;
     [SerializeField] float JumpTime;
     float jumpTimeCounter;
-    bool isJumping;
-    bool isSuperJumping;
+    bool isJumping = false;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
@@ -135,9 +134,9 @@ public class PlayerController : MonoBehaviour
 
         //CarryObject();
 
-        if (isSuperJumping)
+        if (isJumping)
         {
-            Jump(isSuperJumping);
+            Jump();
         } 
     }
 
@@ -205,65 +204,56 @@ public class PlayerController : MonoBehaviour
         bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
         bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
 
-        return groundedInCheck1 || groundedInCheck2 || /*groundedInCheck3 || groundedInCheck4 ||*/ groundedInCheck5;
+        return groundedInCheck1 || groundedInCheck2 || groundedInCheck3 || groundedInCheck4 || groundedInCheck5;
 
     }
     void OnJumpStarted(InputAction.CallbackContext context)
     {
-        isSuperJumping = false;
-        Jump(isSuperJumping);
-        Debug.Log("Simple Jump Started!!!");
+        Debug.Log("Jump Started!!!");
+        if (IsGrounded())
+        {
+            isJumping = true;
+        }
+        anim.SetInteger("BaseState", (int)AnimationState.jumping);
+        jumpTimeCounter = JumpTime;
 
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
-        isSuperJumping = true;
-       
-        Debug.Log("Simple Jump Performed!!!");
     }
     void OnJumpCancelled(InputAction.CallbackContext context)
     {
-        Debug.Log("Simple Jump Cancelled!!!"); 
-        if (isSuperJumping)
-        {
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        }
+        Debug.Log("Jump Cancelled!!!");
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         isJumping = false;
-        isSuperJumping = false;
+        if (IsGrounded())
+        {
+            anim.SetInteger("BaseState", (int)AnimationState.idle);
+        }
+        Debug.Log("Robot Y Velocity:"+rb.velocity.y);
+        Debug.Log("Robot is Grounded:"+IsGrounded());
     }
     
     private void ResetJump()
     {
         readyToJump = true;
     }
-    void Jump(bool isSuperJump)
+    void Jump()
     {
-        // reset y velocity then apply jump force
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-        if (!isSuperJump && IsGrounded())
-        {
-            jumpTimeCounter = JumpTime;
-            Debug.Log("Jump Time is set");
-            isJumping = true;
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-            anim.SetInteger("BaseState", (int)AnimationState.jumping);
-        }
-        else if (isSuperJump && isJumping)
-        {
+/*            // reset y velocity then apply jump force
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);*/
             if (jumpTimeCounter > 0)
             {
-                rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+                /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
+                rb.AddForce(transform.up* jumpForce, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
-                Debug.Log("JUmp time counter: " + jumpTimeCounter);
-                anim.SetInteger("BaseState", (int)AnimationState.jumping);
+                Debug.Log("Jump time counter: " + jumpTimeCounter);
             }
             else
-            {
-                isJumping = false;
+            { 
                 rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-                isSuperJumping = false;
-            }
-        }  
+                isJumping = false;
+        }   
     }
     void RobotFalling()
     {
