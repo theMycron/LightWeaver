@@ -218,13 +218,13 @@ public class PlayerController : MonoBehaviour
         anim.SetInteger("BaseState", (int)AnimationState.jumping);
         jumpTimeCounter = JumpTime;
         jumpForceCounter = jumpForce;
-
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
     }
     void OnJumpCancelled(InputAction.CallbackContext context)
     {
+
         Debug.Log("Jump Cancelled!!!");
         Debug.Log("Robot Y Velocity:" + rb.velocity.y);
         Debug.Log("Robot is Grounded:" + IsGrounded());
@@ -235,10 +235,16 @@ public class PlayerController : MonoBehaviour
         }
         if (IsGrounded())
         {
-            anim.SetInteger("BaseState", (int)AnimationState.idle);
+/*            anim.SetInteger("BaseState", (int)AnimationState.idle);*/
+            rb.AddForce(transform.up * 13f, ForceMode.Impulse);
+        }
+        Debug.Log("small Jump time: " + jumpTimeCounter);
+        if (jumpTimeCounter >= 0.75 * JumpTime)
+        {
+            rb.AddForce(transform.up * 6f, ForceMode.Impulse);
+            Debug.Log("small Jump Performed: ");
         }
         isJumping = false;
-
     }
     
     private void ResetJump()
@@ -248,16 +254,16 @@ public class PlayerController : MonoBehaviour
     void Jump()
     {
 /*            // reset y velocity then apply jump force
-            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);*/
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);*/  
             if (jumpTimeCounter > 0)
             {
             /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
-            jumpForceCounter = jumpForce - 1f;
             rb.AddForce(transform.up* jumpForceCounter, ForceMode.Impulse);
-                jumpTimeCounter -= Time.deltaTime;
+            jumpForceCounter -= 0.5f;
+            jumpTimeCounter -= Time.deltaTime;
                 Debug.Log("Jump!! ");
             }
-        else if (jumpTimeCounter < 0 || jumpForceCounter < 0f) { }
+        else if (jumpTimeCounter < 0 || jumpForceCounter < 0f)
         {
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             isJumping = false;
