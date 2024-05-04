@@ -8,7 +8,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IActivable
 {
     public InputManager InputManager;
 
@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
+    [SerializeField] public int robotNumber;
     
     [Header("Movement")]
     [SerializeField] float moveSpeed;
@@ -288,5 +289,19 @@ public class PlayerController : MonoBehaviour
     {
         isActive = true;
         CheckIfActive();
+    }
+
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (CheckRobotNumber(objectNumber) && targetName == "Robot")
+        {
+            isActive = true;
+            CheckIfActive();
+        }
+    }
+
+    private bool CheckRobotNumber(int robotNumber)
+    {
+        return this.robotNumber == robotNumber;
     }
 }

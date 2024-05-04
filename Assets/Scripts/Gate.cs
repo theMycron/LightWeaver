@@ -43,45 +43,15 @@ public class Gate : MonoBehaviour, IActivable, IDisable
         
     //}
 
-    public void CloseGate(Component sender, object data, int gateNumber)
+    private bool CheckGateNumber(int gateNumber)
     {
-        //activationsRequired++;
-        //if (CheckGateNumber(gateNumber) && activationsRequired != 0)
-        //{
-        //    animator.SetBool("isOpened", false);
-        //}
-        Debug.Log("close sender: " + sender);
-        if (CheckGateNumber(gateNumber))
-        {
-            if (sender.tag.EndsWith("Emitter"))
-            {
-                if (!hasLaserBlockedBefore)
-                {
-                    hasLaserBlockedBefore = true;
-                    activationsRequired++;
-                }
-                hasLaserDetectedBefore = false;
-            } else
-            {
-                activationsRequired++;
-            }
-            
-            if (activationsRequired != 0)
-            {
-                animator.SetBool("isOpened", false);
-            }
-            
-        }
+        return this.gateNumber == gateNumber;
     }
 
-    public void OpenGate(Component sender, object data, int gateNumber)
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-        //activationsRequired--;
-        //if (CheckGateNumber(gateNumber) && activationsRequired == 0)
-        //{
-        //    animator.SetBool("isOpened", true);
-        //}
-        if (CheckGateNumber(gateNumber))
+
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
             if (sender.tag.EndsWith("Emitter"))
             {
@@ -91,12 +61,13 @@ public class Gate : MonoBehaviour, IActivable, IDisable
                     hasLaserDetectedBefore = true;
                     hasLaserBlockedBefore = false;
                 }
-                
-            } else
+
+            }
+            else
             {
                 activationsRequired--;
             }
-                
+
             if (activationsRequired == 0)
             {
                 animator.SetBool("isOpened", true);
@@ -104,19 +75,30 @@ public class Gate : MonoBehaviour, IActivable, IDisable
         }
     }
 
-    private bool CheckGateNumber(int gateNumber)
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        return this.gateNumber == gateNumber;
-    }
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
+        {
+            if (sender.tag.EndsWith("Emitter"))
+            {
+                if (!hasLaserBlockedBefore)
+                {
+                    hasLaserBlockedBefore = true;
+                    activationsRequired++;
+                }
+                hasLaserDetectedBefore = false;
+            }
+            else
+            {
+                activationsRequired++;
+            }
 
-    public void Activate()
-    {
-        throw new System.NotImplementedException();
-    }
+            if (activationsRequired != 0)
+            {
+                animator.SetBool("isOpened", false);
+            }
 
-    public void Deactivate()
-    {
-        throw new System.NotImplementedException();
+        }
     }
 
     //private void ResetGateParameters()

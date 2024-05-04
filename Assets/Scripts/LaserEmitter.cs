@@ -25,9 +25,9 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
 
     }
 
-    public void Activate()
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-        if (!isActive)
+        if (!isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
         {
             isActive = true;
             ToggleEmitter(isActive);
@@ -36,11 +36,15 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
         
     }
 
-    public void Deactivate()
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        isActive = false;
-        ToggleEmitter(isActive);
-        Debug.Log("Deactivate laser emitter!");
+        if (CheckEmitterNumber(objectNumber) && targetName == "Emitter")
+        {
+            isActive = false;
+            ToggleEmitter(isActive);
+            Debug.Log("Deactivate laser emitter!");
+        }
+        
     }
 
     private void ToggleEmitter(bool isActive)
@@ -49,6 +53,11 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
         laserScript.enabled = isActive;
         lineRenderer.enabled = isActive;
+    }
+
+    private bool CheckEmitterNumber(int emitterNumber)
+    {
+        return this.number == emitterNumber;
     }
 
 }

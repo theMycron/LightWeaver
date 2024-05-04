@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IActivable
 {
 
-    void Activate();
+    void Activate(Component sender, int objectNumber, string targetName, object data);
 
 }

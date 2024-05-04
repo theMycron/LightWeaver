@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IDisable
 {
-    void Deactivate();
+    void Deactivate(Component sender, int objectNumber, string targetName, object data);
 }

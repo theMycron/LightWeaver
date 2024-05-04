@@ -24,6 +24,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     // Start is called before the first frame update
     void Start()
     {
+        isActive = false;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
         //lineRenderer.useWorldSpace = true;
@@ -40,41 +41,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     {
         if (laserScript.enabled)
         {
+            isActive = true;
             lineRenderer.SetPosition(0,startPoint.position);
             laserScript.direction = transform.forward;
         }
-    }
-
-    public void RedirectLaser(Component sender, object data, int t)
-    {
-        Debug.Log("Redirect Laser called!");
-        
-        if (!lineRenderer.enabled)
-        {
-            lineRenderer.enabled = true;
-            laserScript.enabled = true;
-            laserScript.isBlue = isBlue;
-            laserScript.direction = transform.forward;
-            Debug.Log("Direction: "+laserScript.direction);
-            Debug.Log("Rotation: "+transform.forward);
-        }
-        ChangeInnerSphereColor(sender);
-
-        //Debug.Log("This is the starting point: " + startPoint.position);
-        //Debug.Log("This is the ending point: " + lineRenderer.GetPosition(1));
-        //Debug.DrawLine(startPoint.localPosition, lineRenderer.GetPosition(1), Color.blue);
-        //Debug.Log("This is the direction: " + (lineRenderer.GetPosition(1) - startPoint.localPosition));
-
-        //RaycastHit hit;
-        //if (Physics.Linecast(startPoint.position, lineRenderer.GetPosition(1), out hit))
-        //{
-
-        //    if (hit.collider)
-        //    {
-        //        Debug.Log("I have hitted something: " + hit.collider.tag);
-        //        lineRenderer.SetPosition(1, hit.point);
-        //    }
-        //}
     }
     public void StopLaser(Component sender, object data, int t)
     {
@@ -107,26 +77,32 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         
     }
 
-    public void Activate()
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
+
+        Debug.Log("Redirect Laser called!");
         isActive = true;
         if (!lineRenderer.enabled)
         {
-            ToggleLaserCube(isActive);
+            lineRenderer.enabled = true;
+            laserScript.enabled = true;
             laserScript.isBlue = isBlue;
             laserScript.direction = transform.forward;
-            Debug.Log("Direction: "+laserScript.direction);
-            Debug.Log("Rotation: "+transform.forward);
+            //Debug.Log("Direction: "+laserScript.direction);
+            //Debug.Log("Rotation: "+transform.forward);
         }
-        //ChangeInnerSphereColor(sender);
-        
+        ChangeInnerSphereColor(sender);
 
     }
 
-    public void Deactivate()
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
         isActive = false;
-        ToggleLaserCube(isActive);
+        //ToggleLaserCube(isActive);
+        lineRenderer.enabled = false;
+        laserScript.enabled = false;
+
+        Debug.Log($"{isActive}, {lineRenderer.enabled}, {laserScript.enabled} ");
     }
 
     private void ToggleLaserCube(bool isActive)
