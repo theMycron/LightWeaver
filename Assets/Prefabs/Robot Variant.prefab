@@ -318,10 +318,12 @@ MonoBehaviour:
   rotateSpeed: 7
   groundDrag: 20
   mainCamera: {fileID: 0}
-  jumpForce: 27.5
+  jumpForce: 20
   jumpCooldown: 0.2
   fallSpeed: 50
-  airMultiplier: 0.2
+  airMultiplier: 0.3
+  JumpTime: 0.37
+  minJumpTime: 0.2
   ground:
     serializedVersion: 2
     m_Bits: 64

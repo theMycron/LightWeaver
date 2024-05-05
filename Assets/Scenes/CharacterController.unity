@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -4113,59 +4113,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: JumpTime
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: isActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: fallSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpForce
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: groundDrag
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: rotateSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: airMultiplier
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpStartTime
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
@@ -4589,33 +4539,13 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: JumpTime
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
       propertyPath: isActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: fallSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpForce
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
       propertyPath: moveSpeed
       value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: groundDrag
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4625,12 +4555,7 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: rotateSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: airMultiplier
-      value: 0.3
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -5119,54 +5044,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: camera
-      value: 
-      objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: JumpTime
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: fallSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpForce
-      value: 6.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: groundDrag
-      value: 20
+      propertyPath: isActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: rotateSpeed
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: airMultiplier
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpStartTime
-      value: 0.25
-      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
