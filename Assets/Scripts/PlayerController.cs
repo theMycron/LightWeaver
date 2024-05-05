@@ -193,7 +193,6 @@ public class PlayerController : MonoBehaviour
 
     bool IsGrounded()
     {
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red, 2, true);
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
@@ -203,11 +202,17 @@ public class PlayerController : MonoBehaviour
         Transform groundCheck3Trans = gameObject.transform.Find("GroundCheck3");
         Transform groundCheck4Trans = gameObject.transform.Find("GroundCheck4");
 
-        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
+        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+
+        Debug.DrawRay(groundCheck1Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck2Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck3Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck4Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(transform.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 2, true);
 
         return groundedInCheck1 || groundedInCheck2 || groundedInCheck3 || groundedInCheck4 || groundedInCheck5;
 
