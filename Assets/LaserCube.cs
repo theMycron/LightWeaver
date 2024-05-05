@@ -21,6 +21,11 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     [SerializeField]
     private bool isActive;
 
+    [Header("LaserCube Number")]
+    [SerializeField]
+    private int cubeNumber;
+
+
     // Start is called before the first frame update
     void Start()
     {

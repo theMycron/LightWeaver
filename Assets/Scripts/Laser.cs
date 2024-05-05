@@ -82,14 +82,8 @@ public class Laser : MonoBehaviour
                 //Debug.Log("Close Gate Logic!");
                 //Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
 
-                if (!hasLaserBlockedBefore && lastHittedRecevier != null)
-                {
-
-                    //onLaserBlocked.Raise(this, null, 1);
-                    onLaserBlocked.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
-                    lastHittedRecevier = null;
-                    hasLaserBlockedBefore = true;
-                }
+                BlockLaserFromReceiver();
+                
 
             }
 
@@ -135,6 +129,17 @@ public class Laser : MonoBehaviour
         }
     }
 
+    public void BlockLaserFromReceiver()
+    {
+        if (!hasLaserBlockedBefore && lastHittedRecevier != null)
+        {
+            Debug.Log("onlaserblocked is reaised");
+            //onLaserBlocked.Raise(this, null, 1);
+            onLaserBlocked.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
+            lastHittedRecevier = null;
+            hasLaserBlockedBefore = true;
+        }
+    }
 
     private void GetSimilarReceviers()
     {

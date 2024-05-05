@@ -329,10 +329,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startPoint: {fileID: 1431613478626920126}
   direction: {x: 0, y: 0, z: 0}
-  isBlue: 0
+  isBlue: 1
   onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
   onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
-  onLaserStopped: {fileID: 0}
+  onLaserStopped: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
   onLaserCollidedWithLaserCube: {fileID: 11400000, guid: a10e9bdce74bedd4c8007dd7271affa2,
     type: 2}
 --- !u!199 &1496509162147550279

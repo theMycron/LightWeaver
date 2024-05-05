@@ -75,6 +75,6 @@ public class FloorButton : MonoBehaviour
         }
 
         onFloorButtonDePressed.Raise(this, gateNumber, "Gate", animator.GetBool("isObjectOver"));
-        onFloorButtonDePressed.Raise(this, emitterNumber, "Emitter", animator.GetBool("isObjectOver")   );
+        onFloorButtonDePressed.Raise(this, emitterNumber, "Emitter", animator.GetBool("isObjectOver"));
     }
 }

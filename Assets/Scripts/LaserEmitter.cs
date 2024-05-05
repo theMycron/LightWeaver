@@ -54,15 +54,18 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
     {
         Laser laserScript = gameObject.GetComponent<Laser>();
         LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
-        laserScript.enabled = isActive;
-        lineRenderer.enabled = isActive;
+       
         if (isActive)
         {
             particleSystem.Play();
         } else
         {
+            laserScript.BlockLaserFromReceiver();
             particleSystem.Stop();
+            //particleSystem.gameObject.SetActive(false);
         }
+        lineRenderer.enabled = isActive;
+        laserScript.enabled = isActive;
     }
 
     private bool CheckEmitterNumber(int emitterNumber)
