@@ -27,6 +27,9 @@ public class Laser : MonoBehaviour
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
+
+        //lineRenderer.startWidth = 0.5f;
+        //lineRenderer.endWidth = 0.5f;
         GetSimilarReceviers();
     }
 
