@@ -62,9 +62,12 @@ public class Laser : MonoBehaviour
                     lastHittedRecevier = hit.transform.gameObject;
                     Debug.Log("Open Gate Logic!");
                     //onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
+
                     onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
                     onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().RobotNumber, "Robot", null);
                     onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().EmitterNumber, "Emitter", null);
+
+
 
                     hasLaserBlockedBefore = false;
                     //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
@@ -137,8 +140,8 @@ public class Laser : MonoBehaviour
             Debug.Log("onlaserblocked is reaised");
             //onLaserBlocked.Raise(this, null, 1);
             onLaserBlocked.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
-            lastHittedRecevier = null;
             hasLaserBlockedBefore = true;
+            lastHittedRecevier = null;
         }
     }
 

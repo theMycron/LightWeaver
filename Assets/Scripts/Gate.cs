@@ -79,8 +79,10 @@ public class Gate : MonoBehaviour, IActivable, IDisable
     {
         if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
+            Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}.");
             if (sender.tag.EndsWith("Emitter"))
             {
+                Debug.Log($"Laser detected before? {hasLaserDetectedBefore}");
                 if (!hasLaserBlockedBefore)
                 {
                     hasLaserBlockedBefore = true;

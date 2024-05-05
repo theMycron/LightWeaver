@@ -18,6 +18,10 @@ public class LaserReceiver : MonoBehaviour
     [Header("Robot Attached")]
     [SerializeField]
     private int robotNumber;
+
+    [Header("Game Events")]
+    public GameEvent onLaserBlocked;
+    public GameEvent onLaserCollided;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,10 +37,12 @@ public class LaserReceiver : MonoBehaviour
     public void LaserCollided(Component sender, int objectNumber, string targetName, object data)
     {
         Debug.Log("I have been hitten By Laser From unknown!" + sender);
+        //onLaserCollided.Raise(sender, objectNumber, targetName, data);
     }
 
     public void LaserBlocked(Component sender, int objectNumber, string targetName, object data)
     {
         Debug.Log("Laser Blocked!" + sender + " " + gateNumber);
+        //onLaserBlocked.Raise(sender, objectNumber, targetName, data);
     }
 }
