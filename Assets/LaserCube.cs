@@ -25,6 +25,8 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     [SerializeField]
     private int cubeNumber;
 
+    public int CubeNumber { get { return this.cubeNumber; } }
+
 
     // Start is called before the first frame update
     void Start()
@@ -84,7 +86,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
 
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-
+        if (!CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        {
+            return;
+        }
         Debug.Log("Redirect Laser called!");
         isActive = true;
         if (!lineRenderer.enabled)
@@ -102,6 +107,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
 
     public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
+        if (!CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        {
+            return;
+        }
         isActive = false;
         //ToggleLaserCube(isActive);
         lineRenderer.enabled = false;
@@ -114,5 +123,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     {
         laserScript.enabled = isActive;
         lineRenderer.enabled = isActive;
+    }
+
+    private bool CheckLaserCubeNmber(int laserCubeNumber)
+    {
+        return this.cubeNumber == laserCubeNumber;
     }
 }

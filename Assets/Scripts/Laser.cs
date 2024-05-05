@@ -90,19 +90,20 @@ public class Laser : MonoBehaviour
             if (hit.transform.tag == "LaserCube")
             {
                 //onLaserCollidedWithLaserCube.Raise(this, null, -1);
-                onLaserCollidedWithLaserCube.Raise(this);
                 lastHittedLaserCube = hit.transform.gameObject;
+                onLaserCollidedWithLaserCube.Raise(this, lastHittedLaserCube.gameObject.GetComponent<LaserCube>().CubeNumber, "LaserCube", null);
+                
             } else
             {
-                //if (lastHittedLaserCube != null)
-                //{
+                if (lastHittedLaserCube != null)
+                {
                     Debug.Log("onLaserStopped should be raised");
                     //onLaserBlocked.Raise(this, null,-1);
-                    onLaserStopped.Raise(this);
+                    onLaserStopped.Raise(this, lastHittedLaserCube.gameObject.GetComponent<LaserCube>().CubeNumber, "LaserCube", null);
                     lastHittedLaserCube = null;
-                //}
-                
-            }
+                }
+
+        }
 
             // if hitted robot
             if (hit.transform.tag.StartsWith("Robot"))
