@@ -19,12 +19,17 @@ public class Laser : MonoBehaviour
     public GameEvent onLaserCollidedWithLaserCube;
 
     private GameObject[] laserReceivers;
-    private GameObject lastHittedRecevier;
-    private GameObject lastHittedLaserCube;
-    private bool hasLaserBlockedBefore = false;
+    //private GameObject lastHittedRecevier;
+    //private GameObject lastHittedLaserCube;
+    //private bool hasLaserBlockedBefore = false;
+
+    private GameObject currentHitObject;
+    private GameObject lastHitObject;
+    private GameObject dummyGameObject;
 
     void Start()
     {
+        dummyGameObject = gameObject;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
 
@@ -51,32 +56,32 @@ public class Laser : MonoBehaviour
 
             if (hit.collider)
             {
-                Debug.Log("I have hit by: " +  hit.collider);
+                //Debug.Log("I have hit by: " +  hit.collider);
+
                 lineRenderer.SetPosition(1, hit.point);
+
+                currentHitObject = hit.collider.gameObject;
+                if (!lastHitObject) { lastHitObject = currentHitObject; }
             }
-            if (hit.transform.tag.EndsWith("LaserReceiver"))
+
+            if (currentHitObject.tag.EndsWith("LaserReceiver"))
             {
 
-                if (laserReceivers.Contains(hit.transform.gameObject))
+                if (laserReceivers.Contains(currentHitObject))
                 {
-                    lastHittedRecevier = hit.transform.gameObject;
-                    Debug.Log("Open Gate Logic!");
+                    int receiverNumber = currentHitObject.GetComponent<LaserReceiver>().ReceiverNumber;
+                    Debug.Log("Receiver hit by correct laser! Raise onLaserCollided Event to receiver #"+ receiverNumber);
                     //onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
 
-                    onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
-                    onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().RobotNumber, "Robot", null);
-                    onLaserCollided.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().EmitterNumber, "Emitter", null);
+                    onLaserCollided.Raise(this, receiverNumber, "Receiver", null);
 
-
-
-                    hasLaserBlockedBefore = false;
+                    //hasLaserBlockedBefore = false;
                     //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
 
                 }
                 else
                 {
-                    lastHittedRecevier = null;
-                    Debug.Log("Wrong receiver color" + lastHittedRecevier);
+                    Debug.Log("Wrong receiver color: " + lastHitObject);
                 }
 
             }
@@ -86,39 +91,33 @@ public class Laser : MonoBehaviour
                 //Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
 
                 BlockLaserFromReceiver();
-                
-
             }
 
-            if (hit.transform.tag == "LaserCube")
+            if (currentHitObject.tag == "LaserCube")
             {
+                int laserCubeNumber = currentHitObject.GetComponent<LaserCube>().CubeNumber;
                 //onLaserCollidedWithLaserCube.Raise(this, null, -1);
-                lastHittedLaserCube = hit.transform.gameObject;
-                onLaserCollidedWithLaserCube.Raise(this, lastHittedLaserCube.gameObject.GetComponent<LaserCube>().CubeNumber, "LaserCube", null);
+                //lastHittedLaserCube = hit.transform.gameObject;
+                //Debug.Log("Hit laserCube! Raise onLaserCollided Event to cube #" + laserCubeNumber);
+                onLaserCollidedWithLaserCube.Raise(this, laserCubeNumber, "LaserCube", null);
                 
             } else
             {
-                if (lastHittedLaserCube != null)
-                {
-                    Debug.Log("onLaserStopped should be raised");
-                    //onLaserBlocked.Raise(this, null,-1);
-                    onLaserStopped.Raise(this, lastHittedLaserCube.gameObject.GetComponent<LaserCube>().CubeNumber, "LaserCube", null);
-                    lastHittedLaserCube = null;
-                }
-
-        }
+                //if (lastHittedLaserCube != null)
+                BlockLaserFromLaserCube();
+            }
 
             // if hitted robot
-            if (hit.transform.tag.StartsWith("Robot"))
+            if (currentHitObject.tag.StartsWith("Robot"))
             {
                 // TODO: change behaviour to perform laser pointing logic only when robot is active
                 // robot activation should have the same behaviour as opening a gate,
                 // either by floor button or laser receiver
                 // check if active
-                if (!hit.transform.gameObject.GetComponent<PlayerController>().isActive)
+                if (!currentHitObject.GetComponent<PlayerController>().isActive)
                 {
-                    hit.transform.gameObject.GetComponent<PlayerController>().ActivateRobot();
-                    Debug.Log("Active robot please");
+                    currentHitObject.GetComponent<PlayerController>().ActivateRobot();
+                    //Debug.Log("Active robot please");
                 }
                 else // if not active
                 {
@@ -126,6 +125,8 @@ public class Laser : MonoBehaviour
                 }
 
             }
+
+            lastHitObject = currentHitObject;
         }
         else
         {
@@ -133,16 +134,54 @@ public class Laser : MonoBehaviour
         }
     }
 
+    public void BlockLaserFromLaserCube()
+    {
+        if (!lastHitObject) { return; }
+        LaserCube lastHitLaserCube = lastHitObject.GetComponent<LaserCube>();
+        LaserCube currentHitLaserCube = currentHitObject.GetComponent<LaserCube>();
+        bool didntHitLaserCubeBefore = !lastHitLaserCube;
+        //Debug.Log("trying to block lasercube, did we hit laser cube now? "+(currentHitLaserCube != null));
+        // if a laser cube was hit last frame AND this frame BUT they are different numbers then raise blocked event
+        if (didntHitLaserCubeBefore || (currentHitLaserCube && lastHitLaserCube.CubeNumber == currentHitLaserCube.CubeNumber))
+        {
+            return;
+        }
+        Debug.Log("onLaserStopped is raised for laser cube number " + lastHitLaserCube.CubeNumber);
+        //onLaserBlocked.Raise(this, null,-1);
+        onLaserStopped.Raise(this, lastHitLaserCube.CubeNumber, "LaserCube", null);
+        
+    }
+
+    // used to raise laser blocked event for receiver if it was hit in the last frame
+    // but not in this frame
     public void BlockLaserFromReceiver()
     {
-        if (!hasLaserBlockedBefore && lastHittedRecevier != null)
+        if (!lastHitObject) { return; }
+        LaserReceiver lastHitReceiver = lastHitObject.GetComponent<LaserReceiver>();
+        LaserReceiver currentHitReceiver = currentHitObject.GetComponent<LaserReceiver>();
+        bool didntHitReceiverBefore = !lastHitReceiver;
+        Debug.Log($"trying to block laser from receiver {lastHitObject}");
+        // dont continue if last hit receiver doesnt exist
+        // or if it was different color
+        // or if the last hit receiver is the same as the current hit one
+        if (didntHitReceiverBefore || lastHitReceiver.IsBlue != isBlue
+            || (currentHitReceiver && lastHitReceiver.ReceiverNumber == currentHitReceiver.ReceiverNumber))
         {
-            Debug.Log("onlaserblocked is reaised");
-            //onLaserBlocked.Raise(this, null, 1);
-            onLaserBlocked.Raise(this, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber, "Gate", null);
-            hasLaserBlockedBefore = true;
-            lastHittedRecevier = null;
+            return;
         }
+
+        onLaserBlocked.Raise(this, lastHitReceiver.ReceiverNumber, "Receiver", null);
+        //onLaserBlocked.Raise(this, null, 1);
+        //hasLaserBlockedBefore = true;
+        
+    }
+
+    // this will block laser from any object hit in the last frame
+    public void BlockLaserFromAll()
+    {
+        currentHitObject = dummyGameObject;
+        BlockLaserFromLaserCube();
+        BlockLaserFromReceiver();
     }
 
     private void GetSimilarReceviers()

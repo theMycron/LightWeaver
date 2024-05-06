@@ -36,18 +36,16 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
             ToggleEmitter(isActive);
             Debug.Log("Activate laser emitter!");
         }
-        
     }
 
     public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        if (CheckEmitterNumber(objectNumber) && targetName == "Emitter")
+        if (isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
         {
             isActive = false;
             ToggleEmitter(isActive);
             Debug.Log("Deactivate laser emitter!");
         }
-        
     }
 
     private void ToggleEmitter(bool isActive)
@@ -60,7 +58,7 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
             particleSystem.Play();
         } else
         {
-            laserScript.BlockLaserFromReceiver();
+            laserScript.BlockLaserFromAll();
             particleSystem.Stop();
             //particleSystem.gameObject.SetActive(false);
         }

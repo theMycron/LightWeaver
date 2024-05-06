@@ -9,15 +9,13 @@ public class Gate : MonoBehaviour, IActivable, IDisable
     [SerializeField]
     private int gateNumber;
 
-    private bool hasLaserDetectedBefore;
-    private bool hasLaserBlockedBefore;
+    private List<GameObject> activators = new List<GameObject>();
 
     [SerializeField]
     private int activationsRequired;
     void Start()
     {
         animator = GetComponent<Animator>();
-        hasLaserDetectedBefore = false;
     }
 
     // Update is called once per frame
@@ -53,20 +51,14 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
         if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
-            if (sender.tag.EndsWith("Emitter"))
-            {
-                if (!hasLaserDetectedBefore)
-                {
-                    activationsRequired--;
-                    hasLaserDetectedBefore = true;
-                    hasLaserBlockedBefore = false;
-                }
 
-            }
-            else
+            // if an object is already activating this gate, dont try to activate again
+            if (activators.Contains(sender.gameObject))
             {
-                activationsRequired--;
+                return;
             }
+            activators.Add(sender.gameObject);
+            activationsRequired--;
 
             if (activationsRequired == 0)
             {
@@ -79,21 +71,14 @@ public class Gate : MonoBehaviour, IActivable, IDisable
     {
         if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
-            Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}.");
-            if (sender.tag.EndsWith("Emitter"))
+            Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
+
+            if (!activators.Contains(sender.gameObject))
             {
-                Debug.Log($"Laser detected before? {hasLaserDetectedBefore}");
-                if (!hasLaserBlockedBefore)
-                {
-                    hasLaserBlockedBefore = true;
-                    activationsRequired++;
-                }
-                hasLaserDetectedBefore = false;
+                return;
             }
-            else
-            {
-                activationsRequired++;
-            }
+            activators.Remove(sender.gameObject);
+            activationsRequired++;
 
             if (activationsRequired != 0)
             {
@@ -102,9 +87,4 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
         }
     }
-
-    //private void ResetGateParameters()
-    //{
-    //    hasLaserDetectedBefore = false;
-    //}
 }

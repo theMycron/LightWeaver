@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LaserReceiver : MonoBehaviour
 {
+    public int ReceiverNumber { get { return receiverNumber; } }
+    public bool IsBlue { get { return isBlue; } }
+    [SerializeField] private int receiverNumber;
+    [SerializeField]  private bool isBlue;
+    
     public int GateNumber { get { return gateNumber; } }
     [Header("Gate Attached")]
     [SerializeField]
@@ -36,13 +41,24 @@ public class LaserReceiver : MonoBehaviour
 
     public void LaserCollided(Component sender, int objectNumber, string targetName, object data)
     {
-        Debug.Log("I have been hitten By Laser From unknown!" + sender);
-        //onLaserCollided.Raise(sender, objectNumber, targetName, data);
+
+        if (receiverNumber == objectNumber && targetName == "Receiver")
+        {
+            Debug.Log("receiver been hitten By Laser From " + sender);
+            onLaserCollided.Raise(this, GateNumber, "Gate", null);
+            onLaserCollided.Raise(this, RobotNumber, "Robot", null);
+            onLaserCollided.Raise(this, EmitterNumber, "Emitter", null);
+        }
     }
 
     public void LaserBlocked(Component sender, int objectNumber, string targetName, object data)
     {
-        Debug.Log("Laser Blocked!" + sender + " " + gateNumber);
-        //onLaserBlocked.Raise(sender, objectNumber, targetName, data);
+        if (receiverNumber == objectNumber && targetName == "Receiver")
+        {
+            Debug.Log("Laser Blocked!" + sender + " " + gateNumber);
+            onLaserBlocked.Raise(this, GateNumber, "Gate", null);
+            //onLaserBlocked.Raise(this, RobotNumber, "Robot", null);
+            onLaserBlocked.Raise(this, EmitterNumber, "Emitter", null);
+        }
     }
 }

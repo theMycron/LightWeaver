@@ -25,6 +25,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     [SerializeField]
     private int cubeNumber;
 
+    private GameObject activatedBy;
     public int CubeNumber { get { return this.cubeNumber; } }
 
 
@@ -39,6 +40,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         lineRenderer.endWidth = 0.4059853f;
         lineRenderer.enabled = false;
 
+        ChangeCubeColor(isBlue);
 
         laserScript = GetComponent<Laser>();
     }
@@ -67,30 +69,29 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         //Debug.Log(laserScript.enabled);
     }
 
-    private void ChangeInnerSphereColor(Component sender)
+    private void ChangeCubeColor(bool changeToBlue)
     {
         
-        if (sender.tag.StartsWith("Blue"))
+        if (changeToBlue)
         {
             GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = blueMaterial;
             lineRenderer.material = blueMaterial;
-            isBlue = true;
         } else
         {
             GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = redMaterial;
             lineRenderer.material = redMaterial;
-            isBlue = false;
         }
-        
+        isBlue = changeToBlue;
     }
 
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-        if (!CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        if (isActive || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
         {
             return;
         }
         Debug.Log("Redirect Laser called!");
+        activatedBy = sender.gameObject;
         isActive = true;
         if (!lineRenderer.enabled)
         {
@@ -101,22 +102,24 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
             //Debug.Log("Direction: "+laserScript.direction);
             //Debug.Log("Rotation: "+transform.forward);
         }
-        ChangeInnerSphereColor(sender);
+        ChangeCubeColor(activatedBy.GetComponent<Laser>().isBlue);
 
     }
 
     public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        if (!CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        if (!isActive || activatedBy != sender.gameObject || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
         {
             return;
         }
+        activatedBy = null;
+        laserScript.BlockLaserFromAll();
         isActive = false;
         //ToggleLaserCube(isActive);
         lineRenderer.enabled = false;
         laserScript.enabled = false;
 
-        Debug.Log($"{isActive}, {lineRenderer.enabled}, {laserScript.enabled} ");
+        Debug.Log($"laser cube stopped redirecting");
     }
 
     private void ToggleLaserCube(bool isActive)
