@@ -185,6 +185,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
       propertyPath: m_Constraints
       value: 112
       objectReference: {fileID: 0}
@@ -345,12 +350,12 @@ PrefabInstance:
     - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.g
-      value: 0.5629902
+      value: 0.5137255
       objectReference: {fileID: 0}
     - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: m_Parameters.colorGradient.key1.r
-      value: 0.4666667
+      value: 0.4392157
       objectReference: {fileID: 0}
     - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
@@ -1221,7 +1226,7 @@ ParticleSystem:
       serializedVersion: 2
       minMaxState: 0
       minColor: {r: 1, g: 1, b: 1, a: 1}
-      maxColor: {r: 0.3443396, g: 0.46124035, b: 1, a: 1}
+      maxColor: {r: 0.4392157, g: 0.5137255, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}
@@ -6451,7 +6456,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh33450
+  m_Name: pb_Mesh116074
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -7159,10 +7164,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1015455867519520580, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1132587563607472450, guid: 657142b8e0e99f14d9c76d8e34cc042a,
         type: 3}
       propertyPath: m_Name
       value: LaserCollision
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972339354728164543, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972339354728164543, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.5004579
+      objectReference: {fileID: 0}
+    - target: {fileID: 3972339354728164543, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.43921566
       objectReference: {fileID: 0}
     - target: {fileID: 7207865478066313015, guid: 657142b8e0e99f14d9c76d8e34cc042a,
         type: 3}
@@ -7219,7 +7244,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7426001901141805102, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7426001901141805102, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c877d2ec3aa713840ba658117f45b58c, type: 2}
+    m_RemovedComponents:
+    - {fileID: 1015455867519520580, guid: 657142b8e0e99f14d9c76d8e34cc042a, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

@@ -27,6 +27,12 @@ public class Laser : MonoBehaviour
     private GameObject lastHitObject;
     private GameObject dummyGameObject;
 
+    private void OnEnable()
+    {
+        // set linerenderer color
+        
+    }
+
     void Start()
     {
         dummyGameObject = gameObject;
