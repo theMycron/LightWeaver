@@ -11,7 +11,7 @@ public class Laser : MonoBehaviour
     [SerializeField] public GameObject collisionEffect;
     public Transform startPoint;
     public Vector3 direction;
-    public bool isBlue;
+    public LaserColors colorEnum;
     public Color color;
     private int laserDistance = 1000;
 
@@ -29,12 +29,12 @@ public class Laser : MonoBehaviour
     private GameObject currentHitObject;
     private GameObject lastHitObject;
     private GameObject dummyGameObject;
+    private GameObject collisionEffectInstance;
 
     private void OnEnable()
     {
-        HideCollisionEffect();
-        // set linerenderer color
-        if (color != null) SetLaserColor(color);
+        lineRenderer = GetComponent<LineRenderer>();
+        //HideCollisionEffect();
     }
 
     void Start()
@@ -42,6 +42,8 @@ public class Laser : MonoBehaviour
         dummyGameObject = gameObject;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
+        collisionEffectInstance = Instantiate(collisionEffect);
+        collisionEffect.SetActive(false);
 
         //lineRenderer.startWidth = 0.5f;
         //lineRenderer.endWidth = 0.5f;
@@ -63,7 +65,7 @@ public class Laser : MonoBehaviour
 
         if (Physics.Raycast(startPoint.position, direction, out hit))
         {
-            bool hitLaserInteractable = true;
+            bool hitLaserInteractable = false;
 
             if (hit.collider)
             {
@@ -88,7 +90,7 @@ public class Laser : MonoBehaviour
 
                     //hasLaserBlockedBefore = false;
                     //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
-                    hitLaserInteractable = false;
+                    hitLaserInteractable = true;
                 }
                 else
                 {
@@ -111,7 +113,7 @@ public class Laser : MonoBehaviour
                 //lastHittedLaserCube = hit.transform.gameObject;
                 //Debug.Log("Hit laserCube! Raise onLaserCollided Event to cube #" + laserCubeNumber);
                 onLaserCollidedWithLaserCube.Raise(this, laserCubeNumber, "LaserCube", null);
-                hitLaserInteractable = false;
+                hitLaserInteractable = true;
             } else
             {
                 //if (lastHittedLaserCube != null)
@@ -127,7 +129,7 @@ public class Laser : MonoBehaviour
                 // check if active
                 if (!currentHitObject.GetComponent<PlayerController>().isActive)
                 {
-                    hitLaserInteractable = false;
+                    hitLaserInteractable = true;
                     currentHitObject.GetComponent<PlayerController>().ActivateRobot();
                     //Debug.Log("Active robot please");
                 }
@@ -142,10 +144,10 @@ public class Laser : MonoBehaviour
 
             if (hitLaserInteractable)
             {
-                SetCollisionEffect(hit.point, hit.normal);
+                HideCollisionEffect();
             } else
             {
-                HideCollisionEffect();
+                SetCollisionEffect(hit.point, hit.normal);
             }
         }
         else
@@ -166,7 +168,7 @@ public class Laser : MonoBehaviour
         {
             return;
         }
-        Debug.Log("onLaserStopped is raised for laser cube number " + lastHitLaserCube.CubeNumber);
+        //Debug.Log("onLaserStopped is raised for laser cube number " + lastHitLaserCube.CubeNumber);
         //onLaserBlocked.Raise(this, null,-1);
         onLaserStopped.Raise(this, lastHitLaserCube.CubeNumber, "LaserCube", null);
         
@@ -180,11 +182,12 @@ public class Laser : MonoBehaviour
         LaserReceiver lastHitReceiver = lastHitObject.GetComponent<LaserReceiver>();
         LaserReceiver currentHitReceiver = currentHitObject.GetComponent<LaserReceiver>();
         bool didntHitReceiverBefore = !lastHitReceiver;
-        Debug.Log($"trying to block laser from receiver {lastHitObject}");
+        //Debug.Log($"trying to block laser from receiver {lastHitObject}");
+
         // dont continue if last hit receiver doesnt exist
         // or if it was different color
         // or if the last hit receiver is the same as the current hit one
-        if (didntHitReceiverBefore || lastHitReceiver.IsBlue != isBlue
+        if (didntHitReceiverBefore || lastHitReceiver.selectedLaserColor != colorEnum
             || (currentHitReceiver && lastHitReceiver.ReceiverNumber == currentHitReceiver.ReceiverNumber))
         {
             return;
@@ -205,29 +208,46 @@ public class Laser : MonoBehaviour
     }
     private void SetCollisionEffect(Vector3 position, Vector3 normal)
     {
-        collisionEffect.SetActive(true);
-        LaserCollision laserCollision = collisionEffect.GetComponent<LaserCollision>();
+        LaserCollision laserCollision = collisionEffectInstance.GetComponent<LaserCollision>();
         laserCollision.color = color;
-        collisionEffect.transform.position = position;
-        collisionEffect.transform.rotation = Quaternion.Euler(normal);
+        collisionEffectInstance.SetActive(true);
+        // add offset to prevent clipping
+        laserCollision.MoveCollision(position + (normal*0.2f), Quaternion.LookRotation(normal));
+        Debug.DrawRay(collisionEffectInstance.transform.position, collisionEffect.transform.forward*5, Color.blue, 1, false);
     }
     private void HideCollisionEffect()
     {
-        collisionEffect.SetActive(false);
+        collisionEffectInstance.SetActive(false);
     }
 
-    private void SetLaserColor(Color color)
+    public void SetLaserColor(LaserColors color)
     {
-        lineRenderer.startColor = color;
-        lineRenderer.endColor = color;
+        colorEnum = color;
+        this.color = (Color)Colors.GetLaserColor(color);
+        // Line renderer needs a gradient, so create one with only the passed in color
+        Gradient gradient = new Gradient();
+
+        GradientColorKey[] colors = new GradientColorKey[2];
+        colors[0] = new GradientColorKey(this.color, 1.0f);
+        colors[1] = new GradientColorKey(this.color, 1.0f);
+
+        GradientAlphaKey[] alphas = new GradientAlphaKey[2];
+        alphas[0] = new GradientAlphaKey(1.0f, 1.0f);
+        alphas[1] = new GradientAlphaKey(1.0f, 1.0f);
+
+        gradient.SetKeys(colors, alphas);
+
+        Debug.Log($"laserscript new color: {this.color}");
+
+        lineRenderer.colorGradient = gradient;
     }
 
     private void GetSimilarReceviers()
     {
-        if (isBlue)
+        if (colorEnum == LaserColors.blue)
         {
             laserReceivers = GameObject.FindGameObjectsWithTag("BlueLaserReceiver");
-        } else
+        } else if (colorEnum == LaserColors.red)
         {
             laserReceivers = GameObject.FindGameObjectsWithTag("RedLaserReceiver");
         }

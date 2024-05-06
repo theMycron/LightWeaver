@@ -12,8 +12,9 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
 
     [SerializeField]
     private bool isActive;
+    public LaserColors selectedLaserColor;
 
-    public Color color;
+    private Color color;
 
     private ParticleSystem _particleSystem;
     private Laser laserScript;
@@ -22,13 +23,14 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
     // Start is called before the first frame update
     void Start()
     {
+        color = (Color)Colors.GetLaserColor(selectedLaserColor);
         laserScript = gameObject.GetComponent<Laser>();
         lineRenderer = gameObject.GetComponent<LineRenderer>();
         _particleSystem = GetComponent<ParticleSystem>();
         var main = _particleSystem.main;
         main.startColor = color;
-        ToggleEmitter(isActive);
         laserScript.color = color;
+        ToggleEmitter(isActive);
     }
 
     // Update is called once per frame
@@ -70,7 +72,9 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
             //particleSystem.gameObject.SetActive(false);
         }
         lineRenderer.enabled = isActive;
+        Debug.Log($"laserscript color: {laserScript.color}");
         laserScript.enabled = isActive;
+        laserScript.SetLaserColor(selectedLaserColor);
     }
 
     private bool CheckEmitterNumber(int emitterNumber)

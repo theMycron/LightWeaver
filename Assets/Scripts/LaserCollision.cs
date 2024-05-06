@@ -12,7 +12,6 @@ public class LaserCollision : MonoBehaviour
     {
         _particleSystem = GetComponent<ParticleSystem>();
         mesh = transform.GetChild(0).GetComponent<MeshFilter>().mesh;
-        Debug.Log(mesh.colors.Length);
 
         Color32[] colors = new Color32[mesh.vertices.Length];
         for (int i=0; i<colors.Length; i++)
@@ -25,6 +24,13 @@ public class LaserCollision : MonoBehaviour
         main.startColor = color;
 
     }
+
+    public void MoveCollision(Vector3 pos, Quaternion dir)
+    {
+        transform.position = pos;
+        transform.rotation = dir;
+    }
+
     private void OnDestroy()
     {
         Destroy(mesh);

@@ -10,8 +10,8 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     [SerializeField] 
     private Material blueMaterial;
 
-    public bool isBlue = false;
     public Color color;
+    public LaserColors colorEnum;
 
     private LineRenderer lineRenderer;
 
@@ -37,12 +37,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.SetPosition(0, startPoint.position);
         //lineRenderer.useWorldSpace = true;
-        lineRenderer.startWidth = 0.4059853f;
-        lineRenderer.endWidth = 0.4059853f;
         lineRenderer.enabled = false;
         laserScript = GetComponent<Laser>();
 
-        ChangeCubeColor(color);
+        ChangeCubeColor(colorEnum);
         ToggleLaserCube(false);
     }
 
@@ -70,20 +68,19 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         //Debug.Log(laserScript.enabled);
     }
 
-    private void ChangeCubeColor(Color color)
+    private void ChangeCubeColor(LaserColors color)
     {
-        
-        if (color == Colors.LASER_BLUE)
+        colorEnum = color;
+        if (color == LaserColors.blue)
         {
-            GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = blueMaterial;
-            lineRenderer.material = blueMaterial;
-            isBlue = true;
-        } else if (color == Colors.LASER_RED)
+            // change color of inner sphere
+            transform.GetChild(1).GetComponent<MeshRenderer>().material = blueMaterial;
+        } else if (color == LaserColors.red)
         {
-            GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = redMaterial;
-            lineRenderer.material = redMaterial;
+            // change color of inner sphere
+            transform.GetChild(1).GetComponent<MeshRenderer>().material = redMaterial;
         }
-        this.color = color;
+        this.color = (Color) Colors.GetLaserColor(color);
     }
 
     public void Activate(Component sender, int objectNumber, string targetName, object data)
@@ -110,19 +107,16 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
 
     private void ToggleLaserCube(bool value)
     {
-        laserScript.enabled = isActive;
-        lineRenderer.enabled = isActive;
         if (value)
         {
             Debug.Log("Redirect Laser called!");
             isActive = true;
-            ChangeCubeColor(activatedBy.GetComponent<Laser>().color);
+            ChangeCubeColor(activatedBy.GetComponent<Laser>().colorEnum);
             if (!lineRenderer.enabled)
             {
                 lineRenderer.enabled = true;
                 laserScript.enabled = true;
-                laserScript.isBlue = isBlue;
-                laserScript.color = color;
+                laserScript.SetLaserColor(colorEnum);
                 laserScript.direction = transform.forward;
                 //Debug.Log("Direction: "+laserScript.direction);
                 //Debug.Log("Rotation: "+transform.forward);

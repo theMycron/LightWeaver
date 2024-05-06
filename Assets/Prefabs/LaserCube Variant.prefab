@@ -190,9 +190,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f167ee29866558d4483637567a45f0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redMaterial: {fileID: 2100000, guid: 71043b4620b421346812f3b3fe2d072b, type: 2}
-  blueMaterial: {fileID: 2100000, guid: 9ef98add414170f418a5945f5aaf5744, type: 2}
-  isBlue: 0
+  redMaterial: {fileID: 2100000, guid: a6076975d943d934b8b192d15e44dad1, type: 2}
+  blueMaterial: {fileID: 2100000, guid: d7dbaa09baa975449aebec9c9536c231, type: 2}
+  color: {r: 0, g: 0, b: 0, a: 0}
   startPoint: {fileID: 6249727294443442988}
   isActive: 0
   cubeNumber: 1
@@ -300,7 +300,8 @@ LineRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials: []
+  m_Materials:
+  - {fileID: -876546973899608171, guid: e8146a9977eb48646a0ff51c800cd600, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -332,7 +333,7 @@ LineRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0.13615337
-        value: 0.4059853
+        value: 0.9
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -399,7 +400,7 @@ MonoBehaviour:
     type: 3}
   startPoint: {fileID: 6249727294443442988}
   direction: {x: 0, y: 0, z: 0}
-  isBlue: 0
+  colorEnum: 0
   color: {r: 0, g: 0, b: 0, a: 0}
   onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
   onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}

@@ -5,9 +5,9 @@ using UnityEngine;
 public class LaserReceiver : MonoBehaviour
 {
     public int ReceiverNumber { get { return receiverNumber; } }
-    public bool IsBlue { get { return isBlue; } }
     [SerializeField] private int receiverNumber;
-    [SerializeField]  private bool isBlue;
+    [SerializeField] public LaserColors selectedLaserColor;
+    private Color color;
     
     public int GateNumber { get { return gateNumber; } }
     [Header("Gate Attached")]
@@ -30,7 +30,7 @@ public class LaserReceiver : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        color = (Color) Colors.GetLaserColor(selectedLaserColor);
     }
 
     // Update is called once per frame

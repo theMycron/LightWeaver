@@ -158,6 +158,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 6096078191599053836}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 7238598031787462214}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
         type: 3}
@@ -171,6 +175,22 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4411412189378516321}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8012273974017081145}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1678488049871775125}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6474723236854365044}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: d7df10d90ae18cc498ce2f60c491beed,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 753107186446446785}
   m_SourcePrefab: {fileID: 100100000, guid: d7df10d90ae18cc498ce2f60c491beed, type: 3}
 --- !u!1 &2614152224387511309 stripped
 GameObject:
@@ -303,6 +323,21 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &6096078191599053836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614152224387511309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd058a7e3d0679b4f8f41a6b85ffb518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  number: 0
+  isActive: 1
+  selectedLaserColor: 1
 --- !u!114 &7238598031787462214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,9 +362,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b086d9f4eb8d2347b39129e3e6dc0b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionEffect: {fileID: 1132587563607472450, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+    type: 3}
   startPoint: {fileID: 1431613478626920126}
   direction: {x: 0, y: 0, z: 0}
-  isBlue: 1
+  colorEnum: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
   onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
   onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
   onLaserStopped: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
@@ -5188,6 +5226,118 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!114 &8012273974017081145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614152224387511309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 8c5cdfa470f362645be02eba59c9015a, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2614152224387511309}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1678488049871775125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614152224387511309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73c33978ae4e9424192d9183c460026b, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2614152224387511309}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Deactivate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6474723236854365044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614152224387511309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2614152224387511309}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Activate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &753107186446446785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2614152224387511309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2614152224387511309}
+        m_TargetAssemblyTypeName: LaserEmitter, Assembly-CSharp
+        m_MethodName: Deactivate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!4 &4257828893221880798 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1409878029710494338, guid: d7df10d90ae18cc498ce2f60c491beed,
