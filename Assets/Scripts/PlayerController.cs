@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public Rigidbody rb;
 
-    Vector2 moveDirection = Vector2.zero;
+    public Vector2 moveDirection = Vector2.zero;
 
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float groundDrag;
 
     [Header("Camera")]
-    [SerializeField] Camera mainCamera;
+    [SerializeField] public Camera mainCamera;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
         moveDirection = Vector2.zero;
         anim.SetInteger("BaseState", (int)AnimationState.idle);
     }
-    Vector3 MovePlayer()
+    public Vector3 MovePlayer()
     {
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
@@ -176,7 +176,7 @@ public class PlayerController : MonoBehaviour
             force = targetVector.normalized * moveSpeed * airMultiplier;
         }
 
-        rb.AddForce(force, ForceMode.Force);
+        rb.AddForce(force, ForceMode.Acceleration);
 
         // Return the movement vector
         return targetVector;

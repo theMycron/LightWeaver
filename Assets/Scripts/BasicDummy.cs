@@ -7,44 +7,46 @@ public class BasicDummy : MonoBehaviour
 {
 
     private NavMeshAgent agent;
-    public GameObject target;
-    public GameObject target2;
     private Rigidbody rigidbody;
-    private bool isTargetOneActive;
+
+    PlayerController controller;
+
+    Vector2 direction;
+
+    private Animator animator;
+
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
+        animator = GetComponent<Animator>();
+        controller = GetComponent<PlayerController>();
+        //agent = GetComponent<NavMeshAgent>();
         rigidbody = GetComponent<Rigidbody>();
-        agent.destination = target.transform.position;
-        isTargetOneActive = true;
+        //agent.destination = target.transform.position;
+        direction = new Vector3(transform.forward.x ,0f, transform.forward.z);
+        direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
+        
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
 
-        
+    private void FixedUpdate()
+    {
+        controller.moveDirection = direction;
+
+        animator.SetInteger("BaseState", (int)PlayerController.AnimationState.walking);
+        //rigidbody.AddForce(direction * 100);
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.transform.tag);        
-        SwitchTargets();
+        
+        direction = -1 * direction;
+
+
+
     }
 
-    private void SwitchTargets()
-    {
-        if (isTargetOneActive)
-        {
-            agent.destination = target2.transform.position;
-            isTargetOneActive = false;
-        } else
-        {
-            agent.destination = target.transform.position;
-            isTargetOneActive = true;
-        }
-    }
+    
     
 }
