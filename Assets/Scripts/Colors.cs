@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Colors : MonoBehaviour
 {
-    public static Color LASER_RED { get { return HexToColor("#5876FF"); } }
+    public static Color LASER_RED { get { return HexToColor("#FF7E75"); } }
     public static Color LASER_BLUE { get { return HexToColor("#7083FF"); } }
     public static Color LASER_PURPLE { get { return HexToColor("#5876FF"); } }
     public static Color LASER_WHITE { get { return HexToColor("#5876FF"); } }

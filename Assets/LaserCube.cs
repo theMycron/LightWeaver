@@ -11,6 +11,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     private Material blueMaterial;
 
     public bool isBlue = false;
+    public Color color;
 
     private LineRenderer lineRenderer;
 
@@ -39,10 +40,10 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         lineRenderer.startWidth = 0.4059853f;
         lineRenderer.endWidth = 0.4059853f;
         lineRenderer.enabled = false;
-
-        ChangeCubeColor(isBlue);
-
         laserScript = GetComponent<Laser>();
+
+        ChangeCubeColor(color);
+        ToggleLaserCube(false);
     }
 
     // Update is called once per frame
@@ -69,19 +70,20 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         //Debug.Log(laserScript.enabled);
     }
 
-    private void ChangeCubeColor(bool changeToBlue)
+    private void ChangeCubeColor(Color color)
     {
         
-        if (changeToBlue)
+        if (color == Colors.LASER_BLUE)
         {
             GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = blueMaterial;
             lineRenderer.material = blueMaterial;
-        } else
+            isBlue = true;
+        } else if (color == Colors.LASER_RED)
         {
             GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = redMaterial;
             lineRenderer.material = redMaterial;
         }
-        isBlue = changeToBlue;
+        this.color = color;
     }
 
     public void Activate(Component sender, int objectNumber, string targetName, object data)
@@ -90,20 +92,9 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         {
             return;
         }
-        Debug.Log("Redirect Laser called!");
         activatedBy = sender.gameObject;
-        isActive = true;
-        if (!lineRenderer.enabled)
-        {
-            lineRenderer.enabled = true;
-            laserScript.enabled = true;
-            laserScript.isBlue = isBlue;
-            laserScript.direction = transform.forward;
-            //Debug.Log("Direction: "+laserScript.direction);
-            //Debug.Log("Rotation: "+transform.forward);
-        }
-        ChangeCubeColor(activatedBy.GetComponent<Laser>().isBlue);
 
+        ToggleLaserCube(true);
     }
 
     public void Deactivate(Component sender, int objectNumber, string targetName, object data)
@@ -112,20 +103,40 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         {
             return;
         }
-        activatedBy = null;
-        laserScript.BlockLaserFromAll();
-        isActive = false;
-        //ToggleLaserCube(isActive);
-        lineRenderer.enabled = false;
-        laserScript.enabled = false;
 
-        Debug.Log($"laser cube stopped redirecting");
+        activatedBy = null;
+        ToggleLaserCube(false);
     }
 
-    private void ToggleLaserCube(bool isActive)
+    private void ToggleLaserCube(bool value)
     {
         laserScript.enabled = isActive;
         lineRenderer.enabled = isActive;
+        if (value)
+        {
+            Debug.Log("Redirect Laser called!");
+            isActive = true;
+            ChangeCubeColor(activatedBy.GetComponent<Laser>().color);
+            if (!lineRenderer.enabled)
+            {
+                lineRenderer.enabled = true;
+                laserScript.enabled = true;
+                laserScript.isBlue = isBlue;
+                laserScript.color = color;
+                laserScript.direction = transform.forward;
+                //Debug.Log("Direction: "+laserScript.direction);
+                //Debug.Log("Rotation: "+transform.forward);
+            }
+        } else
+        {
+            laserScript.BlockLaserFromAll();
+            isActive = false;
+            //ToggleLaserCube(isActive);
+            lineRenderer.enabled = false;
+            laserScript.enabled = false;
+
+            Debug.Log($"laser cube stopped redirecting");
+        }
     }
 
     private bool CheckLaserCubeNmber(int laserCubeNumber)

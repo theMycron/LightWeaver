@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using System.Drawing;
 using System.Linq;
 using UnityEngine;
 
@@ -7,9 +8,11 @@ public class Laser : MonoBehaviour
 {
 
     private LineRenderer lineRenderer;
+    [SerializeField] public GameObject collisionEffect;
     public Transform startPoint;
     public Vector3 direction;
     public bool isBlue;
+    public Color color;
     private int laserDistance = 1000;
 
     [Header("Events")]
@@ -29,8 +32,9 @@ public class Laser : MonoBehaviour
 
     private void OnEnable()
     {
+        HideCollisionEffect();
         // set linerenderer color
-        
+        if (color != null) SetLaserColor(color);
     }
 
     void Start()
@@ -59,6 +63,7 @@ public class Laser : MonoBehaviour
 
         if (Physics.Raycast(startPoint.position, direction, out hit))
         {
+            bool hitLaserInteractable = true;
 
             if (hit.collider)
             {
@@ -83,7 +88,7 @@ public class Laser : MonoBehaviour
 
                     //hasLaserBlockedBefore = false;
                     //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
-
+                    hitLaserInteractable = false;
                 }
                 else
                 {
@@ -106,7 +111,7 @@ public class Laser : MonoBehaviour
                 //lastHittedLaserCube = hit.transform.gameObject;
                 //Debug.Log("Hit laserCube! Raise onLaserCollided Event to cube #" + laserCubeNumber);
                 onLaserCollidedWithLaserCube.Raise(this, laserCubeNumber, "LaserCube", null);
-                
+                hitLaserInteractable = false;
             } else
             {
                 //if (lastHittedLaserCube != null)
@@ -122,6 +127,7 @@ public class Laser : MonoBehaviour
                 // check if active
                 if (!currentHitObject.GetComponent<PlayerController>().isActive)
                 {
+                    hitLaserInteractable = false;
                     currentHitObject.GetComponent<PlayerController>().ActivateRobot();
                     //Debug.Log("Active robot please");
                 }
@@ -133,6 +139,14 @@ public class Laser : MonoBehaviour
             }
 
             lastHitObject = currentHitObject;
+
+            if (hitLaserInteractable)
+            {
+                SetCollisionEffect(hit.point, hit.normal);
+            } else
+            {
+                HideCollisionEffect();
+            }
         }
         else
         {
@@ -188,6 +202,24 @@ public class Laser : MonoBehaviour
         currentHitObject = dummyGameObject;
         BlockLaserFromLaserCube();
         BlockLaserFromReceiver();
+    }
+    private void SetCollisionEffect(Vector3 position, Vector3 normal)
+    {
+        collisionEffect.SetActive(true);
+        LaserCollision laserCollision = collisionEffect.GetComponent<LaserCollision>();
+        laserCollision.color = color;
+        collisionEffect.transform.position = position;
+        collisionEffect.transform.rotation = Quaternion.Euler(normal);
+    }
+    private void HideCollisionEffect()
+    {
+        collisionEffect.SetActive(false);
+    }
+
+    private void SetLaserColor(Color color)
+    {
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
     }
 
     private void GetSimilarReceviers()

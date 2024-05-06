@@ -13,13 +13,22 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
     [SerializeField]
     private bool isActive;
 
-    private ParticleSystem particleSystem;
+    public Color color;
+
+    private ParticleSystem _particleSystem;
+    private Laser laserScript;
+    private LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
-        particleSystem = GetComponent<ParticleSystem>();
+        laserScript = gameObject.GetComponent<Laser>();
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        _particleSystem = GetComponent<ParticleSystem>();
+        var main = _particleSystem.main;
+        main.startColor = color;
         ToggleEmitter(isActive);
+        laserScript.color = color;
     }
 
     // Update is called once per frame
@@ -50,16 +59,14 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
 
     private void ToggleEmitter(bool isActive)
     {
-        Laser laserScript = gameObject.GetComponent<Laser>();
-        LineRenderer lineRenderer = gameObject.GetComponent<LineRenderer>();
        
         if (isActive)
         {
-            particleSystem.Play();
+            _particleSystem.Play();
         } else
         {
             laserScript.BlockLaserFromAll();
-            particleSystem.Stop();
+            _particleSystem.Stop();
             //particleSystem.gameObject.SetActive(false);
         }
         lineRenderer.enabled = isActive;

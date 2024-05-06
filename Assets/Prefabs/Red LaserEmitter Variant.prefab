@@ -348,9 +348,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b086d9f4eb8d2347b39129e3e6dc0b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collisionEffect: {fileID: 1132587563607472450, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+    type: 3}
   startPoint: {fileID: 3195737258080365257}
   direction: {x: 0, y: 0, z: 0}
   isBlue: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
   onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
   onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
   onLaserStopped: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
