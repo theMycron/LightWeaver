@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     private bool isFalling;
     private bool isJumpCancelled = false;
     public bool isCarryingObject;
-    private enum AnimationState
+    public enum AnimationState
     {
         disabled = 0,
         idle = 1,
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         jumping = 4,
         falling = 5,
     }
-    private enum UpperAnimationState
+    public enum UpperAnimationState
     {
         none = 0,
         carryObject = 1,
