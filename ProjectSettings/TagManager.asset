@@ -16,6 +16,12 @@ TagManager:
   - ActiveRobot
   - Undefined
   - Robots
+  - BlueLaserEmitter
+  - BlueLaserReceiver
+  - LaserCube
+  - RedLaserReceiver
+  - RedLaserEmitter
+  - Dummy
   layers:
   - Default
   - TransparentFX
@@ -26,7 +32,7 @@ TagManager:
   - Ground
   - Cube
   - Robot
-  - 
+  - LaserCube
   - 
   - 
   - 
