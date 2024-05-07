@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : MonoBehaviour, IActivable, IDisable
 {
     private Animator animator;
     // Start is called before the first frame update
     [SerializeField]
     private int gateNumber;
 
-    private bool hasLaserDetectedBefore;
-    private bool hasLaserBlockedBefore;
+    private List<GameObject> activators = new List<GameObject>();
 
     [SerializeField]
     private int activationsRequired;
     void Start()
     {
         animator = GetComponent<Animator>();
-        hasLaserDetectedBefore = false;
     }
 
     // Update is called once per frame
@@ -43,60 +41,25 @@ public class Gate : MonoBehaviour
         
     //}
 
-    public void CloseGate(Component sender, object data, int gateNumber)
+    private bool CheckGateNumber(int gateNumber)
     {
-        //activationsRequired++;
-        //if (CheckGateNumber(gateNumber) && activationsRequired != 0)
-        //{
-        //    animator.SetBool("isOpened", false);
-        //}
-        Debug.Log("close sender: " + sender);
-        if (CheckGateNumber(gateNumber))
-        {
-            if (sender.tag.EndsWith("Emitter"))
-            {
-                if (!hasLaserBlockedBefore)
-                {
-                    hasLaserBlockedBefore = true;
-                    activationsRequired++;
-                }
-                hasLaserDetectedBefore = false;
-            } else
-            {
-                activationsRequired++;
-            }
-            
-            if (activationsRequired != 0)
-            {
-                animator.SetBool("isOpened", false);
-            }
-            
-        }
+        return this.gateNumber == gateNumber;
     }
 
-    public void OpenGate(Component sender, object data, int gateNumber)
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-        //activationsRequired--;
-        //if (CheckGateNumber(gateNumber) && activationsRequired == 0)
-        //{
-        //    animator.SetBool("isOpened", true);
-        //}
-        if (CheckGateNumber(gateNumber))
+
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
-            if (sender.tag.EndsWith("Emitter"))
+
+            // if an object is already activating this gate, dont try to activate again
+            if (activators.Contains(sender.gameObject))
             {
-                if (!hasLaserDetectedBefore)
-                {
-                    activationsRequired--;
-                    hasLaserDetectedBefore = true;
-                    hasLaserBlockedBefore = false;
-                }
-                
-            } else
-            {
-                activationsRequired--;
+                return;
             }
-                
+            activators.Add(sender.gameObject);
+            activationsRequired--;
+
             if (activationsRequired == 0)
             {
                 animator.SetBool("isOpened", true);
@@ -104,13 +67,24 @@ public class Gate : MonoBehaviour
         }
     }
 
-    private bool CheckGateNumber(int gateNumber)
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        return this.gateNumber == gateNumber;
-    }
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
+        {
+            Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
 
-    //private void ResetGateParameters()
-    //{
-    //    hasLaserDetectedBefore = false;
-    //}
+            if (!activators.Contains(sender.gameObject))
+            {
+                return;
+            }
+            activators.Remove(sender.gameObject);
+            activationsRequired++;
+
+            if (activationsRequired != 0)
+            {
+                animator.SetBool("isOpened", false);
+            }
+
+        }
+    }
 }

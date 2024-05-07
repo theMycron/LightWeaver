@@ -9,9 +9,17 @@ public class FloorButton : MonoBehaviour
     private Animator animator;
     private Animator gateAnimator;
 
-    [Header("Gates Attached")]
+    [Header("Gate Attached")]
     [SerializeField]
     private int gateNumber;
+
+    [Header("Emitter Attached")]
+    [SerializeField]
+    private int emitterNumber;
+
+    [Header("Robot Attached")]
+    [SerializeField]
+    private int robotNumber;
     //private GameObject gate;
 
     [Header("Events")]
@@ -46,7 +54,10 @@ public class FloorButton : MonoBehaviour
             //gateAnimator.SetBool("isOpened", true);
         }
 
-        onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"), gateNumber);
+        onFloorButtonPressed.Raise(this, gateNumber, "Gate", animator.GetBool("isObjectOver"));
+        onFloorButtonPressed.Raise(this, emitterNumber, "Emitter", animator.GetBool("isObjectOver"));
+        onFloorButtonPressed.Raise(this, robotNumber, "Robot", animator.GetBool("isObjectOver"));
+        //onFloorButtonPressed.Raise(this, animator.GetBool("isObjectOver"), emitterNumber);
     }
 
     private void OnTriggerExit(Collider other)
@@ -63,6 +74,7 @@ public class FloorButton : MonoBehaviour
             //gateAnimator.SetBool("isOpened", false);
         }
 
-        onFloorButtonDePressed.Raise(this, animator.GetBool("isObjectOver"), gateNumber);
+        onFloorButtonDePressed.Raise(this, gateNumber, "Gate", animator.GetBool("isObjectOver"));
+        onFloorButtonDePressed.Raise(this, emitterNumber, "Emitter", animator.GetBool("isObjectOver"));
     }
 }

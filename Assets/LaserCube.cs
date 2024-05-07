@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserCube : MonoBehaviour
+public class LaserCube : MonoBehaviour, IActivable, IDisable
 {
     [SerializeField]
     private Material redMaterial;
@@ -10,52 +10,131 @@ public class LaserCube : MonoBehaviour
     [SerializeField] 
     private Material blueMaterial;
 
+    public Color color;
+    public LaserColors colorEnum;
+
     private LineRenderer lineRenderer;
 
     [SerializeField]
     private Transform startPoint;
-    
+    private Laser laserScript;
+
+    [SerializeField]
+    private bool isActive;
+
+    [Header("LaserCube Number")]
+    [SerializeField]
+    private int cubeNumber;
+
+    private GameObject activatedBy;
+    public int CubeNumber { get { return this.cubeNumber; } }
+
+
     // Start is called before the first frame update
     void Start()
     {
+        isActive = false;
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, startPoint.localPosition);
+        lineRenderer.SetPosition(0, startPoint.position);
         //lineRenderer.useWorldSpace = true;
-        lineRenderer.startWidth = 0.4059853f;
-        lineRenderer.endWidth = 0.4059853f;
         lineRenderer.enabled = false;
+        laserScript = GetComponent<Laser>();
+
+        ChangeCubeColor(colorEnum);
+        ToggleLaserCube(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-    }
-
-    public void RedirectLaser(Component sender, object data, int t)
-    {
-        Debug.Log("Redirect Laser called!");
-        ChangeInnerSphereColor(sender);
-        if (!lineRenderer.enabled)
+        if (laserScript.enabled)
         {
-            lineRenderer.enabled = true;
+            isActive = true;
+            lineRenderer.SetPosition(0,startPoint.position);
+            laserScript.direction = transform.forward;
+        }
+    }
+    public void StopLaser(Component sender, object data, int t)
+    {
+        Debug.Log("Stop Laser called!");
+        if (lineRenderer.enabled)
+        {
+            lineRenderer.enabled = false;
+            laserScript.enabled = false;
         }
 
-        //Debug.DrawLine(startPoint.position, new Vector3(0f, 0f, 15f), Color.red);
+        //Debug.Log("is enabled: ");
+        //Debug.Log(lineRenderer.enabled);
+        //Debug.Log(laserScript.enabled);
     }
 
-    private void ChangeInnerSphereColor(Component sender)
+    private void ChangeCubeColor(LaserColors color)
     {
-        
-        if (sender.tag.StartsWith("Blue"))
+        colorEnum = color;
+        if (color == LaserColors.blue)
         {
-            GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = blueMaterial;
-            lineRenderer.material = blueMaterial;
+            // change color of inner sphere
+            transform.GetChild(1).GetComponent<MeshRenderer>().material = blueMaterial;
+        } else if (color == LaserColors.red)
+        {
+            // change color of inner sphere
+            transform.GetChild(1).GetComponent<MeshRenderer>().material = redMaterial;
+        }
+        this.color = (Color) Colors.GetLaserColor(color);
+    }
+
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (isActive || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        {
+            return;
+        }
+        activatedBy = sender.gameObject;
+
+        ToggleLaserCube(true);
+    }
+
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (!isActive || activatedBy != sender.gameObject || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
+        {
+            return;
+        }
+
+        activatedBy = null;
+        ToggleLaserCube(false);
+    }
+
+    private void ToggleLaserCube(bool value)
+    {
+        if (value)
+        {
+            Debug.Log("Redirect Laser called!");
+            isActive = true;
+            ChangeCubeColor(activatedBy.GetComponent<Laser>().colorEnum);
+            if (!lineRenderer.enabled)
+            {
+                lineRenderer.enabled = true;
+                laserScript.enabled = true;
+                laserScript.SetLaserColor(colorEnum);
+                laserScript.direction = transform.forward;
+                //Debug.Log("Direction: "+laserScript.direction);
+                //Debug.Log("Rotation: "+transform.forward);
+            }
         } else
         {
-            GameObject.Find("InnerSphere").gameObject.GetComponent<MeshRenderer>().material = redMaterial;
-            lineRenderer.material = redMaterial;
+            laserScript.BlockLaserFromAll();
+            isActive = false;
+            //ToggleLaserCube(isActive);
+            lineRenderer.enabled = false;
+            laserScript.enabled = false;
+
+            Debug.Log($"laser cube stopped redirecting");
         }
-        
+    }
+
+    private bool CheckLaserCubeNmber(int laserCubeNumber)
+    {
+        return this.cubeNumber == laserCubeNumber;
     }
 }

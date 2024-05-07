@@ -1,155 +1,85 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class LaserEmitter : MonoBehaviour
+public class LaserEmitter : MonoBehaviour, IActivable, IDisable
 {
 
+    [SerializeField]
+    private int number;
+
+    [SerializeField]
+    private bool isActive;
+    public LaserColors selectedLaserColor;
+
+    private Color color;
+
+    private ParticleSystem _particleSystem;
+    private Laser laserScript;
     private LineRenderer lineRenderer;
-
-    [SerializeField]
-    private Transform startPoint;
-
-    [Header("Laser Distance")]
-    [SerializeField]
-    private int laserDistance;
-    private Vector3 direction;
-
-    private GameObject[] laserReceivers;
-    private GameObject lastHittedRecevier;
-    private bool hasLaserBlockedBefore = false;
-
-    [Header("Events")]
-    public GameEvent onLaserCollided;
-    public GameEvent onLaserBlocked;
-    public GameEvent onLaserCollidedWithLaserCube;
-
-    //enum Directions { north = 0, east = 90, south = 180, west  = 270 }
-    //[Header("Directions")]
-    //[SerializeField] private Directions directions; 
 
     // Start is called before the first frame update
     void Start()
     {
-        lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, startPoint.position);
-        direction = -transform.forward;
-        //gateAnimator = gate.GetComponent<Animator>();
-        GetSimilarReceviers();
+        color = (Color)Colors.GetLaserColor(selectedLaserColor);
+        laserScript = gameObject.GetComponent<Laser>();
+        lineRenderer = gameObject.GetComponent<LineRenderer>();
+        _particleSystem = GetComponent<ParticleSystem>();
+        var main = _particleSystem.main;
+        main.startColor = color;
+        laserScript.color = color;
+        ToggleEmitter(isActive);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log(startPoint.position);
-        //lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
-        RaycastHit hit;
-        // this will be for north by default
-
-        //if (directions == Directions.south)
-        //{
-        //    direction = transform.forward;
-        //} else if (directions == Directions.east)
-        //{
-        //    direction = transform.right;
-        //} else if  (directions == Directions.west)
-        //{
-        //    direction = -transform.right;
-        //}
-
-        //if (laserReceivers.Length == 0)
-        //{
-        //    Debug.Log("No lasers found;");
-        //    return;
-        //}
-
-        
-
-        if (Physics.Raycast(transform.position, direction, out hit))
-        {
-            
-            if (hit.collider)
-            {
-                lineRenderer.SetPosition(1, hit.point);
-            }
-            if (hit.transform.tag.EndsWith("LaserReceiver"))
-            {
-
-                if (laserReceivers.Contains(hit.transform.gameObject))
-                {
-                    lastHittedRecevier = hit.transform.gameObject;
-                    Debug.Log("Open Gate Logic!");
-                    onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
-                    hasLaserBlockedBefore = false;
-                    //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
-                   
-                } else
-                {
-                    lastHittedRecevier = null;
-                    Debug.Log("Wrong receiver color" + lastHittedRecevier);
-                }
-
-            }
-            else
-            {
-                //Debug.Log("Close Gate Logic!");
-                //Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
-                
-                if (!hasLaserBlockedBefore && lastHittedRecevier != null)
-                {
-                    
-                    onLaserBlocked.Raise(this, null, 1);
-                    lastHittedRecevier = null;
-                    hasLaserBlockedBefore = true;
-                }
-                
-            }
-
-            if (hit.transform.tag == "LaserCube")
-            {
-                onLaserCollidedWithLaserCube.Raise(this, null, -1);
-            }
-
-            // if hitted robot
-            if (hit.transform.tag.StartsWith("Robot"))
-            {
-                // TODO: change behaviour to perform laser pointing logic only when robot is active
-                // robot activation should have the same behaviour as opening a gate,
-                // either by floor button or laser receiver
-                // check if active
-                if (!hit.transform.gameObject.GetComponent<PlayerController>().isActive)
-                {
-                    hit.transform.gameObject.GetComponent<PlayerController>().ActivateRobot();
-                    Debug.Log("Active robot please");
-                } else // if not active
-                {
-                    //Debug.Log("Laser Pointing logic!");
-                }
-                
-            }
-        }
-        else
-        {
-            lineRenderer.SetPosition(1, direction * laserDistance);
-        }
 
     }
 
-    private void GetSimilarReceviers()
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-        if (this.tag.StartsWith("Blue"))
+        if (!isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
         {
-            laserReceivers = GameObject.FindGameObjectsWithTag("BlueLaserReceiver");
+            isActive = true;
+            ToggleEmitter(isActive);
+            Debug.Log("Activate laser emitter!");
+        }
+    }
 
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
+        {
+            isActive = false;
+            ToggleEmitter(isActive);
+            Debug.Log("Deactivate laser emitter!");
+        }
+    }
+
+    private void ToggleEmitter(bool isActive)
+    {
+       
+        if (isActive)
+        {
+            _particleSystem.Play();
         } else
         {
-            laserReceivers = GameObject.FindGameObjectsWithTag("RedLaserReceiver");
+            laserScript.BlockLaserFromAll();
+            _particleSystem.Stop();
+            //particleSystem.gameObject.SetActive(false);
         }
-        //foreach (var lr in laserReceivers)
-        //{
-        //    Debug.Log(lr.tag + " " + laserReceivers.Length);
-        //}
+        lineRenderer.enabled = isActive;
+        Debug.Log($"laserscript color: {laserScript.color}");
+        laserScript.enabled = isActive;
+        laserScript.SetLaserColor(selectedLaserColor);
+    }
+
+    private bool CheckEmitterNumber(int emitterNumber)
+    {
+        return this.number == emitterNumber;
     }
 
 }

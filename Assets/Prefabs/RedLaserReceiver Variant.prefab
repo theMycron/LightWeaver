@@ -81,7 +81,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
         type: 3}
       propertyPath: m_Name
-      value: LaserReceiver Variant
+      value: RedLaserReceiver Variant
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
         type: 3}
@@ -153,7 +153,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 624afbb60544cf74e95e4314792d2bee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  receiverNumber: 0
+  selectedLaserColor: 0
   gateNumber: 0
+  emitterNumber: 0
+  robotNumber: 0
+  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
 --- !u!114 &9070377830024031835
 MonoBehaviour:
   m_ObjectHideFlags: 0
