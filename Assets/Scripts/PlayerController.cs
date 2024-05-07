@@ -27,13 +27,19 @@ public class PlayerController : MonoBehaviour, IActivable
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
-    
+
     [Header("Jumping")]
     [SerializeField] float jumpForce;
+    float jumpForceCounter;
     [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
     [SerializeField] float airMultiplier = .2f;
     Boolean readyToJump;
+    [SerializeField] float JumpTime;
+    [SerializeField] float minJumpTime;
+    float jumpTimeCounter;
+    float minJumpTimeLimit;
+    bool isJumping = false;
 
     [Header("Ground Check")]
     [SerializeField] LayerMask ground;
@@ -42,6 +48,7 @@ public class PlayerController : MonoBehaviour, IActivable
     private RobotTextureController texture;
     private Animator anim;
     private bool isFalling;
+    private bool isJumpCancelled = false;
     public bool isCarryingObject;
     private enum AnimationState
     {
@@ -74,10 +81,11 @@ public class PlayerController : MonoBehaviour, IActivable
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
+        minJumpTimeLimit = JumpTime - minJumpTime;
         ResetJump();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
-        
+
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
 
     }
@@ -95,7 +103,9 @@ public class PlayerController : MonoBehaviour, IActivable
         InputManager.Player.Move.performed += OnMovePerformed;
         InputManager.Player.Move.canceled += OnMoveCancelled;
 
+        InputManager.Player.Jump.started += OnJumpStarted;
         InputManager.Player.Jump.performed += OnJumpPerformed;
+        InputManager.Player.Jump.canceled += OnJumpCancelled;
     }
 
     public void DisableInput()
@@ -104,10 +114,14 @@ public class PlayerController : MonoBehaviour, IActivable
         InputManager.Player.Move.performed -= OnMovePerformed;
         InputManager.Player.Move.canceled -= OnMoveCancelled;
 
+        InputManager.Player.Jump.started -= OnJumpStarted;
         InputManager.Player.Jump.performed -= OnJumpPerformed;
+        InputManager.Player.Jump.canceled -= OnJumpCancelled;
+
     }
-    private void Update()   
+    private void Update()
     {
+
     }
     private void FixedUpdate()
     {
@@ -126,11 +140,10 @@ public class PlayerController : MonoBehaviour, IActivable
 
         //CarryObject();
 
-        /*        //check if player is not moving
-                if (moveDirection == Vector2.zero && IsGrounded())
-                {
-                    anim.SetInteger("BaseState", (int)AnimationState.idle);
-                }*/
+        if (isJumping)
+        {
+            Jump();
+        } 
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -151,20 +164,21 @@ public class PlayerController : MonoBehaviour, IActivable
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
         Vector3 force;
         // Adjust velocity if the player is grounded
-        if (IsGrounded() )
+        if (IsGrounded())
         {
             // drag will be applied when grounded
             force = targetVector.normalized * moveSpeed * 10f;
 
-        } else
+        }
+        else
         {
             // no drag will be applied when airborne (because it messes with the jump height)
             // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed * 10f * airMultiplier;
+            force = targetVector.normalized * moveSpeed * airMultiplier;
         }
 
         rb.AddForce(force, ForceMode.Force);
-        
+
         // Return the movement vector
         return targetVector;
     }
@@ -180,56 +194,121 @@ public class PlayerController : MonoBehaviour, IActivable
 
     bool IsGrounded()
     {
-        Debug.DrawRay(transform.position, Vector3.down * groundCheckDistance, Color.red, 2, true);
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
-        
+
         Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
         Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
-        
-        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        bool groundedInCheck3 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + 0.5f, ground);
-        
-        return  groundedInCheck1 || groundedInCheck2 || groundedInCheck3;
+        Transform groundCheck3Trans = gameObject.transform.Find("GroundCheck3");
+        Transform groundCheck4Trans = gameObject.transform.Find("GroundCheck4");
 
+        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+
+        Debug.DrawRay(groundCheck1Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck2Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck3Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(groundCheck4Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
+        Debug.DrawRay(transform.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 2, true);
+
+        return groundedInCheck1 || groundedInCheck2 || groundedInCheck3 || groundedInCheck4 || groundedInCheck5;
+
+    }
+    void OnJumpStarted(InputAction.CallbackContext context)
+    {
+        Debug.Log("Jump Started!!!");
+        if (IsGrounded() && !isJumping)
+        {
+            isJumping = true;
+            isJumpCancelled = false;
+            anim.SetInteger("BaseState", (int)AnimationState.jumping);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            jumpTimeCounter = JumpTime;
+            jumpForceCounter = jumpForce;
+
+            Debug.Log("JumpStart Y Velocity: " + rb.velocity.y);
+            Debug.Log("JumpStart Y Position: " + rb.position.y);
+        }
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
     {
-        //Debug.Log(IsGrounded());
-
-        if (readyToJump && IsGrounded())
-        {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
-            
-        }
-        
     }
+    void OnJumpCancelled(InputAction.CallbackContext context)
+    {
+        if (!isJumping)
+        {
+            return;
+        }
 
+        Debug.Log("Jump attempted Cancel!!!");
+        Debug.Log("JumpTimeCounter:" + jumpTimeCounter);
+        //Debug.Log("Robot Y Velocity:" + rb.velocity.y);
+        //Debug.Log("Robot is Grounded:" + IsGrounded());
+
+        //if (!isFalling && jumpTimeCounter < minJumpTimeLimit)
+        //{
+        //    rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        //    isJumping = false;
+        //}
+        //if (IsGrounded())
+        //{
+        //    /*            anim.SetInteger("BaseState", (int)AnimationState.idle);*/
+        //    rb.AddForce(transform.up * 13f, ForceMode.Impulse);
+        //}
+        //if (jumpTimeCounter >= 0.75 * JumpTime)
+        //{
+        //    rb.AddForce(transform.up * 6f, ForceMode.Impulse);
+        //    Debug.Log("small Jump Performed: ");
+        //}
+        isJumpCancelled = true;
+    }
+    
     private void ResetJump()
     {
         readyToJump = true;
     }
     void Jump()
     {
-        // reset y velocity then apply jump force
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
-
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        anim.SetInteger("BaseState", (int)AnimationState.jumping);
+        // if player attempted to cancel jump, dont stop the jump until minimum time limit
+        if (isJumpCancelled && !isFalling && jumpTimeCounter < minJumpTimeLimit)
+        {
+            StopJump();
+        }
+        if (jumpTimeCounter > 0)
+        {
+            /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
+            rb.AddForce(transform.up* jumpForceCounter, ForceMode.Impulse);
+            jumpForceCounter *= 0.5f;
+            jumpTimeCounter -= Time.deltaTime;
+            Debug.Log("Jumping! time: " + jumpTimeCounter + ", force: " + jumpForceCounter);
+        }
+        else if (jumpTimeCounter <= 0 || jumpForceCounter < 0.01f)
+        {
+            // stop jump if reached maximum jump time 
+            StopJump();
+        }
     }
-
-
+    void StopJump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        jumpTimeCounter = 0;
+        isJumpCancelled = false;
+        isJumping = false;
+        Debug.Log("Cancelled jump! started falling at jumpTime: " + jumpTimeCounter + "  " + minJumpTimeLimit);
+    }
     void RobotFalling()
     {
         // If the player is not grounded, apply gravity
         if (!IsGrounded() && rb.velocity.y <= 0)
         {
+            //Debug.Log("Robot is Falling!!!");
             rb.AddForce(Vector3.down * fallSpeed * Time.deltaTime, ForceMode.VelocityChange);
             anim.SetInteger("BaseState", (int)AnimationState.falling);
+            //Debug.Log("BaseState"+ (int)AnimationState.falling);
             isFalling = true;
         }
     }
@@ -238,25 +317,33 @@ public class PlayerController : MonoBehaviour, IActivable
     {
         if (isFalling && IsGrounded())
         {
+            
             // only play the landing animation if the player isnt trying to move
             // if the player is trying to move, play the walking animation
             if (moveDirection == Vector2.zero)
+            {
+                Debug.Log("Robot is Landing!!!");
                 anim.SetInteger("BaseState", (int)AnimationState.landing);
+                Debug.Log("BaseState"+ (int)AnimationState.landing);
+                /*                anim.SetInteger("BaseState", (int)AnimationState.idle);*/
+            }
+                
             else
-                 anim.SetInteger("BaseState", (int)AnimationState.walking);
+                anim.SetInteger("BaseState", (int)AnimationState.walking);
             isFalling = false;
         }
     }
 
     void CarryObject()
     {
-        
+
         if (isCarryingObject)
         {
             //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
             Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
-        }else
+        }
+        else
         {
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
             //  layer weight is always set to 1, will do empty animation if not carrying
