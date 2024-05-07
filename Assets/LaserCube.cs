@@ -124,6 +124,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         } else
         {
             laserScript.BlockLaserFromAll();
+            laserScript.HideCollisionEffect();
             isActive = false;
             //ToggleLaserCube(isActive);
             lineRenderer.enabled = false;

@@ -109,7 +109,7 @@ public class CubeController : MonoBehaviour
     {
         if (isRaised)
         {
-            transform.Rotate(Vector3.right, 180f, Space.Self);
+            transform.Rotate(Vector3.right, 90f, Space.Self);
         }
     }
 

@@ -72,7 +72,7 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
             //particleSystem.gameObject.SetActive(false);
         }
         lineRenderer.enabled = isActive;
-        Debug.Log($"laserscript color: {laserScript.color}");
+        //Debug.Log($"laserscript color: {laserScript.color}");
         laserScript.enabled = isActive;
         laserScript.SetLaserColor(selectedLaserColor);
     }

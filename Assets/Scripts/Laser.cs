@@ -123,6 +123,7 @@ public class Laser : MonoBehaviour
             // if hitted robot
             if (currentHitObject.tag.StartsWith("Robot"))
             {
+                Debug.Log("HIT ROBOT WITH LASER " + startPoint.position);
                 // TODO: change behaviour to perform laser pointing logic only when robot is active
                 // robot activation should have the same behaviour as opening a gate,
                 // either by floor button or laser receiver
@@ -215,8 +216,12 @@ public class Laser : MonoBehaviour
         laserCollision.MoveCollision(position + (normal*0.2f), Quaternion.LookRotation(normal));
         Debug.DrawRay(collisionEffectInstance.transform.position, collisionEffect.transform.forward*5, Color.blue, 1, false);
     }
-    private void HideCollisionEffect()
+    public void HideCollisionEffect()
     {
+        if (!collisionEffectInstance)
+        {
+            return;
+        }
         collisionEffectInstance.SetActive(false);
     }
 
