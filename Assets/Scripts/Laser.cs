@@ -245,6 +245,7 @@ public class Laser : MonoBehaviour
         Debug.Log($"laserscript new color: {this.color}");
 
         lineRenderer.colorGradient = gradient;
+        GetSimilarReceviers();
     }
 
     private void GetSimilarReceviers()

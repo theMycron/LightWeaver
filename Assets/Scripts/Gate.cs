@@ -13,9 +13,16 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
     [SerializeField]
     private int activationsRequired;
+
+    private Collider[] doorColliders;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        doorColliders = new Collider[2];
+        doorColliders[0] = transform.GetChild(0).GetComponent<BoxCollider>();
+        doorColliders[1] = transform.GetChild(1).GetComponent<BoxCollider>();
+        animator.speed = 10f;
     }
 
     // Update is called once per frame
@@ -41,6 +48,16 @@ public class Gate : MonoBehaviour, IActivable, IDisable
         
     //}
 
+    private void ToggleGateOpen(bool open)
+    {
+        foreach (Collider collider in doorColliders)
+        {
+            collider.enabled = !open;
+        }
+        animator.SetBool("isOpened", open);
+        animator.speed = 1f;
+    }
+
     private bool CheckGateNumber(int gateNumber)
     {
         return this.gateNumber == gateNumber;
@@ -48,10 +65,8 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
-
         if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
-
             // if an object is already activating this gate, dont try to activate again
             if (activators.Contains(sender.gameObject))
             {
@@ -62,7 +77,7 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
             if (activationsRequired == 0)
             {
-                animator.SetBool("isOpened", true);
+                ToggleGateOpen(true);
             }
         }
     }
@@ -71,7 +86,7 @@ public class Gate : MonoBehaviour, IActivable, IDisable
     {
         if (CheckGateNumber(objectNumber) && targetName == "Gate")
         {
-            Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
+            //Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
 
             if (!activators.Contains(sender.gameObject))
             {
@@ -82,7 +97,7 @@ public class Gate : MonoBehaviour, IActivable, IDisable
 
             if (activationsRequired != 0)
             {
-                animator.SetBool("isOpened", false);
+                ToggleGateOpen(false);
             }
 
         }

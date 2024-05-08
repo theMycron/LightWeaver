@@ -53,7 +53,7 @@ public class FloorButton : MonoBehaviour
             animator.SetBool("isObjectOver", true);
             //gateAnimator.SetBool("isOpened", true);
         }
-
+        Debug.Log("Sending event for gate");
         onFloorButtonPressed.Raise(this, gateNumber, "Gate", animator.GetBool("isObjectOver"));
         onFloorButtonPressed.Raise(this, emitterNumber, "Emitter", animator.GetBool("isObjectOver"));
         onFloorButtonPressed.Raise(this, robotNumber, "Robot", animator.GetBool("isObjectOver"));
