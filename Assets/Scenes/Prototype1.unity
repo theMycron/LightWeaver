@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -281,10 +281,118 @@ PrefabInstance:
       propertyPath: m_Name
       value: BlueLaserEmitter Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2614152224387511309, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -15.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 270
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 17c777680c01cc34a8718a1db0559d24, type: 3}
+--- !u!1001 &275416797
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.atime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.ctime0
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.g
+      value: 0.5137255
+      objectReference: {fileID: 0}
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.colorGradient.key1.r
+      value: 0.4392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].time
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 332908727322639666, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[0].value
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2614152224387511309, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Name
+      value: BlueLaserEmitter Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}

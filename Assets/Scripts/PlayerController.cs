@@ -8,7 +8,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IActivable
 {
     public InputManager InputManager;
 
@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour
 
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
-
+    [SerializeField] public int robotNumber;
+    
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
@@ -149,7 +150,6 @@ public class PlayerController : MonoBehaviour
     {
         moveDirection = context.ReadValue<Vector2>();
         anim.SetInteger("BaseState", (int)AnimationState.walking);
-
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
@@ -219,7 +219,7 @@ public class PlayerController : MonoBehaviour
     }
     void OnJumpStarted(InputAction.CallbackContext context)
     {
-        Debug.Log("Jump Started!!!");
+        //Debug.Log("Jump Started!!!");
         if (IsGrounded() && !isJumping)
         {
             isJumping = true;
@@ -229,8 +229,8 @@ public class PlayerController : MonoBehaviour
             jumpTimeCounter = JumpTime;
             jumpForceCounter = jumpForce;
 
-            Debug.Log("JumpStart Y Velocity: " + rb.velocity.y);
-            Debug.Log("JumpStart Y Position: " + rb.position.y);
+            //Debug.Log("JumpStart Y Velocity: " + rb.velocity.y);
+            //Debug.Log("JumpStart Y Position: " + rb.position.y);
         }
     }
     void OnJumpPerformed(InputAction.CallbackContext context)
@@ -243,8 +243,8 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Debug.Log("Jump attempted Cancel!!!");
-        Debug.Log("JumpTimeCounter:" + jumpTimeCounter);
+        //Debug.Log("Jump attempted Cancel!!!");
+        //Debug.Log("JumpTimeCounter:" + jumpTimeCounter);
         //Debug.Log("Robot Y Velocity:" + rb.velocity.y);
         //Debug.Log("Robot is Grounded:" + IsGrounded());
 
@@ -283,7 +283,7 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(transform.up* jumpForceCounter, ForceMode.Impulse);
             jumpForceCounter *= 0.5f;
             jumpTimeCounter -= Time.deltaTime;
-            Debug.Log("Jumping! time: " + jumpTimeCounter + ", force: " + jumpForceCounter);
+            //Debug.Log("Jumping! time: " + jumpTimeCounter + ", force: " + jumpForceCounter);
         }
         else if (jumpTimeCounter <= 0 || jumpForceCounter < 0.01f)
         {
@@ -297,7 +297,7 @@ public class PlayerController : MonoBehaviour
         jumpTimeCounter = 0;
         isJumpCancelled = false;
         isJumping = false;
-        Debug.Log("Cancelled jump! started falling at jumpTime: " + jumpTimeCounter + "  " + minJumpTimeLimit);
+        //Debug.Log("Cancelled jump! started falling at jumpTime: " + jumpTimeCounter + "  " + minJumpTimeLimit);
     }
     void RobotFalling()
     {
@@ -321,9 +321,9 @@ public class PlayerController : MonoBehaviour
             // if the player is trying to move, play the walking animation
             if (moveDirection == Vector2.zero)
             {
-                Debug.Log("Robot is Landing!!!");
+                //Debug.Log("Robot is Landing!!!");
                 anim.SetInteger("BaseState", (int)AnimationState.landing);
-                Debug.Log("BaseState"+ (int)AnimationState.landing);
+                //Debug.Log("BaseState"+ (int)AnimationState.landing);
                 /*                anim.SetInteger("BaseState", (int)AnimationState.idle);*/
             }
                 
@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour
         {
             //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
-            Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
+            //Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
         }
         else
         {
@@ -375,5 +375,19 @@ public class PlayerController : MonoBehaviour
     {
         isActive = true;
         CheckIfActive();
+    }
+
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (!isActive && CheckRobotNumber(objectNumber) && targetName == "Robot")
+        {
+            isActive = true;
+            CheckIfActive();
+        }
+    }
+
+    private bool CheckRobotNumber(int robotNumber)
+    {
+        return this.robotNumber == robotNumber;
     }
 }
