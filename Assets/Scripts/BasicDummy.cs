@@ -9,6 +9,11 @@ public class BasicDummy : MonoBehaviour
     private NavMeshAgent agent;
     private Rigidbody rigidbody;
 
+    [SerializeField]
+    private int dummyNumber;
+
+    public int DummyNumber { get { return dummyNumber; } }
+
     PlayerController controller;
 
     Vector2 direction;

@@ -141,6 +141,20 @@ public class Laser : MonoBehaviour
 
             }
 
+            if (currentHitObject.tag.Equals("Dummy"))
+            {
+                if (colorEnum == LaserColors.red)
+                {
+                    Debug.Log("Kill and explode dummy");
+                } else
+                {
+                    Debug.Log("Freeze dummy");
+                }
+            } else
+            {
+                BlockLaserFromDummy();
+            }
+
             lastHitObject = currentHitObject;
 
             if (hitLaserInteractable)
@@ -198,6 +212,22 @@ public class Laser : MonoBehaviour
         //onLaserBlocked.Raise(this, null, 1);
         //hasLaserBlockedBefore = true;
         
+    }
+
+    public void BlockLaserFromDummy()
+    {
+        if (!lastHitObject) { return; }
+        BasicDummy lastDummy = lastHitObject.GetComponent<BasicDummy>();
+        BasicDummy currentDummy = currentHitObject.GetComponent<BasicDummy>();
+
+        if (!lastDummy || (currentDummy && lastDummy.DummyNumber == currentDummy.DummyNumber))
+        {
+            return;
+        }
+
+
+        onLaserBlocked.Raise(this, lastDummy.DummyNumber, "Dummy", null);
+
     }
 
     // this will block laser from any object hit in the last frame

@@ -228,6 +228,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 366d6260754b90f43947b68b521550be,
+        type: 3}
+      propertyPath: m_TagString
+      value: Dummy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: 366d6260754b90f43947b68b521550be,
         type: 3}
       propertyPath: m_Avatar
@@ -319,6 +324,7 @@ MonoBehaviour:
   rb: {fileID: 8993694809480805076}
   moveDirection: {x: 0, y: 0}
   isActive: 0
+  robotNumber: 0
   moveSpeed: 25
   rotateSpeed: 7
   groundDrag: 20
