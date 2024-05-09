@@ -345,7 +345,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         }
     }
 
-    public void LaserExit()
+    public void LaserExit(Laser sender)
     {
         texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
     }

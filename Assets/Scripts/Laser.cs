@@ -87,7 +87,7 @@ public class Laser : MonoBehaviour
             if (lastObject != null && lastHitObject != currentHitObject)
             {
                 //Debug.Log($"Exiting last object: {lastHitObject}");
-                lastObject.LaserExit();
+                lastObject.LaserExit(this);
             }
 
             //if (currentHitObject.tag.EndsWith("LaserReceiver"))
@@ -167,6 +167,10 @@ public class Laser : MonoBehaviour
         else
         {
             lineRenderer.SetPosition(1, startPoint.position + direction * laserDistance );
+            if (lastHitObject != null && lastHitObject.GetComponent<ILaserInteractable>() != null)
+            {
+                lastHitObject.GetComponent<ILaserInteractable>().LaserExit(this);
+            }
         }
     }
 
@@ -218,9 +222,9 @@ public class Laser : MonoBehaviour
     {
         if (!lastHitObject) return;
         ILaserInteractable lastObject = lastHitObject.GetComponent<ILaserInteractable>();
-        if (lastObject == null) return;
+        if (lastObject == null ) return;
         currentHitObject = dummyGameObject;
-        lastObject.LaserExit();
+        lastObject.LaserExit(this);
     }
 
     public void BlockLaserFromAllOld()

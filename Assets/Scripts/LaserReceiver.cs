@@ -69,11 +69,19 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
     public void LaserCollide(Laser sender)
     {
         // use ? to check if they have an IActivable component
+        if (sender.colorEnum != selectedLaserColor)
+        {
+            return;
+        }
         activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
     }
 
-    public void LaserExit()
+    public void LaserExit(Laser sender)
     {
+        if (sender.colorEnum != selectedLaserColor)
+        {
+            return;
+        }
         activateList.ForEach(c => c.GetComponent<IActivable>()?.Deactivate(this));
     }
 }

@@ -21,6 +21,7 @@ public class CubeController : MonoBehaviour
     float RotationValue;
     [SerializeField] float rotateSpeed =4f;
     private BoxCollider bx;
+    private float horizontalRotation = 90f;
     private void Awake()
     {
         inputManager = new InputManager();
@@ -109,7 +110,8 @@ public class CubeController : MonoBehaviour
     {
         if (isRaised)
         {
-            transform.Rotate(Vector3.right, 90f, Space.Self);
+            transform.Rotate(Vector3.left, horizontalRotation, Space.Self);
+            horizontalRotation *= -1;
         }
     }
 

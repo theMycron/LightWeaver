@@ -19,6 +19,7 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
     private Transform startPoint;
     private Laser laserScript;
 
+
     [SerializeField]
     private bool isActive;
 
@@ -124,9 +125,9 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
             }
         } else
         {
+            isActive = false;
             laserScript.BlockLaser();
             laserScript.HideCollisionEffect();
-            isActive = false;
             //ToggleLaserCube(isActive);
             lineRenderer.enabled = false;
             laserScript.enabled = false;
@@ -137,16 +138,16 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-        if (!isActive)
+        if (!isActive && activatedBy == null)
         {
             Debug.Log("Laser entered cube");
             activatedBy = sender.gameObject;
             ToggleLaserCube(true);
         }
     }
-    public void LaserExit()
+    public void LaserExit(Laser sender)
     {
-        if (isActive)
+        if (isActive && activatedBy == sender.gameObject)
         {
             Debug.Log("Laser exited cube");
             activatedBy = null;

@@ -5,5 +5,5 @@ using UnityEngine;
 public interface ILaserInteractable
 {
     public void LaserCollide(Laser sender);
-    public void LaserExit();
+    public void LaserExit(Laser sender);
 }
