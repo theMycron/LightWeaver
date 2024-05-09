@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +10,10 @@ public class SwitchPlayer : MonoBehaviour
 {
 
     [SerializeField] private GameObject[] robots;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
     static GameObject activeRobot; 
+
 
     InputManager inputManager;
     private void Awake()
@@ -63,6 +66,7 @@ public class SwitchPlayer : MonoBehaviour
             return;
         }
         DisableAllRobots();
+        SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
         //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
@@ -76,6 +80,11 @@ public class SwitchPlayer : MonoBehaviour
             script.DisableInput();
             //robot.tag = "Undefined";
         }
+    }
+
+    void SetCameraTarget()
+    {
+        virtualCamera.Follow = activeRobot.transform;
     }
 
     public static GameObject GetActiveRobot()
