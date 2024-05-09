@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour, IActivable, IDisable
+public class Gate : MonoBehaviour, IActivable
 {
     private Animator animator;
     // Start is called before the first frame update
@@ -63,6 +63,38 @@ public class Gate : MonoBehaviour, IActivable, IDisable
         return this.gateNumber == gateNumber;
     }
 
+    public void Activate(Component sender)
+    {
+        // if an object is already activating this gate, dont try to activate again
+        if (activators.Contains(sender.gameObject))
+        {
+            return;
+        }
+        activators.Add(sender.gameObject);
+        activationsRequired--;
+
+        if (activationsRequired == 0)
+        {
+            ToggleGateOpen(true);
+        }
+    }
+
+    public void Deactivate(Component sender)
+    {
+        //Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
+
+        if (!activators.Contains(sender.gameObject))
+        {
+            return;
+        }
+        activators.Remove(sender.gameObject);
+        activationsRequired++;
+
+        if (activationsRequired != 0)
+        {
+            ToggleGateOpen(false);
+        }
+    }
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
         if (CheckGateNumber(objectNumber) && targetName == "Gate")

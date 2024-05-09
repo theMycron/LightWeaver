@@ -8,7 +8,7 @@ using static UnityEngine.Rendering.DebugUI;
 
 
 
-public class PlayerController : MonoBehaviour, IActivable
+public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 {
     public InputManager InputManager;
 
@@ -333,6 +333,23 @@ public class PlayerController : MonoBehaviour, IActivable
         }
     }
 
+    public void LaserCollide(Laser sender)
+    {
+        // laser pointing logic
+        switch (sender.colorEnum)
+        {
+            case LaserColors.red:
+                texture.SetRobotColor(RobotTextureController.ROBOT_RED); break;
+            case LaserColors.blue:
+                texture.SetRobotColor(RobotTextureController.ROBOT_BLUE); break;
+        }
+    }
+
+    public void LaserExit()
+    {
+        texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+    }
+
     void CarryObject()
     {
 
@@ -377,6 +394,19 @@ public class PlayerController : MonoBehaviour, IActivable
         CheckIfActive();
     }
 
+    public void Activate(Component sender)
+    {
+        if (!isActive)
+        {
+            isActive = true;
+            CheckIfActive();
+        }
+    }
+
+    public void Deactivate(Component sender)
+    {
+        // robot cannot be deactivated
+    }
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
         if (!isActive && CheckRobotNumber(objectNumber) && targetName == "Robot")

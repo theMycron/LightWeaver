@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserCube : MonoBehaviour, IActivable, IDisable
+public class LaserCube : MonoBehaviour, ILaserInteractable
 {
     [SerializeField]
     private Material redMaterial;
@@ -105,6 +105,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         ToggleLaserCube(false);
     }
 
+
     private void ToggleLaserCube(bool value)
     {
         if (value)
@@ -123,7 +124,7 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
             }
         } else
         {
-            laserScript.BlockLaserFromAll();
+            laserScript.BlockLaser();
             laserScript.HideCollisionEffect();
             isActive = false;
             //ToggleLaserCube(isActive);
@@ -131,6 +132,25 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
             laserScript.enabled = false;
 
             Debug.Log($"laser cube stopped redirecting");
+        }
+    }
+
+    public void LaserCollide(Laser sender)
+    {
+        if (!isActive)
+        {
+            Debug.Log("Laser entered cube");
+            activatedBy = sender.gameObject;
+            ToggleLaserCube(true);
+        }
+    }
+    public void LaserExit()
+    {
+        if (isActive)
+        {
+            Debug.Log("Laser exited cube");
+            activatedBy = null;
+            ToggleLaserCube(false);
         }
     }
 

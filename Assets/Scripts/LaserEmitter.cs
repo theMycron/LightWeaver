@@ -4,7 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class LaserEmitter : MonoBehaviour, IActivable, IDisable
+public class LaserEmitter : MonoBehaviour, IActivable
 {
 
     [SerializeField]
@@ -39,6 +39,20 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
 
     }
 
+    public void Activate(Component sender)
+    {
+        isActive = true;
+        ToggleEmitter(isActive);
+        Debug.Log("Activate laser emitter!");
+    }
+
+    public void Deactivate(Component sender)
+    {
+        isActive = false;
+        ToggleEmitter(isActive);
+        Debug.Log("Deactivate laser emitter!");
+    }
+
     public void Activate(Component sender, int objectNumber, string targetName, object data)
     {
         if (!isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
@@ -67,7 +81,7 @@ public class LaserEmitter : MonoBehaviour, IActivable, IDisable
             _particleSystem.Play();
         } else
         {
-            laserScript.BlockLaserFromAll();
+            laserScript.BlockLaser();
             _particleSystem.Stop();
             //particleSystem.gameObject.SetActive(false);
         }
