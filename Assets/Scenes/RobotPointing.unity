@@ -4315,6 +4315,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   robots:
   - {fileID: 367826219}
+  virtualCamera: {fileID: 1916338517}
 --- !u!4 &606306163
 Transform:
   m_ObjectHideFlags: 0
