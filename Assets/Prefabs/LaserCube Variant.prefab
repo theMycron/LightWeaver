@@ -123,11 +123,27 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 9026957311908238992}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 533871549075282265}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
         type: 3}
       insertIndex: -1
+      addedObject: {fileID: 3163606173413449210}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
+      insertIndex: -1
       addedObject: {fileID: 6195132124584678832}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7603597258146591606}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3862546403731086715}
   m_SourcePrefab: {fileID: 100100000, guid: 759efbf6b9a112d44b03f47c5ee48188, type: 3}
 --- !u!4 &3057445205586306630 stripped
 Transform:
@@ -160,7 +176,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &7247839468303567808
 MonoBehaviour:
@@ -174,9 +190,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f167ee29866558d4483637567a45f0c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redMaterial: {fileID: 2100000, guid: 71043b4620b421346812f3b3fe2d072b, type: 2}
-  blueMaterial: {fileID: 2100000, guid: 9ef98add414170f418a5945f5aaf5744, type: 2}
+  redMaterial: {fileID: 2100000, guid: a6076975d943d934b8b192d15e44dad1, type: 2}
+  blueMaterial: {fileID: 2100000, guid: d7dbaa09baa975449aebec9c9536c231, type: 2}
+  color: {r: 0, g: 0, b: 0, a: 0}
   startPoint: {fileID: 6249727294443442988}
+  isActive: 0
+  cubeNumber: 1
+--- !u!114 &9026957311908238992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177717087144540242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7247839468303567808}
+        m_TargetAssemblyTypeName: LaserCube, Assembly-CSharp
+        m_MethodName: Deactivate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &533871549075282265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,7 +242,35 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7247839468303567808}
         m_TargetAssemblyTypeName: LaserCube, Assembly-CSharp
-        m_MethodName: RedirectLaser
+        m_MethodName: Activate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3163606173413449210
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177717087144540242}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7247839468303567808}
+        m_TargetAssemblyTypeName: LaserCube, Assembly-CSharp
+        m_MethodName: Deactivate
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -226,7 +301,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: -876546973899608171, guid: e8146a9977eb48646a0ff51c800cd600, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -249,7 +324,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 15}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -257,8 +332,8 @@ LineRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.13615337
+        value: 0.9
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -306,6 +381,48 @@ LineRenderer:
     shadowBias: 0.5
     generateLightingData: 0
   m_MaskInteraction: 0
-  m_UseWorldSpace: 0
+  m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &7603597258146591606
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177717087144540242}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b086d9f4eb8d2347b39129e3e6dc0b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collisionEffect: {fileID: 1132587563607472450, guid: 657142b8e0e99f14d9c76d8e34cc042a,
+    type: 3}
+  startPoint: {fileID: 6249727294443442988}
+  direction: {x: 0, y: 0, z: 0}
+  colorEnum: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
+  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
+  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
+  onLaserStopped: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
+  onLaserCollidedWithLaserCube: {fileID: 11400000, guid: a10e9bdce74bedd4c8007dd7271affa2,
+    type: 2}
+--- !u!114 &3862546403731086715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177717087144540242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf0e86e2953053d4aa34b44ea733d8c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isRaised: 0
+  strength: 75
+  CubeLayer:
+    serializedVersion: 2
+    m_Bits: 128
+  pickupDistance: 10
+  rotateSpeed: 6
