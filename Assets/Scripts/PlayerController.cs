@@ -50,6 +50,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool isFalling;
     private bool isJumpCancelled = false;
     public bool isCarryingObject;
+
+    [SerializeField] LayerMask robotLayer;
+    Vector3 requiredHitPoint;
     private enum AnimationState
     {
         disabled = 0,
@@ -106,6 +109,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         InputManager.Player.Jump.started += OnJumpStarted;
         InputManager.Player.Jump.performed += OnJumpPerformed;
         InputManager.Player.Jump.canceled += OnJumpCancelled;
+
+        InputManager.Player.RotateRobot.started += OnRotateRobotStarted;
+        InputManager.Player.RotateRobot.canceled += OnRotateRobotCancelled;
     }
 
     public void DisableInput()
@@ -117,6 +123,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         InputManager.Player.Jump.started -= OnJumpStarted;
         InputManager.Player.Jump.performed -= OnJumpPerformed;
         InputManager.Player.Jump.canceled -= OnJumpCancelled;
+
+        InputManager.Player.RotateRobot.started -= OnRotateRobotStarted;
+        InputManager.Player.RotateRobot.canceled -= OnRotateRobotCancelled;
 
     }
     private void Update()
@@ -144,6 +153,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             Jump();
         } 
+
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -265,7 +275,75 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //}
         isJumpCancelled = true;
     }
+
+    void OnRotateRobotStarted(InputAction.CallbackContext context)
+    {
+        /* Vector2 turn;*/
+        /*        var mousePos = InputManager.Player.MoveMouse.ReadValue<Vector2>();
+                turn.y = mousePos.y;  // Scale down the rotation speed
+                Quaternion rotation = Quaternion.Euler(0, turn.y, 0); // Only change the y-component
+                transform.localRotation = rotation;
+                isRotating = true;*/
+
+        /*        Quaternion rotation = Quaternion.Euler(0, requiredHitPoint.y, 0); // Only change the y-component
+                transform.localRotation = rotation;*/
+
+        /*        var rotation = Quaternion.LookRotation(GetRotatePosition());
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);*/
+
+
+        var rotation = Quaternion.LookRotation(GetRotatePosition());
+
+        // Extract the y-component of the target rotation
+        float targetYRotation = rotation.eulerAngles.y;
+
+        // Create a new rotation with only the y-component changed
+        Quaternion newYRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, targetYRotation, transform.rotation.eulerAngles.z);
+
+        // Rotate towards the new rotation
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, newYRotation, 50);
+
+
+    }
+    Vector3 GetRotatePosition()
+    {
+        Vector3 mouse = Input.mousePosition;
+        Ray castPoint = mainCamera.ScreenPointToRay(mouse);
+        RaycastHit hit;
+        if (Physics.Raycast(castPoint, out hit,Mathf.Infinity))
+        {
+            //length of triangle
+            Vector3 playerHeight = new Vector3(hit.point.x,transform.position.y,hit.point.z);
+            Vector3 hitPoint = new Vector3(hit.point.x,hit.point.y,hit.point.z);
+            float length = Vector3.Distance(playerHeight, hitPoint);
+
+            //length of hypotenuse
+            var deg = 30;
+            var rad = deg * Mathf.Deg2Rad;
+            float hypote = (float)(length / Math.Sin(rad));
+            float distanceFromCamera = hit.distance;
+
+            //changes based on player height
+            if (transform.position.y > hit.point.y)
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera-hypote);
+            }else if (transform.position.y < hit.point.y)
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera - hypote);
+            }else
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera);
+            }
+            
+        }
+        return requiredHitPoint;
+
+    }
     
+    void OnRotateRobotCancelled(InputAction.CallbackContext context)
+    {
+        
+    }
     private void ResetJump()
     {
         readyToJump = true;

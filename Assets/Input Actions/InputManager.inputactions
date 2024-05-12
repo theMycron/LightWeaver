@@ -58,6 +58,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Rotate Robot",
+                    "type": "Button",
+                    "id": "cf2c172d-1d44-45ba-8c8f-850c49415bb2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Move Mouse",
+                    "type": "Value",
+                    "id": "47f4048c-4106-42e6-ba44-c5d51e0d018f",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -234,6 +252,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotate Cube Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ce5b5c2-08a3-45fd-b918-29c865d73a38",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotate Robot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd42073f-ef62-4383-a320-6569f23d1b77",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move Mouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
