@@ -13,22 +13,7 @@ public class FloorButton : MonoBehaviour
     // they must implement the IActivable interface
     public List<GameObject> activateList;
 
-    [Header("Gate Attached")]
-    [SerializeField]
-    private int gateNumber;
-
-    [Header("Emitter Attached")]
-    [SerializeField]
-    private int emitterNumber;
-
-    [Header("Robot Attached")]
-    [SerializeField]
-    private int robotNumber;
     //private GameObject gate;
-
-    [Header("Events")]
-    public GameEvent onFloorButtonPressed;
-    public GameEvent onFloorButtonDePressed;
 
     // Start is called before the first frame update
     void Start()
