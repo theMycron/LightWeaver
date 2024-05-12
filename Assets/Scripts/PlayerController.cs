@@ -278,32 +278,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     void OnRotateRobotStarted(InputAction.CallbackContext context)
     {
-        /* Vector2 turn;*/
-        /*        var mousePos = InputManager.Player.MoveMouse.ReadValue<Vector2>();
-                turn.y = mousePos.y;  // Scale down the rotation speed
-                Quaternion rotation = Quaternion.Euler(0, turn.y, 0); // Only change the y-component
-                transform.localRotation = rotation;
-                isRotating = true;*/
 
-        /*        Quaternion rotation = Quaternion.Euler(0, requiredHitPoint.y, 0); // Only change the y-component
-                transform.localRotation = rotation;*/
+        var direction = GetRotatePosition() - transform.position;
+        direction.y = 0;
 
-        /*        var rotation = Quaternion.LookRotation(GetRotatePosition());
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);*/
-
-
-        var rotation = Quaternion.LookRotation(GetRotatePosition());
-
-        // Extract the y-component of the target rotation
-        float targetYRotation = rotation.eulerAngles.y;
-
-        // Create a new rotation with only the y-component changed
-        Quaternion newYRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, targetYRotation, transform.rotation.eulerAngles.z);
-
-        // Rotate towards the new rotation
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, newYRotation, 50);
-
-
+        transform.forward = direction;
     }
     Vector3 GetRotatePosition()
     {
@@ -320,7 +299,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             //length of hypotenuse
             var deg = 30;
             var rad = deg * Mathf.Deg2Rad;
-            float hypote = (float)(length / Math.Sin(rad));
+            float hypote = (length / Mathf.Sin(rad));
             float distanceFromCamera = hit.distance;
 
             //changes based on player height
