@@ -26,7 +26,7 @@ public class SwitchPlayer : MonoBehaviour
     private void Start()
     {
         /*        activeRobot = robots[0];*/
-        ActivateRobot(1);
+        ActivateRobot(activeRobotIndex);
     }
 
     private void OnEnable()
@@ -45,15 +45,6 @@ public class SwitchPlayer : MonoBehaviour
     {
         string keyName = context.control.displayName;
         Debug.Log("Pressed key: " + keyName);
-        try
-        {
-            int robotNumber = int.Parse(keyName);
-            //GameObject selectedRobot = robots[robotNumber - 1];
-            ActivateRobot(robotNumber);
-        }catch(Exception e)
-        {
-            Debug.Log("Inavlid Robot Number: " + e);
-        }
 
         if (keyName.Equals("E"))
         {
@@ -70,7 +61,7 @@ public class SwitchPlayer : MonoBehaviour
             try
             {
                 int robotNumber = int.Parse(keyName);
-                ActivateRobot(robotNumber - 1);
+                ActivateRobot(robotNumber-1);
             }
             catch (Exception e)
             {
