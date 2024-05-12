@@ -49,10 +49,12 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private Animator anim;
     private bool isFalling;
     private bool isJumpCancelled = false;
-    public bool isCarryingObject;
+    private bool isCarryingObject;
+    private bool isRotating;
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
+
     private enum AnimationState
     {
         disabled = 0,
@@ -152,7 +154,16 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         if (isJumping)
         {
             Jump();
-        } 
+        }
+
+        //rotate robot when press/hold right click
+        if (IsGrounded() && isRotating)
+        {
+            var direction = GetRotatePosition() - transform.position;
+            direction.y = 0;
+
+            transform.forward = direction;
+        }
 
     }
 
@@ -278,18 +289,20 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     void OnRotateRobotStarted(InputAction.CallbackContext context)
     {
+        isRotating = true;
 
-        var direction = GetRotatePosition() - transform.position;
-        direction.y = 0;
+    }
 
-        transform.forward = direction;
+    void OnRotateRobotCancelled(InputAction.CallbackContext context)
+    {
+        isRotating = false;
     }
     Vector3 GetRotatePosition()
     {
         Vector3 mouse = Input.mousePosition;
         Ray castPoint = mainCamera.ScreenPointToRay(mouse);
         RaycastHit hit;
-        if (Physics.Raycast(castPoint, out hit,Mathf.Infinity))
+        if (Physics.Raycast(castPoint, out hit,Mathf.Infinity,~robotLayer))
         {
             //length of triangle
             Vector3 playerHeight = new Vector3(hit.point.x,transform.position.y,hit.point.z);
@@ -319,10 +332,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     }
     
-    void OnRotateRobotCancelled(InputAction.CallbackContext context)
-    {
-        
-    }
+
     private void ResetJump()
     {
         readyToJump = true;
@@ -476,5 +486,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool CheckRobotNumber(int robotNumber)
     {
         return this.robotNumber == robotNumber;
+    }
+
+    public bool isRobotCarryingObject()
+    {
+        return isCarryingObject;
     }
 }
