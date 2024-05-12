@@ -105,7 +105,7 @@ public class SwitchPlayer : MonoBehaviour
         }
         // Update the UI image of the selected robot
         UpdateRobotImage(robotNumber);
-        activeRobot = robots[robotNumber - 1];
+        activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
         // cant switch to robot if it is disabled
         if (!script.isActive)
