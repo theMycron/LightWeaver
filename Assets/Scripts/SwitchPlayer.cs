@@ -90,6 +90,11 @@ public class SwitchPlayer : MonoBehaviour
         }
     }
 
+    public void ActivateFirstRobot()
+    {
+        ActivateRobot(1);
+    }
+
     void SetCameraTarget()
     {
         virtualCamera.Follow = activeRobot.transform;
