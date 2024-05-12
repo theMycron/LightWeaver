@@ -33,11 +33,6 @@ public class LaserEmitter : MonoBehaviour, IActivable
         ToggleEmitter(isActive);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     public void Activate(Component sender)
     {
@@ -51,26 +46,6 @@ public class LaserEmitter : MonoBehaviour, IActivable
         isActive = false;
         ToggleEmitter(isActive);
         Debug.Log("Deactivate laser emitter!");
-    }
-
-    public void Activate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (!isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
-        {
-            isActive = true;
-            ToggleEmitter(isActive);
-            Debug.Log("Activate laser emitter!");
-        }
-    }
-
-    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (isActive && CheckEmitterNumber(objectNumber) && targetName == "Emitter")
-        {
-            isActive = false;
-            ToggleEmitter(isActive);
-            Debug.Log("Deactivate laser emitter!");
-        }
     }
 
     private void ToggleEmitter(bool isActive)
