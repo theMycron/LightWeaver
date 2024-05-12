@@ -2,13 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gate : MonoBehaviour
+public class Gate : MonoBehaviour, IActivable
 {
     private Animator animator;
     // Start is called before the first frame update
+    [SerializeField]
+    private int gateNumber;
+
+    private List<GameObject> activators = new List<GameObject>();
+
+    [SerializeField]
+    private int activationsRequired;
+
+    private Collider[] doorColliders;
+
     void Start()
     {
         animator = GetComponent<Animator>();
+        doorColliders = new Collider[2];
+        doorColliders[0] = transform.GetChild(0).GetComponent<BoxCollider>();
+        doorColliders[1] = transform.GetChild(1).GetComponent<BoxCollider>();
+        animator.speed = 10f;
     }
 
     // Update is called once per frame
@@ -17,30 +31,107 @@ public class Gate : MonoBehaviour
         
     }
 
-    public void ManageGate(Component sender, object data)
+    //public void ManageGate(Component sender, object data, int gateNumber)
+    //{
+    //    if (data is bool)
+    //    {
+    //        bool isObjectOver = (bool)data;
+    //        Debug.Log("Event recevied" + isObjectOver + " " + gateNumber);
+    //        if (isObjectOver)
+    //        {
+    //            OpenGate();
+    //        } else
+    //        {
+    //            CloseGate();
+    //        }
+    //    }
+        
+    //}
+
+    private void ToggleGateOpen(bool open)
     {
-        if (data is bool)
+        foreach (Collider collider in doorColliders)
         {
-            bool isObjectOver = (bool)data;
-            Debug.Log("Event recevied" + isObjectOver);
-            if (isObjectOver)
+            collider.enabled = !open;
+        }
+        animator.SetBool("isOpened", open);
+        animator.speed = 1f;
+    }
+
+    private bool CheckGateNumber(int gateNumber)
+    {
+        return this.gateNumber == gateNumber;
+    }
+
+    public void Activate(Component sender)
+    {
+        // if an object is already activating this gate, dont try to activate again
+        if (activators.Contains(sender.gameObject))
+        {
+            return;
+        }
+        activators.Add(sender.gameObject);
+        activationsRequired--;
+
+        if (activationsRequired == 0)
+        {
+            ToggleGateOpen(true);
+        }
+    }
+
+    public void Deactivate(Component sender)
+    {
+        //Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
+
+        if (!activators.Contains(sender.gameObject))
+        {
+            return;
+        }
+        activators.Remove(sender.gameObject);
+        activationsRequired++;
+
+        if (activationsRequired != 0)
+        {
+            ToggleGateOpen(false);
+        }
+    }
+    public void Activate(Component sender, int objectNumber, string targetName, object data)
+    {
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
+        {
+            // if an object is already activating this gate, dont try to activate again
+            if (activators.Contains(sender.gameObject))
             {
-                OpenGate();
-            } else
+                return;
+            }
+            activators.Add(sender.gameObject);
+            activationsRequired--;
+
+            if (activationsRequired == 0)
             {
-                CloseGate();
+                ToggleGateOpen(true);
             }
         }
-        
     }
 
-    public void CloseGate()
+    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
     {
-        animator.SetBool("isOpened", false);
-    }
+        if (CheckGateNumber(objectNumber) && targetName == "Gate")
+        {
+            //Debug.Log($"Trying to close gate {gateNumber}. objectnum: {objectNumber}. Sender tag: {sender.tag}");
 
-    public void OpenGate()
-    {
-        animator.SetBool("isOpened", true);
+            if (!activators.Contains(sender.gameObject))
+            {
+                return;
+            }
+            activators.Remove(sender.gameObject);
+            activationsRequired++;
+
+            if (activationsRequired != 0)
+            {
+                ToggleGateOpen(false);
+            }
+
+        }
     }
 }

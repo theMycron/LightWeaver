@@ -1,0 +1,22 @@
+diff a/Assets/Scripts/PlayerController.cs b/Assets/Scripts/PlayerController.cs	(rejected hunks)
+@@ -27,19 +27,13 @@
+ 
+     [Header("Camera")]
+     [SerializeField] Camera mainCamera;
+-
++    
+     [Header("Jumping")]
+     [SerializeField] float jumpForce;
+-    float jumpForceCounter;
+     [SerializeField] float jumpCooldown = .2f;
+     [SerializeField] float fallSpeed = 50f;
+     [SerializeField] float airMultiplier = .2f;
+     Boolean readyToJump;
+-    [SerializeField] float JumpTime;
+-    [SerializeField] float minJumpTime;
+-    float jumpTimeCounter;
+-    float minJumpTimeLimit;
+-    bool isJumping = false;
+ 
+     [Header("Ground Check")]
+     [SerializeField] LayerMask ground;

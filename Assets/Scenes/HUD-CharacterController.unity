@@ -2764,7 +2764,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh42328
+  m_Name: pb_Mesh66368
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -3270,6 +3270,7 @@ MonoBehaviour:
   - {fileID: 1292573261}
   - {fileID: 666898797}
   - {fileID: 925339555}
+  virtualCamera: {fileID: 1916338517}
 --- !u!4 &606306163
 Transform:
   m_ObjectHideFlags: 0
@@ -4324,17 +4325,12 @@ PrefabInstance:
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: isActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: fallSpeed
       value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpForce
-      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4369,7 +4365,7 @@ PrefabInstance:
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 202.1
+      value: 201.97469
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -5009,13 +5005,13 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: fallSpeed
-      value: 50
+      propertyPath: isActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: jumpForce
-      value: 25
+      propertyPath: fallSpeed
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -5722,34 +5718,14 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: fallSpeed
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: jumpForce
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 25
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: groundDrag
-      value: 20
+      propertyPath: isActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: rotateSpeed
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder

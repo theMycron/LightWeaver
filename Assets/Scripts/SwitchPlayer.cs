@@ -1,3 +1,4 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,16 +11,22 @@ public class SwitchPlayer : MonoBehaviour
 {
     [SerializeField] private GameObject[] robots;
     [SerializeField] private Image[] robotImages;
+    [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
     static GameObject activeRobot;
     int activeRobotIndex = 0; // Track the current active robot index
+
 
     InputManager inputManager;
 
     private void Awake()
     {
         inputManager = new InputManager();
-        ActivateRobot(0); // Changed to activate the first robot at index 0
+    }
+    private void Start()
+    {
+        /*        activeRobot = robots[0];*/
+        ActivateRobot(1);
     }
 
     private void OnEnable()
@@ -38,6 +45,15 @@ public class SwitchPlayer : MonoBehaviour
     {
         string keyName = context.control.displayName;
         Debug.Log("Pressed key: " + keyName);
+        try
+        {
+            int robotNumber = int.Parse(keyName);
+            //GameObject selectedRobot = robots[robotNumber - 1];
+            ActivateRobot(robotNumber);
+        }catch(Exception e)
+        {
+            Debug.Log("Inavlid Robot Number: " + e);
+        }
 
         if (keyName.Equals("E"))
         {
@@ -87,17 +103,20 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
-
-        DisableAllRobots();
-        activeRobotIndex = robotNumber;
-        activeRobot = robots[robotNumber];
-        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
-        activeRobot.tag = "ActiveRobot";
-        PlayerController script = activeRobot.GetComponent<PlayerController>();
-        script.enabled = true;
-
         // Update the UI image of the selected robot
         UpdateRobotImage(robotNumber);
+        activeRobot = robots[robotNumber - 1];
+        PlayerController script = activeRobot.GetComponent<PlayerController>();
+        // cant switch to robot if it is disabled
+        if (!script.isActive)
+        {
+            return;
+        }
+        DisableAllRobots();
+        SetCameraTarget();
+        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        //activeRobot.tag = "ActiveRobot";
+        script.EnableInput();
     }
 
     // New method to update the UI image of the selected robot
@@ -119,9 +138,14 @@ public class SwitchPlayer : MonoBehaviour
         {
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
-            script.enabled = false;
-            robot.tag = "Undefined";
+            script.DisableInput();
+            //robot.tag = "Undefined";
         }
+    }
+
+    void SetCameraTarget()
+    {
+        virtualCamera.Follow = activeRobot.transform;
     }
 
     public static GameObject GetActiveRobot()
