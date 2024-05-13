@@ -7039,7 +7039,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &683712440
 PrefabInstance:
@@ -7245,7 +7245,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &688019010
 MonoBehaviour:
@@ -10035,7 +10035,7 @@ Transform:
   - {fileID: 732027689}
   - {fileID: 766804299}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &926978118
 PrefabInstance:
@@ -10341,7 +10341,7 @@ Transform:
   - {fileID: 1184368560}
   - {fileID: 1842028872}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &951505306
 PrefabInstance:
@@ -17009,7 +17009,7 @@ Transform:
   - {fileID: 1063603798}
   - {fileID: 2057741544}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1503244516
 PrefabInstance:
@@ -18336,10 +18336,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ba8e4841142f741bf165926662d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robots:
-  - {fileID: 2044352814}
-  - {fileID: 748579766}
   virtualCamera: {fileID: 1916338517}
+  followRobot: 1
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -18355,7 +18353,7 @@ Transform:
   - {fileID: 2044352815}
   - {fileID: 748579767}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1644721469
 PrefabInstance:
@@ -21308,7 +21306,7 @@ Transform:
   - {fileID: 1868783370}
   - {fileID: 1447824857}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1930277525
 PrefabInstance:
@@ -22990,12 +22988,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b3d66b25ebcce74f9e1361537346509, type: 3}
---- !u!1 &2044352814 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
-    type: 3}
-  m_PrefabInstance: {fileID: 2044352813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2044352815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
