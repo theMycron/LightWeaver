@@ -2625,6 +2625,21 @@ PrefabInstance:
       propertyPath: CubeLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: cubeLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: laserCubeLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: m_Constraints
@@ -3002,6 +3017,21 @@ PrefabInstance:
         type: 3}
       propertyPath: CubeLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: cubeLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: laserCubeLayer.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -3403,6 +3433,21 @@ PrefabInstance:
         type: 3}
       propertyPath: CubeLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: cubeLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: laserCubeLayer.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -4411,6 +4456,21 @@ PrefabInstance:
       propertyPath: CubeLayer.m_Bits
       value: 128
       objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: cubeLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: laserCubeLayer.m_Bits
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: m_Constraints
@@ -4847,6 +4907,21 @@ PrefabInstance:
         type: 3}
       propertyPath: CubeLayer.m_Bits
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: cubeLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: groundLayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+        type: 3}
+      propertyPath: laserCubeLayer.m_Bits
+      value: 512
       objectReference: {fileID: 0}
     - target: {fileID: 5318720212041669208, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}

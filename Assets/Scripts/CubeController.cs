@@ -18,7 +18,9 @@ public class CubeController : MonoBehaviour
 
     [Header("Ground Check")]
     [SerializeField] float cubeHeight;
-    [SerializeField] LayerMask ground;
+    [SerializeField] LayerMask groundLayer;
+    [SerializeField] LayerMask cubeLayer;
+    [SerializeField] LayerMask laserCubeLayer;
 
 
     [Header("Cube Movement")]
@@ -32,7 +34,6 @@ public class CubeController : MonoBehaviour
 
 
     [Header("Pickup/Place Cube")]
-    [SerializeField] LayerMask CubeLayer;
     [SerializeField] float pickupDistance = 10f;
     [SerializeField] float cubeMassWhenPlaced = 1000f;
     GameObject activeRobot;
@@ -108,7 +109,7 @@ public class CubeController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
             // Perform a raycast from the mouse position
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, CubeLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer))
             {
                 if (hit.collider.gameObject == gameObject)
                 {
@@ -129,7 +130,7 @@ public class CubeController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
             // Perform a raycast from the mouse position
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, CubeLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer))
             {
                 if (hit.collider.gameObject == gameObject)
                 {
@@ -226,7 +227,7 @@ public class CubeController : MonoBehaviour
     }
     void AddForce()
     {
-        strength = 200;
+        strength = 75;
     }
     bool IsActiveRobotCarryingObject()
     {
@@ -248,7 +249,12 @@ public class CubeController : MonoBehaviour
     bool IsGrounded()
     {
         Debug.DrawRay(transform.position, Vector3.down * (cubeHeight * 0.5f + 0.2f), Color.red);
-        return Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, ground);
+
+        bool placedOnGround = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer);
+        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
+        bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);
+
+        return placedOnGround || placedOnCube || placedOnLaserCube;
     }
 
     bool IsRobotNearCube()
