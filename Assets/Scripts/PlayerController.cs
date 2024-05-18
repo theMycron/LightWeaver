@@ -157,13 +157,15 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         }
 
         //rotate robot when press/hold right click
-        if (IsGrounded() && isRotating)
+        if (IsGrounded() && isRotating && moveDirection == Vector2.zero)
         {
             var direction = GetRotatePosition() - transform.position;
             direction.y = 0;
-
             transform.forward = direction;
+
         }
+
+        
 
     }
 
@@ -488,7 +490,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         return this.robotNumber == robotNumber;
     }
 
-    public bool isRobotCarryingObject()
+    public bool IsRobotCarryingObject()
     {
         return isCarryingObject;
     }
