@@ -1,22 +1,25 @@
 using UnityEngine;
-using TMPro; // Required for TextMeshPro
+using TMPro;
 using UnityEngine.UI;
-
 
 public class PromptManager : MonoBehaviour
 {
-    public GameObject promptPrefab; // Assign your prompt prefab here
-    public Transform promptBar; // Assign your PromptBar transform here
+    public GameObject promptPrefab;
+    public Transform promptBar;
 
     void Start()
     {
-        // Assuming PromptManager is attached to the same GameObject as this script
-        PromptManager promptManager = GetComponent<PromptManager>();
-        promptManager.AddPrompt("Drop Cube", PromptIcons.Drop);
+
+        // Example calls to the AddPrompt method
+        AddPrompt("Drop Cube",PromptIcons.Drop);
+        AddPrompt("Pick Cube",PromptIcons.Pick);
+        AddPrompt("Rotate Object", PromptIcons.Rotate);
+        AddPrompt("Custom Text", PromptIcons.Point);
     }
 
     public enum PromptIcons
     {
+        None,
         Drop,
         Pick,
         Point,
@@ -24,14 +27,41 @@ public class PromptManager : MonoBehaviour
         // Add more icons as needed
     }
 
+    public Sprite dropSprite; // Reference to the Drop sprite in the Unity Inspector
+    public Sprite pickSprite; // Reference to the Pick sprite in the Unity Inspector
+    public Sprite pointSprite; // Reference to the Point sprite in the Unity Inspector
+    public Sprite rotateSprite; // Reference to the Rotate sprite in the Unity Inspector
+
+
     public void AddPrompt(string text, PromptIcons icon)
     {
-        // Instantiate the prompt prefab
+        if (string.IsNullOrEmpty(text) && icon == PromptIcons.None)
+        {
+            Debug.LogWarning("Both text and icon are empty. Skipping prompt creation.");
+            return;
+        }
+
         GameObject newPrompt = Instantiate(promptPrefab, promptBar);
 
-        // Set the text
-        TextMeshProUGUI textMeshPro = newPrompt.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
-        
+        float promptHeight = newPrompt.GetComponent<RectTransform>().rect.height;
+        Vector3 promptPosition;
+        int promptCount = promptBar.childCount;
+
+        if (promptCount == 0)
+        {
+            // Position the first prompt at the same location as the prefab
+            promptPosition = Vector3.zero;
+        }
+        else
+        {
+            // Position subsequent prompts on top of each other
+            float stackedHeight = promptHeight * promptCount;
+            promptPosition = new Vector3(0f, stackedHeight, 0f);
+        }
+
+        newPrompt.transform.localPosition = promptPosition;
+
+        TextMeshProUGUI textMeshPro = newPrompt.GetComponentInChildren<TextMeshProUGUI>();
         if (textMeshPro != null)
         {
             textMeshPro.text = text;
@@ -42,26 +72,59 @@ public class PromptManager : MonoBehaviour
             return;
         }
 
-        // Set the icon
-        Image iconImage = newPrompt.GetComponent<Image>();
-        switch (icon)
+        Transform iconObject = newPrompt.transform.Find("Icon");
+        if (iconObject != null)
         {
-            case PromptIcons.Drop:
-                iconImage.sprite = Resources.Load<Sprite>("Assets/Icons/Drop.png"); // Load your icon sprite
-                break;
-            case PromptIcons.Pick:
-                iconImage.sprite = Resources.Load<Sprite>("Assets/Icons/Pick.png");
-                break;
-            case PromptIcons.Point:
-                iconImage.sprite = Resources.Load<Sprite>("Assets/Icons/Point.png"); 
-                break;
-            case PromptIcons.Rotate:
-                iconImage.sprite = Resources.Load<Sprite>("Assets/Icons/Rotate.png"); 
-                break;
-            // Add cases for other icons as needed
-            default:
-                Debug.LogError("Unknown icon: " + icon);
-                break;
+            Image iconImage = iconObject.GetComponent<Image>();
+            if (iconImage != null)
+            {
+                if (icon == PromptIcons.None)
+                {
+                    Destroy(iconObject.gameObject);
+                }
+                else
+                {
+                    Sprite iconSprite = null;
+
+                    switch (icon)
+                    {
+                        case PromptIcons.Drop:
+                            iconSprite = dropSprite;
+                            break;
+                        case PromptIcons.Pick:
+                            iconSprite = pickSprite;
+                            break;
+                        case PromptIcons.Point:
+                            iconSprite = pointSprite;
+                            break;
+                        case PromptIcons.Rotate:
+                            iconSprite = rotateSprite;
+                            break;
+                        default:
+                            Debug.LogError("Unhandled prompt icon: " + icon.ToString());
+                            break;
+                    }
+
+                    if (iconSprite != null)
+                    {
+                        iconImage.sprite = iconSprite;
+                    }
+                    else
+                    {
+                        Debug.LogError("Icon sprite not set for: " + icon.ToString());
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogError("Image component not found on the Icon object.");
+                return;
+            }
+        }
+        else if (icon != PromptIcons.None)
+        {
+            Debug.LogError("Icon object not found in the prompt prefab.");
         }
     }
 }
+    

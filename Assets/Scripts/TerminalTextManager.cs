@@ -18,9 +18,9 @@ public class TerminalTextManager : MonoBehaviour
 
     private void Start()
     {
-        // Example usage
         string[] messages = { "Try to move Roboot 1...", "Use the box...", "Drop the box..." };
         StartCoroutine(DisplayLinesCoroutine(messages));
+        AddNewLine(messages[0]);
     }
 
     private IEnumerator DisplayLinesCoroutine(string[] lines)
@@ -31,7 +31,7 @@ public class TerminalTextManager : MonoBehaviour
             TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
             temporaryText.text = "";
 
-            activeTexts.Add(temporaryText);
+            activeTexts.Insert(0, temporaryText);
             RepositionTexts();
 
             for (int j = 0; j < line.Length; j++)
@@ -114,10 +114,38 @@ public class TerminalTextManager : MonoBehaviour
 
     private void RepositionTexts()
     {
+        float totalHeight = 0f;
+
         for (int i = 0; i < activeTexts.Count; i++)
         {
-            Vector2 anchoredPosition = new Vector2(0f, -i * (temporaryTextPrefab.rectTransform.sizeDelta.y + verticalSpacing));
-            activeTexts[i].rectTransform.anchoredPosition = anchoredPosition;
+            totalHeight += activeTexts[i].rectTransform.sizeDelta.y + verticalSpacing;
         }
+
+        // Resize the background image
+        Vector2 backgroundSize = new Vector2(textContainer.GetComponent<RectTransform>().rect.width, totalHeight);
+        textContainer.GetComponent<RectTransform>().sizeDelta = backgroundSize;
+    }
+
+    public void AddNewLine(string message)
+    {
+        TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
+        temporaryText.text = "";
+
+        activeTexts.Insert(0, temporaryText);
+        RepositionTexts();
+
+        StartCoroutine(DisplayLineCoroutine(temporaryText, message));
+        RepositionTexts();
+    }
+
+    private IEnumerator DisplayLineCoroutine(TextMeshProUGUI textObject, string line)
+    {
+        for (int j = 0; j < line.Length; j++)
+        {
+            textObject.text += line[j];
+            yield return new WaitForSeconds(characterDelay);
+        }
+
+        yield return new WaitForSeconds(lineDelay);
     }
 }
