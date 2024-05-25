@@ -145,7 +145,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         RobotFalling();
         RobotLanding();
 
-        rb.drag = IsGrounded() ? groundDrag : 0;
+        /*        rb.drag = IsGrounded() ? groundDrag : 0;*/
+
+        EnsurePlayerIsNotMovingAtSpeedOfLight();
 
         //SpeedControl();
 
@@ -167,6 +169,28 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         
 
+    }
+
+    private void EnsurePlayerIsNotMovingAtSpeedOfLight()
+    {
+        float xSpeed = Mathf.Abs(rb.velocity.x);
+        float zSpeed = Mathf.Abs(rb.velocity.z);
+
+        if(xSpeed > 3f)
+        {
+            xSpeed = 3f;
+        }
+
+        if (zSpeed > 3f)
+        {
+            zSpeed = 3f;
+        }
+
+        rb.velocity = new Vector3(
+            Mathf.Sign(rb.velocity.x) * xSpeed,
+            rb.velocity.y,
+            Mathf.Sign(rb.velocity.z) * zSpeed
+        );
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
