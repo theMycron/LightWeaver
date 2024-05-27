@@ -7,6 +7,7 @@ public class NavigatebetweenScenes : MonoBehaviour
     [SerializeField] AudioSource clickSound;
     public AudioClip sound;
 
+
     private void Start() {
 
         //clickSound = GetComponent<AudioSource>();
@@ -21,11 +22,9 @@ public class NavigatebetweenScenes : MonoBehaviour
 
     public void goToScene(string sceneName) {
 
-
         SceneManager.LoadScene(sceneName);
     }
 
-   
 
     public void exitGame() {
 

@@ -4,6 +4,12 @@ using UnityEngine.Audio;
 using UnityEngine.UI;
 using TMPro;
 
+public enum MenuOrigin
+{
+    MainMenu,
+    PauseMenu
+}
+
 public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
@@ -14,6 +20,7 @@ public class SettingsMenu : MonoBehaviour
     public Toggle fullScreenToggle;
 
     Resolution[] resolutions;
+    private static MenuOrigin menuOrigin;
 
     private void Awake()
     {
@@ -122,7 +129,7 @@ public class SettingsMenu : MonoBehaviour
     public void ResetSettings()
     {
         // Reset volume
-        float defaultVolume = 0.0f; // Set your desired default volume value
+        float defaultVolume = -10.0f; // Set your desired default volume value
         volumeSlider.value = defaultVolume;
         SetVolume(defaultVolume);
 
@@ -140,6 +147,28 @@ public class SettingsMenu : MonoBehaviour
 
         // Check fullscreen toggle
         fullScreenToggle.isOn = defaultFullScreen;
+
+        // Check menu origin and handle transition
+        switch (GetMenuOrigin())
+        {
+            case MenuOrigin.MainMenu:
+                // Handle transition from main menu
+                break;
+            case MenuOrigin.PauseMenu:
+                // Handle transition from pause menu
+                PauseMenu.ResumeGameFromSettings();
+                break;
+        }
+    }
+
+    public static void SetMenuOrigin(MenuOrigin origin)
+    {
+        menuOrigin = origin;
+    }
+
+    public static MenuOrigin GetMenuOrigin()
+    {
+        return menuOrigin;
     }
 
 }

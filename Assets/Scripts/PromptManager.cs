@@ -7,14 +7,21 @@ public class PromptManager : MonoBehaviour
     public GameObject promptPrefab;
     public Transform promptBar;
 
+
+
+    private bool promptsAdded = false; // Flag to track if prompts have been added
+
     void Start()
     {
+        if (!promptsAdded)
+        {
+            AddPrompt("Drop Cube", PromptIcons.Drop);
+            AddPrompt("Pick Cube", PromptIcons.Pick);
+            AddPrompt("Rotate Object", PromptIcons.Rotate);
+            AddPrompt("Point laser", PromptIcons.Point);
 
-        // Example calls to the AddPrompt method
-        AddPrompt("Drop Cube",PromptIcons.Drop);
-        AddPrompt("Pick Cube",PromptIcons.Pick);
-        AddPrompt("Rotate Object", PromptIcons.Rotate);
-        AddPrompt("Custom Text", PromptIcons.Point);
+            promptsAdded = true; // Set the flag to true after prompts are added
+        }
     }
 
     public enum PromptIcons
@@ -35,13 +42,15 @@ public class PromptManager : MonoBehaviour
 
     public void AddPrompt(string text, PromptIcons icon)
     {
+
+
         if (string.IsNullOrEmpty(text) && icon == PromptIcons.None)
         {
             Debug.LogWarning("Both text and icon are empty. Skipping prompt creation.");
             return;
         }
 
-        GameObject newPrompt = Instantiate(promptPrefab, promptBar);
+        GameObject newPrompt = Instantiate(promptPrefab, promptBar.parent);
 
         float promptHeight = newPrompt.GetComponent<RectTransform>().rect.height;
         Vector3 promptPosition;
@@ -50,13 +59,13 @@ public class PromptManager : MonoBehaviour
         if (promptCount == 0)
         {
             // Position the first prompt at the same location as the prefab
-            promptPosition = Vector3.zero;
+            promptPosition = promptPrefab.transform.localPosition;
         }
         else
         {
-            // Position subsequent prompts on top of each other
-            float stackedHeight = promptHeight * promptCount;
-            promptPosition = new Vector3(0f, stackedHeight, 0f);
+            float spaceBetweenPrompts = 10f; // Adjust the value as needed
+            float stackedHeight = promptHeight + spaceBetweenPrompts;
+            promptPosition = promptBar.GetChild(0).localPosition - new Vector3(0f, stackedHeight, 0f);
         }
 
         newPrompt.transform.localPosition = promptPosition;
@@ -72,7 +81,7 @@ public class PromptManager : MonoBehaviour
             return;
         }
 
-        Transform iconObject = newPrompt.transform.Find("Icon");
+        Transform iconObject = newPrompt.transform.Find("icon");
         if (iconObject != null)
         {
             Image iconImage = iconObject.GetComponent<Image>();
@@ -127,4 +136,3 @@ public class PromptManager : MonoBehaviour
         }
     }
 }
-    
