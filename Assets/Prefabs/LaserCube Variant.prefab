@@ -101,6 +101,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
         type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
       propertyPath: m_TagString
       value: LaserCube
       objectReference: {fileID: 0}
@@ -132,6 +137,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3862546403731086715}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 759efbf6b9a112d44b03f47c5ee48188,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3014527623460407465}
   m_SourcePrefab: {fileID: 100100000, guid: 759efbf6b9a112d44b03f47c5ee48188, type: 3}
 --- !u!4 &3057445205586306630 stripped
 Transform:
@@ -184,7 +193,6 @@ MonoBehaviour:
   colorEnum: 0
   startPoint: {fileID: 6249727294443442988}
   isActive: 0
-  cubeNumber: 1
 --- !u!120 &6195132124584678832
 LineRenderer:
   serializedVersion: 2
@@ -307,11 +315,6 @@ MonoBehaviour:
   direction: {x: 0, y: 0, z: 0}
   colorEnum: 0
   color: {r: 0, g: 0, b: 0, a: 0}
-  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
-  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
-  onLaserStopped: {fileID: 11400000, guid: 31983779f54c839418cafa477bf408b2, type: 2}
-  onLaserCollidedWithLaserCube: {fileID: 11400000, guid: a10e9bdce74bedd4c8007dd7271affa2,
-    type: 2}
 --- !u!114 &3862546403731086715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -325,9 +328,44 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRaised: 0
-  strength: 75
-  CubeLayer:
+  cubeHeight: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  cubeLayer:
     serializedVersion: 2
     m_Bits: 128
-  pickupDistance: 10
+  laserCubeLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  strength: 75
   rotateSpeed: 6
+  pickupDistance: 10
+  cubeMassWhenPlaced: 1000
+--- !u!54 &3014527623460407465
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9177717087144540242}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0

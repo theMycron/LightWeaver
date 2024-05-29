@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
-        ResetJump();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
@@ -171,6 +170,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
     {
+        if (rb.isKinematic)
+            return;
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
@@ -346,11 +347,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     }
     
-
-    private void ResetJump()
-    {
-        readyToJump = true;
-    }
     void Jump()
     {
         // if player attempted to cancel jump, dont stop the jump until minimum time limit
