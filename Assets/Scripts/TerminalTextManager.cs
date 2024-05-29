@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class TerminalTextManager : MonoBehaviour
@@ -15,101 +14,115 @@ public class TerminalTextManager : MonoBehaviour
     public float removalDelay = 0.1f;
 
     private List<TextMeshProUGUI> activeTexts = new List<TextMeshProUGUI>();
+    private Queue<string> messageQueue = new Queue<string>();
+    private bool isDisplayingMessage = false;
 
     private void Start()
     {
-        string[] messages = { "Try to move Roboot 1...", "Use the box...", "Drop the box..." };
-        StartCoroutine(DisplayLinesCoroutine(messages));
-        AddNewLine(messages[0]);
+        AddNewLine("This is a new message. This game is beautiful. I love swimming");
+        AddNewLine("Another message to display.");
+        AddNewLine("Another message to display. qlrth9wuiteojrpt iqowerjwq fdisf sdfsdfw");
     }
 
-    private IEnumerator DisplayLinesCoroutine(string[] lines)
+    public void AddNewLine(string message)
     {
-        for (int i = 0; i < lines.Length; i++)
+        messageQueue.Enqueue(message);
+        if (!isDisplayingMessage)
         {
-            string line = lines[i];
-            TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
-            temporaryText.text = "";
+            StartCoroutine(ProcessQueue());
+        }
+    }
 
-            activeTexts.Insert(0, temporaryText);
-            RepositionTexts();
+    private IEnumerator ProcessQueue()
+    {
+        while (messageQueue.Count > 0)
+        {
+            isDisplayingMessage = true;
+            string message = messageQueue.Dequeue();
+            yield return StartCoroutine(DisplayLineCoroutine(message));
+        }
+        isDisplayingMessage = false;
+    }
 
-            for (int j = 0; j < line.Length; j++)
-            {
-                temporaryText.text += line[j];
-                yield return new WaitForSeconds(characterDelay);
-            }
+    private IEnumerator DisplayLineCoroutine(string line)
+    {
+        TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
+        temporaryText.text = "";
 
-            yield return new WaitForSeconds(lineDelay);
+        activeTexts.Insert(0, temporaryText);
+        RepositionTexts();
+
+        for (int j = 0; j < line.Length; j++)
+        {
+            temporaryText.text += line[j];
+            yield return new WaitForSeconds(characterDelay);
         }
 
-        yield return new WaitForSeconds(displayDuration);
+        yield return new WaitForSeconds(lineDelay);
 
-        StartCoroutine(RemoveLinesCoroutine());
+        StartCoroutine(RemoveLineAfterDelay(temporaryText));
     }
 
-    private IEnumerator RemoveLinesCoroutine()
+    private IEnumerator RemoveLineAfterDelay(TextMeshProUGUI text)
     {
-        for (int i = activeTexts.Count - 1; i >= 0; i--)
+        yield return new WaitForSeconds(displayDuration);
+
+        activeTexts.Remove(text);
+
+        TMP_TextInfo textInfo = text.textInfo;
+        int characterCount = textInfo.characterCount;
+        Color32[] newVertexColors = textInfo.meshInfo[0].colors32;
+
+        float fadeOutDuration = 1.0f; // Duration of fade-out animation in seconds
+        float elapsedTime = 0.0f;
+
+        while (elapsedTime < fadeOutDuration)
         {
-            TextMeshProUGUI text = activeTexts[i];
-            activeTexts.RemoveAt(i);
+            float alpha = Mathf.Lerp(1.0f, 0.0f, elapsedTime / fadeOutDuration);
 
-            TMP_TextInfo textInfo = text.textInfo;
-            int characterCount = textInfo.characterCount;
-
-            Color32[] newVertexColors = textInfo.meshInfo[0].colors32;
-            float fadeOutDuration = 1.0f; // Duration of fade-out animation in seconds
-            float elapsedTime = 0.0f;
-
-            while (elapsedTime < fadeOutDuration)
-            {
-                float alpha = Mathf.Lerp(1.0f, 0.0f, elapsedTime / fadeOutDuration);
-
-                for (int j = 0; j < characterCount; j++)
-                {
-                    int materialIndex = textInfo.characterInfo[j].materialReferenceIndex;
-                    int vertexIndex = textInfo.characterInfo[j].vertexIndex;
-
-                    // Apply alpha to each vertex color
-                    for (int k = 0; k < 4; k++)
-                    {
-                        int vertexOffset = vertexIndex + k;
-                        newVertexColors[vertexOffset].a = (byte)(newVertexColors[vertexOffset].a * alpha);
-                    }
-                }
-
-                // Update the vertex colors and mesh
-                text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
-                text.UpdateMeshPadding();
-
-                elapsedTime += Time.deltaTime;
-                yield return null;
-            }
-
-            // Ensure the text is completely faded out
             for (int j = 0; j < characterCount; j++)
             {
+                int materialIndex = textInfo.characterInfo[j].materialReferenceIndex;
                 int vertexIndex = textInfo.characterInfo[j].vertexIndex;
 
-                // Set alpha to zero for each vertex color
+                // Apply alpha to each vertex color
                 for (int k = 0; k < 4; k++)
                 {
                     int vertexOffset = vertexIndex + k;
-                    newVertexColors[vertexOffset].a = 0;
+                    newVertexColors[vertexOffset].a = (byte)(newVertexColors[vertexOffset].a * alpha);
                 }
             }
 
-            // Update the vertex colors and mesh again
+            // Update the vertex colors and mesh
             text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
             text.UpdateMeshPadding();
 
-            // Wait for a short delay before destroying the text object
-            yield return new WaitForSeconds(removalDelay);
-
-            Destroy(text.gameObject);
-            RepositionTexts();
+            elapsedTime += Time.deltaTime;
+            yield return null;
         }
+
+        // Ensure the text is completely faded out
+        for (int j = 0; j < characterCount; j++)
+        {
+            int vertexIndex = textInfo.characterInfo[j].vertexIndex;
+
+            // Set alpha to zero for each vertex color
+            for (int k = 0; k < 4; k++)
+            {
+                int vertexOffset = vertexIndex + k;
+                newVertexColors[vertexOffset].a = 0;
+            }
+        }
+
+        // Update the vertex colors and mesh again
+        text.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+        text.UpdateMeshPadding();
+
+        // Wait for a short delay before destroying the text object
+        yield return new WaitForSeconds(removalDelay);
+
+        Destroy(text.gameObject);
+        RepositionTexts();
     }
 
     private void RepositionTexts()
@@ -118,34 +131,12 @@ public class TerminalTextManager : MonoBehaviour
 
         for (int i = 0; i < activeTexts.Count; i++)
         {
-            totalHeight += activeTexts[i].rectTransform.sizeDelta.y + verticalSpacing;
+            if (i > 0)
+            {
+                totalHeight += verticalSpacing;
+            }
+            activeTexts[i].rectTransform.anchoredPosition = new Vector2(0, -totalHeight);
+            totalHeight += activeTexts[i].rectTransform.sizeDelta.y;
         }
-
-        // Resize the background image
-        Vector2 backgroundSize = new Vector2(textContainer.GetComponent<RectTransform>().rect.width, totalHeight);
-        textContainer.GetComponent<RectTransform>().sizeDelta = backgroundSize;
-    }
-
-    public void AddNewLine(string message)
-    {
-        TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
-        temporaryText.text = "";
-
-        activeTexts.Insert(0, temporaryText);
-        RepositionTexts();
-
-        StartCoroutine(DisplayLineCoroutine(temporaryText, message));
-        RepositionTexts();
-    }
-
-    private IEnumerator DisplayLineCoroutine(TextMeshProUGUI textObject, string line)
-    {
-        for (int j = 0; j < line.Length; j++)
-        {
-            textObject.text += line[j];
-            yield return new WaitForSeconds(characterDelay);
-        }
-
-        yield return new WaitForSeconds(lineDelay);
     }
 }

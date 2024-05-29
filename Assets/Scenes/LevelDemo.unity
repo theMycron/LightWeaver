@@ -8007,7 +8007,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748579766}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
   m_Name: 
@@ -17570,9 +17570,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ba8e4841142f741bf165926662d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  robots:
-  - {fileID: 2044352814}
-  - {fileID: 748579766}
+  robots: []
+  robotImages: []
   virtualCamera: {fileID: 1916338517}
 --- !u!4 &1637423252
 Transform:
@@ -21902,12 +21901,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5b3d66b25ebcce74f9e1361537346509, type: 3}
---- !u!1 &2044352814 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
-    type: 3}
-  m_PrefabInstance: {fileID: 2044352813}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2044352815 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
@@ -22793,6 +22786,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8437342637294268074, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8437342637294268074, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
       propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -22813,9 +22811,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7248733163047358549, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7248733163047358549, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
       propertyPath: response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2098210111}
+    - target: {fileID: -4949864295054654323, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1523118589555414805, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: startPoint
@@ -22866,6 +22874,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ExcludeLayers.m_Bits
       value: 256
+      objectReference: {fileID: 0}
+    - target: {fileID: 1816570590224061677, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2614152224387511309, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
