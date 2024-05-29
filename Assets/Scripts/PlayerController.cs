@@ -49,7 +49,12 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private Animator anim;
     private bool isFalling;
     private bool isJumpCancelled = false;
-    public bool isCarryingObject;
+    private bool isCarryingObject;
+    private bool isRotating;
+
+    [SerializeField] LayerMask robotLayer;
+    Vector3 requiredHitPoint;
+
     private enum AnimationState
     {
         disabled = 0,
@@ -106,6 +111,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         InputManager.Player.Jump.started += OnJumpStarted;
         InputManager.Player.Jump.performed += OnJumpPerformed;
         InputManager.Player.Jump.canceled += OnJumpCancelled;
+
+        InputManager.Player.RotateRobot.started += OnRotateRobotStarted;
+        InputManager.Player.RotateRobot.canceled += OnRotateRobotCancelled;
     }
 
     public void DisableInput()
@@ -117,6 +125,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         InputManager.Player.Jump.started -= OnJumpStarted;
         InputManager.Player.Jump.performed -= OnJumpPerformed;
         InputManager.Player.Jump.canceled -= OnJumpCancelled;
+
+        InputManager.Player.RotateRobot.started -= OnRotateRobotStarted;
+        InputManager.Player.RotateRobot.canceled -= OnRotateRobotCancelled;
 
     }
     private void Update()
@@ -134,7 +145,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         RobotFalling();
         RobotLanding();
 
-        rb.drag = IsGrounded() ? groundDrag : 0;
+        /*        rb.drag = IsGrounded() ? groundDrag : 0;*/
+
+        EnsurePlayerIsNotMovingAtSpeedOfLight();
 
         //SpeedControl();
 
@@ -143,7 +156,41 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         if (isJumping)
         {
             Jump();
-        } 
+        }
+
+        //rotate robot when press/hold right click
+        if (IsGrounded() && isRotating && moveDirection == Vector2.zero)
+        {
+            var direction = GetRotatePosition() - transform.position;
+            direction.y = 0;
+            transform.forward = direction;
+
+        }
+
+        
+
+    }
+
+    private void EnsurePlayerIsNotMovingAtSpeedOfLight()
+    {
+        float xSpeed = Mathf.Abs(rb.velocity.x);
+        float zSpeed = Mathf.Abs(rb.velocity.z);
+
+        if(xSpeed > 3f)
+        {
+            xSpeed = 3f;
+        }
+
+        if (zSpeed > 3f)
+        {
+            zSpeed = 3f;
+        }
+
+        rb.velocity = new Vector3(
+            Mathf.Sign(rb.velocity.x) * xSpeed,
+            rb.velocity.y,
+            Mathf.Sign(rb.velocity.z) * zSpeed
+        );
     }
 
     private void OnMovePerformed(InputAction.CallbackContext context)
@@ -196,17 +243,18 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
+        LayerMask layersToCheck = (1 << 6) | (1 << 7) | (1 << 9);
 
         Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
         Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
         Transform groundCheck3Trans = gameObject.transform.Find("GroundCheck3");
         Transform groundCheck4Trans = gameObject.transform.Find("GroundCheck4");
 
-        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
-        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
-        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
-        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
-        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, ground);
+        bool groundedInCheck1 = Physics.Raycast(groundCheck1Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, layersToCheck);
+        bool groundedInCheck2 = Physics.Raycast(groundCheck2Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, layersToCheck);
+        bool groundedInCheck3 = Physics.Raycast(groundCheck3Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, layersToCheck);
+        bool groundedInCheck4 = Physics.Raycast(groundCheck4Trans.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, layersToCheck);
+        bool groundedInCheck5 = Physics.Raycast(transform.position + verticalOffset, Vector3.down, groundCheckDistance + verticalOffset.y, layersToCheck);
 
         Debug.DrawRay(groundCheck1Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
         Debug.DrawRay(groundCheck2Trans.position + verticalOffset, Vector3.down * (groundCheckDistance + verticalOffset.y), Color.red, 0.1f, true);
@@ -265,7 +313,53 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //}
         isJumpCancelled = true;
     }
+
+    void OnRotateRobotStarted(InputAction.CallbackContext context)
+    {
+        isRotating = true;
+
+    }
+
+    void OnRotateRobotCancelled(InputAction.CallbackContext context)
+    {
+        isRotating = false;
+    }
+    Vector3 GetRotatePosition()
+    {
+        Vector3 mouse = Input.mousePosition;
+        Ray castPoint = mainCamera.ScreenPointToRay(mouse);
+        RaycastHit hit;
+        if (Physics.Raycast(castPoint, out hit,Mathf.Infinity,~robotLayer))
+        {
+            //length of triangle
+            Vector3 playerHeight = new Vector3(hit.point.x,transform.position.y,hit.point.z);
+            Vector3 hitPoint = new Vector3(hit.point.x,hit.point.y,hit.point.z);
+            float length = Vector3.Distance(playerHeight, hitPoint);
+
+            //length of hypotenuse
+            var deg = 30;
+            var rad = deg * Mathf.Deg2Rad;
+            float hypote = (length / Mathf.Sin(rad));
+            float distanceFromCamera = hit.distance;
+
+            //changes based on player height
+            if (transform.position.y > hit.point.y)
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera-hypote);
+            }else if (transform.position.y < hit.point.y)
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera - hypote);
+            }else
+            {
+                requiredHitPoint = castPoint.GetPoint(distanceFromCamera);
+            }
+            
+        }
+        return requiredHitPoint;
+
+    }
     
+
     private void ResetJump()
     {
         readyToJump = true;
@@ -419,5 +513,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool CheckRobotNumber(int robotNumber)
     {
         return this.robotNumber == robotNumber;
+    }
+
+    public bool IsRobotCarryingObject()
+    {
+        return isCarryingObject;
     }
 }
