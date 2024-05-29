@@ -32,10 +32,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     float jumpForceCounter;
-    [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
-    [SerializeField] float airMultiplier = .2f;
-    Boolean readyToJump;
     [SerializeField] float JumpTime;
     [SerializeField] float minJumpTime;
     float jumpTimeCounter;
@@ -508,5 +505,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public bool IsRobotCarryingObject()
     {
         return isCarryingObject;
+    }
+
+    private void OnDestroy()
+    {
+        DisableInput();
     }
 }
