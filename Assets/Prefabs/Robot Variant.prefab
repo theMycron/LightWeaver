@@ -321,9 +321,7 @@ MonoBehaviour:
   maxSpeed: 4
   mainCamera: {fileID: 0}
   jumpForce: 9
-  jumpCooldown: 0.2
   fallSpeed: 50
-  airMultiplier: 0.3
   JumpTime: 0.35
   minJumpTime: 0.2
   ground:
@@ -332,7 +330,7 @@ MonoBehaviour:
   groundCheckDistance: 0.1
   robotLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
 --- !u!114 &-7661870445795561008
 MonoBehaviour:
   m_ObjectHideFlags: 0
