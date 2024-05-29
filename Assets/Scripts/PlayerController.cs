@@ -167,8 +167,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         }
 
-        
-
     }
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
@@ -197,12 +195,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         moveDirection = context.ReadValue<Vector2>();
         anim.SetInteger("BaseState", (int)AnimationState.walking);
-        AudioManager.instance.PlaySFX(AudioManager.instance.walking);
+        AudioManager.instance.StartWalkingSound();
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
         anim.SetInteger("BaseState", (int)AnimationState.idle);
+        AudioManager.instance.StopWalkingSound();
     }
     Vector3 MovePlayer()
     {
@@ -271,7 +270,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //Debug.Log("Jump Started!!!");
         if (IsGrounded() && !isJumping)
         {
-            AudioManager.instance.PlaySFX(AudioManager.instance.Jumping);
+            AudioManager.instance.StartJumpingSound();
             isJumping = true;
             isJumpCancelled = false;
             anim.SetInteger("BaseState", (int)AnimationState.jumping);
@@ -405,6 +404,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             anim.SetInteger("BaseState", (int)AnimationState.falling);
             //Debug.Log("BaseState"+ (int)AnimationState.falling);
             isFalling = true;
+            
         }
     }
 
@@ -412,7 +412,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         if (isFalling && IsGrounded())
         {
-            
+            AudioManager.instance.StartLandingSound();
             // only play the landing animation if the player isnt trying to move
             // if the player is trying to move, play the walking animation
             if (moveDirection == Vector2.zero)

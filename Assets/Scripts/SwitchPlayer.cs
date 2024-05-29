@@ -54,7 +54,6 @@ public class SwitchPlayer : MonoBehaviour
 
     void ActivateRobot(int robotNumber)
     {
-        AudioManager.instance.PlaySFX(AudioManager.instance.robotSwitch);
         if (robotNumber > robots.Length)
         {
             return;
@@ -66,6 +65,7 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
+        AudioManager.instance.PlayRobotSFX(AudioManager.instance.robotSwitch);
         DisableAllRobots();
         SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
