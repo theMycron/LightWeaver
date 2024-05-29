@@ -191,12 +191,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRaised: 0
-  strength: 75
-  CubeLayer:
+  cubeHeight: 0
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  cubeLayer:
     serializedVersion: 2
     m_Bits: 128
-  pickupDistance: 10
+  laserCubeLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  strength: 75
   rotateSpeed: 6
+  pickupDistance: 10
+  cubeMassWhenPlaced: 1000
 --- !u!114 &5031277240214526374
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -314,11 +314,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
   isActive: 0
+  robotNumber: 0
   moveSpeed: 25
   rotateSpeed: 7
   groundDrag: 20
+  maxSpeed: 4
   mainCamera: {fileID: 0}
-  jumpForce: 10.9
+  jumpForce: 9
   jumpCooldown: 0.2
   fallSpeed: 50
   airMultiplier: 0.3
@@ -326,9 +328,11 @@ MonoBehaviour:
   minJumpTime: 0.2
   ground:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 704
   groundCheckDistance: 0.1
-  isCarryingObject: 0
+  robotLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &-7661870445795561008
 MonoBehaviour:
   m_ObjectHideFlags: 0
