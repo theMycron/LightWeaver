@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
@@ -338,7 +339,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     void OnRotateRobotStarted(InputAction.CallbackContext context)
     {
         isRotating = true;
-
+        isRobotPointing = true;
     }
 
     void OnRotateRobotCancelled(InputAction.CallbackContext context)
@@ -450,8 +451,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-        isRobotPointing = true;
-        laserScript.enabled = isRobotPointing;
+        ShouldActivateRobotPointing();
         // laser pointing logic
         switch (sender.colorEnum)
         {
@@ -465,7 +465,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public void LaserExit(Laser sender)
     {
         isRobotPointing = false;
-        laserScript.enabled = isRobotPointing;
+        ShouldActivateRobotPointing();
         texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
     }
 
@@ -557,5 +557,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             Debug.Log(mousePosition);
         }
         
+    }
+
+    private void ShouldActivateRobotPointing()
+    {
+        laserScript.enabled = isRobotPointing;
+        GetComponent<LineRenderer>().enabled = isRobotPointing;
     }
 }
