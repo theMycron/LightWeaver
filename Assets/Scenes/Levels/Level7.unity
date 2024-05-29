@@ -6910,7 +6910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1030851397}
-  m_PathPosition: 0.9863025
+  m_PathPosition: 1
   m_PositionUnits: 0
   m_PathOffset: {x: 28.2, y: 30, z: 22.7}
   m_XDamping: 0
@@ -8277,7 +8277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638711148}
   m_LocalRotation: {x: 0.23911764, y: 0.3696438, z: -0.099045776, w: 0.89239913}
-  m_LocalPosition: {x: -22.2, y: 30, z: -22.343859}
+  m_LocalPosition: {x: -22.2, y: 30, z: -22.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18109,6 +18109,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1511213308041013592, guid: 17c777680c01cc34a8718a1db0559d24,
+        type: 3}
+      propertyPath: EmissionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2614152224387511309, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: m_Name
