@@ -9,8 +9,6 @@ public class EndTrigger : MonoBehaviour
     public GameEvent levelDone;
     private void OnTriggerEnter(Collider other)
     {
-        if (levelComplete)
-            return;
         PlayerController playerController = other.GetComponent<PlayerController>();
         if (playerController == null || levelComplete) return;
         Debug.Log("Level complete!");

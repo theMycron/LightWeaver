@@ -27,6 +27,7 @@ public class LevelManager : MonoBehaviour
     }
     private void NextLevel()
     {
+        Debug.Log("Going to next level. Currently: "+currentLevel);
         if (currentLevel >= levels.Count)
         {
             // no levels after
@@ -34,32 +35,44 @@ public class LevelManager : MonoBehaviour
         }
         if (currentLevel >= 0)
         {
-            UnloadCurrentLevel();
+            StartCoroutine(UnloadCurrentLevel());
+        } else
+        {
+            Debug.Log("Not unloading. Current scene is "+currentLevel);
         }
 
-        string nextLevel = levels[currentLevel + 1];
+        string nextLevel = levels[currentLevel++];
 
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
     }
 
     private void PlayLevel(int level)
     {
+        Debug.Log($"Going to level {level}. Currently: " + currentLevel);
         if (level >= levels.Count || level == currentLevel)
         {
             return;
         }
         if (currentLevel >= 0)
-            SceneManager.UnloadSceneAsync(levels[currentLevel]);
+        {
+            UnloadCurrentLevel();
+        }
+        else
+        {
+            Debug.Log("Not unloading. Current scene is " + currentLevel);
+        }
 
         string nextLevel = levels[level];
+        currentLevel = level;
 
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
     }
 
     private IEnumerator UnloadCurrentLevel()
     {
+        Debug.Log("Unloading scene " + levels[currentLevel]);
         AsyncOperation ao = SceneManager.UnloadSceneAsync(levels[currentLevel]);
         yield return ao;
-
+        Debug.Log("Unloaded");
     }
 }
