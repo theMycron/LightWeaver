@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void Update()
     {
         
-        if (isRobotPointing) {
+        if (isRobotPointing && Input.GetMouseButtonDown(1)) {
             // get mosue position
             RaycastHit hit;
             Vector3 mouse = Input.mousePosition;
@@ -548,7 +548,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void OnAnimatorIK()
     {
         // aiming hand at target IK logic
-        if (isRobotPointing)
+        if (isRobotPointing && Input.GetMouseButtonDown(1))
         {
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
