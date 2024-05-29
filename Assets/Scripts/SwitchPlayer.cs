@@ -16,17 +16,17 @@ public class SwitchPlayer : MonoBehaviour
     static GameObject activeRobot;
     int activeRobotIndex = 0; // Track the current active robot index
 
-
     InputManager inputManager;
 
     private void Awake()
     {
         inputManager = new InputManager();
     }
+
     private void Start()
     {
-        /*        activeRobot = robots[0];*/
         ActivateRobot(activeRobotIndex);
+        UpdateRobotImagesVisibility();
     }
 
     private void OnEnable()
@@ -61,7 +61,7 @@ public class SwitchPlayer : MonoBehaviour
             try
             {
                 int robotNumber = int.Parse(keyName);
-                ActivateRobot(robotNumber-1);
+                ActivateRobot(robotNumber - 1);
             }
             catch (Exception e)
             {
@@ -98,7 +98,7 @@ public class SwitchPlayer : MonoBehaviour
         UpdateRobotImage(robotNumber);
         activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
-        // cant switch to robot if it is disabled
+        // Can't switch to robot if it is disabled
         if (!script.isActive)
         {
             return;
@@ -113,14 +113,39 @@ public class SwitchPlayer : MonoBehaviour
     // New method to update the UI image of the selected robot
     private void UpdateRobotImage(int robotNumber)
     {
-        foreach (var image in robotImages)
+        for (int i = 0; i < robotImages.Length; i++)
         {
-            // Grey out the image
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f); // Adjust the alpha value to make the image semi-transparent
+            if (i < robots.Length)
+            {
+                // Grey out the image
+                robotImages[i].color = new Color(robotImages[i].color.r, robotImages[i].color.g, robotImages[i].color.b, 0.5f);
+            }
+            else
+            {
+                // Hide the image completely
+                robotImages[i].gameObject.SetActive(false);
+            }
         }
 
         // Select the new robot
         robotImages[robotNumber].color = Color.white; // Change color to white
+        robotImages[robotNumber].gameObject.SetActive(true); // Ensure the selected robot image is active
+    }
+
+    // New method to update the visibility of robot images based on the number of robots
+    private void UpdateRobotImagesVisibility()
+    {
+        for (int i = 0; i < robotImages.Length; i++)
+        {
+            if (i < robots.Length)
+            {
+                robotImages[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                robotImages[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     void DisableAllRobots()

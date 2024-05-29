@@ -56,16 +56,17 @@ public class PromptManager : MonoBehaviour
         Vector3 promptPosition;
         int promptCount = promptBar.childCount;
 
-        if (promptCount == 0)
-        {
-            // Position the first prompt at the same location as the prefab
-            promptPosition = promptPrefab.transform.localPosition;
-        }
-        else
+        // Calculate the position based on the last child's position and the desired spacing
+        if (promptCount > 0)
         {
             float spaceBetweenPrompts = 10f; // Adjust the value as needed
             float stackedHeight = promptHeight + spaceBetweenPrompts;
-            promptPosition = promptBar.GetChild(0).localPosition - new Vector3(0f, stackedHeight, 0f);
+            promptPosition = promptBar.GetChild(promptCount - 1).localPosition - new Vector3(0f, stackedHeight, 0f);
+        }
+        else
+        {
+            // Position the first prompt at the same location as the prefab
+            promptPosition = promptPrefab.transform.localPosition;
         }
 
         newPrompt.transform.localPosition = promptPosition;
