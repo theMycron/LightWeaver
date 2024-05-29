@@ -16,17 +16,17 @@ public class SwitchPlayer : MonoBehaviour
     static GameObject activeRobot;
     int activeRobotIndex = 0; // Track the current active robot index
 
+
     InputManager inputManager;
 
     private void Awake()
     {
         inputManager = new InputManager();
     }
-
     private void Start()
     {
+        /*        activeRobot = robots[0];*/
         ActivateRobot(activeRobotIndex);
-        UpdateRobotImagesVisibility();
     }
 
     private void OnEnable()
@@ -61,7 +61,7 @@ public class SwitchPlayer : MonoBehaviour
             try
             {
                 int robotNumber = int.Parse(keyName);
-                ActivateRobot(robotNumber - 1);
+                ActivateRobot(robotNumber-1);
             }
             catch (Exception e)
             {
@@ -94,59 +94,33 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
-
         // Update the UI image of the selected robot
         UpdateRobotImage(robotNumber);
         activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
-
-        // Can't switch to robot if it is disabled
+        // cant switch to robot if it is disabled
         if (!script.isActive)
         {
             return;
         }
-
         DisableAllRobots();
         SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
     }
 
-    // Method to update the UI image of the selected robot
+    // New method to update the UI image of the selected robot
     private void UpdateRobotImage(int robotNumber)
     {
-        for (int i = 0; i < robotImages.Length; i++)
+        foreach (var image in robotImages)
         {
-            if (i < robots.Length)
-            {
-                // Grey out the image
-                robotImages[i].color = new Color(robotImages[i].color.r, robotImages[i].color.g, robotImages[i].color.b, 0.5f); // Adjust the alpha value to make the image semi-transparent
-            }
-            else
-            {
-                // Hide the image completely
-                robotImages[i].gameObject.SetActive(false);
-            }
+            // Grey out the image
+            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f); // Adjust the alpha value to make the image semi-transparent
         }
 
         // Select the new robot
         robotImages[robotNumber].color = Color.white; // Change color to white
-    }
-
-    // Method to update the visibility of robot images based on the number of robots
-    private void UpdateRobotImagesVisibility()
-    {
-        for (int i = 0; i < robotImages.Length; i++)
-        {
-            if (i < robots.Length)
-            {
-                robotImages[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                robotImages[i].gameObject.SetActive(false);
-            }
-        }
     }
 
     void DisableAllRobots()
@@ -156,6 +130,7 @@ public class SwitchPlayer : MonoBehaviour
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
             script.DisableInput();
+            //robot.tag = "Undefined";
         }
     }
 
