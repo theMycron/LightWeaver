@@ -2569,6 +2569,11 @@ PrefabInstance:
       objectReference: {fileID: 638711150}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: basicTarget
+      value: 
+      objectReference: {fileID: 1335014264}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: laserScript
       value: 
       objectReference: {fileID: 2082056504}
@@ -9564,6 +9569,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 689f0fec01a2bf9419c119008feb8e21, type: 3}
+--- !u!1 &1335014264 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7089752302951623599, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
+    type: 3}
+  m_PrefabInstance: {fileID: 108342120}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1338973594
 PrefabInstance:
   m_ObjectHideFlags: 0

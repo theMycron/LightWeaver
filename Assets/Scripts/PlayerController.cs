@@ -60,6 +60,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
 
+    [SerializeField]
+    private GameObject basicTarget;
+
     private enum AnimationState
     {
         disabled = 0,
@@ -536,5 +539,16 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public bool IsRobotCarryingObject()
     {
         return isCarryingObject;
+    }
+
+    private void OnAnimatorIK()
+    {
+        // aiming hand at target IK logic
+        if (isRobotPointing)
+        {
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+            anim.SetIKPosition(AvatarIKGoal.RightHand, basicTarget.transform.position);
+        }
+        
     }
 }
