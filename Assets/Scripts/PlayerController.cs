@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
     [SerializeField] float groundDrag;
+    [SerializeField] float maxSpeed = 4f;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -176,14 +177,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
-        if(xSpeed > 3f)
+        if(xSpeed > maxSpeed)
         {
-            xSpeed = 3f;
+            xSpeed = maxSpeed;
         }
 
-        if (zSpeed > 3f)
+        if (zSpeed > maxSpeed)
         {
-            zSpeed = 3f;
+            zSpeed = maxSpeed;
         }
 
         rb.velocity = new Vector3(
@@ -208,20 +209,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        
         Vector3 force;
-        // Adjust velocity if the player is grounded
-        if (IsGrounded())
-        {
-            // drag will be applied when grounded
-            force = targetVector.normalized * moveSpeed * 10f;
-
-        }
-        else
-        {
-            // no drag will be applied when airborne (because it messes with the jump height)
-            // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed * airMultiplier;
-        }
+        force = targetVector.normalized * moveSpeed * 10f;
 
         rb.AddForce(force, ForceMode.Force);
 

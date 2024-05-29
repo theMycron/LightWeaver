@@ -33,6 +33,10 @@ public class LevelManager : MonoBehaviour
             // no levels after
             return;
         }
+        string nextLevel = levels[currentLevel + 1];
+
+        SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
+
         if (currentLevel >= 0)
         {
             StartCoroutine(UnloadCurrentLevel());
@@ -40,10 +44,7 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("Not unloading. Current scene is "+currentLevel);
         }
-
-        string nextLevel = levels[currentLevel++];
-
-        SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
+        currentLevel++;
     }
 
     private void PlayLevel(int level)
@@ -53,26 +54,29 @@ public class LevelManager : MonoBehaviour
         {
             return;
         }
+
+        string nextLevel = levels[level];
+        SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
+        Debug.Log("Loaded next scene: " + nextLevel);
+
         if (currentLevel >= 0)
         {
             UnloadCurrentLevel();
+            Debug.Log("Unload complete");
         }
         else
         {
             Debug.Log("Not unloading. Current scene is " + currentLevel);
         }
 
-        string nextLevel = levels[level];
         currentLevel = level;
-
-        SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
     }
 
     private IEnumerator UnloadCurrentLevel()
     {
         Debug.Log("Unloading scene " + levels[currentLevel]);
         AsyncOperation ao = SceneManager.UnloadSceneAsync(levels[currentLevel]);
+        Resources.UnloadUnusedAssets();
         yield return ao;
-        Debug.Log("Unloaded");
     }
 }
