@@ -23,12 +23,7 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
     [SerializeField]
     private bool isActive;
 
-    [Header("LaserCube Number")]
-    [SerializeField]
-    private int cubeNumber;
-
     private GameObject activatedBy;
-    public int CubeNumber { get { return this.cubeNumber; } }
 
 
     // Start is called before the first frame update
@@ -84,28 +79,6 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
         this.color = (Color) Colors.GetLaserColor(color);
     }
 
-    public void Activate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (isActive || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-        activatedBy = sender.gameObject;
-
-        ToggleLaserCube(true);
-    }
-
-    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (!isActive || activatedBy != sender.gameObject || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-
-        activatedBy = null;
-        ToggleLaserCube(false);
-    }
-
 
     private void ToggleLaserCube(bool value)
     {
@@ -153,10 +126,5 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
             activatedBy = null;
             ToggleLaserCube(false);
         }
-    }
-
-    private bool CheckLaserCubeNmber(int laserCubeNumber)
-    {
-        return this.cubeNumber == laserCubeNumber;
     }
 }
