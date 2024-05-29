@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool isJumpCancelled = false;
     private bool isCarryingObject;
     private bool isRotating;
+    
+    [Header("Laser Pointing")]
+    public bool isRobotPointing;
+    [SerializeField] GameObject startingPoint;
+    [SerializeField] Laser laserScript;
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
@@ -132,7 +137,16 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     }
     private void Update()
     {
-
+        
+        if (isRobotPointing) {
+            // get mosue position
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Vector3 camPos = ray.origin;
+            Vector3 mouseDir = ray.direction;
+            
+            startingPoint.transform.position = mouseDir;
+        }
+        
     }
     private void FixedUpdate()
     {
@@ -429,6 +443,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
+        isRobotPointing = true;
+        laserScript.enabled = isRobotPointing;
         // laser pointing logic
         switch (sender.colorEnum)
         {
@@ -441,6 +457,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserExit(Laser sender)
     {
+        isRobotPointing = false;
+        laserScript.enabled = isRobotPointing;
         texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
     }
 
