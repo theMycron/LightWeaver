@@ -20,7 +20,6 @@ public class CubeController : MonoBehaviour
     [SerializeField] float cubeHeight;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask cubeLayer;
-    [SerializeField] LayerMask laserCubeLayer;
 
 
     [Header("Cube Movement")]
@@ -252,10 +251,10 @@ public class CubeController : MonoBehaviour
         Debug.DrawRay(transform.position, Vector3.down * (cubeHeight * 0.5f + 0.2f), Color.red);
 
         bool placedOnGround = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer);
-        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
-        bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);
+/*        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
+        bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);*/
 
-        return placedOnGround || placedOnCube || placedOnLaserCube;
+        return placedOnGround /*|| placedOnCube || placedOnLaserCube*/;
     }
 
     bool IsRobotNearCube()

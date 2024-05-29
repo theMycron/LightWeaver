@@ -2756,12 +2756,12 @@ PrefabInstance:
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: cubeLayer.m_Bits
-      value: 128
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 64
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -3149,12 +3149,12 @@ PrefabInstance:
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: cubeLayer.m_Bits
-      value: 128
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 64
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -3565,12 +3565,12 @@ PrefabInstance:
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: cubeLayer.m_Bits
-      value: 128
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 64
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -4021,6 +4021,11 @@ PrefabInstance:
         type: 3}
       propertyPath: airMultiplier
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: ground.m_Bits
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
@@ -4490,6 +4495,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: ground.m_Bits
+      value: 704
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: robotLayer.m_Bits
       value: 256
       objectReference: {fileID: 0}
@@ -4654,12 +4664,12 @@ PrefabInstance:
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: cubeLayer.m_Bits
-      value: 128
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 64
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -5106,12 +5116,12 @@ PrefabInstance:
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: cubeLayer.m_Bits
-      value: 128
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
       propertyPath: groundLayer.m_Bits
-      value: 64
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 2615432623796754897, guid: 4b3054871b9935a45a6fb35e26f0fe4b,
         type: 3}
@@ -5455,6 +5465,11 @@ PrefabInstance:
         type: 3}
       propertyPath: airMultiplier
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: ground.m_Bits
+      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
