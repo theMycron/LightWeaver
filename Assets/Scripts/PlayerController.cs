@@ -197,6 +197,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         moveDirection = context.ReadValue<Vector2>();
         anim.SetInteger("BaseState", (int)AnimationState.walking);
+        AudioManager.instance.PlaySFX(AudioManager.instance.walking);
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
@@ -270,13 +271,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //Debug.Log("Jump Started!!!");
         if (IsGrounded() && !isJumping)
         {
+            AudioManager.instance.PlaySFX(AudioManager.instance.Jumping);
             isJumping = true;
             isJumpCancelled = false;
             anim.SetInteger("BaseState", (int)AnimationState.jumping);
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             jumpTimeCounter = JumpTime;
             jumpForceCounter = jumpForce;
-
+            
             //Debug.Log("JumpStart Y Velocity: " + rb.velocity.y);
             //Debug.Log("JumpStart Y Position: " + rb.position.y);
         }

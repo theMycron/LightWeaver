@@ -54,6 +54,7 @@ public class SwitchPlayer : MonoBehaviour
 
     void ActivateRobot(int robotNumber)
     {
+        AudioManager.instance.PlaySFX(AudioManager.instance.robotSwitch);
         if (robotNumber > robots.Length)
         {
             return;
