@@ -9246,6 +9246,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: m_TagString
       value: Robot1
       objectReference: {fileID: 0}

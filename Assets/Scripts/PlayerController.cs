@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
                 mousePosition = hit.point;
             }
             Debug.Log(mousePosition);
-
+            GetComponent<Laser>().direction = mousePosition;
             //startingPoint.transform.position = mouseDir;
         }
         
@@ -451,8 +451,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-        ShouldActivateRobotPointing();
         // laser pointing logic
+        ShouldActivateRobotPointing();
         switch (sender.colorEnum)
         {
             case LaserColors.red:
@@ -553,7 +553,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
-
+            GetComponent<Laser>().direction = mousePosition;
             Debug.Log(mousePosition);
         }
         
