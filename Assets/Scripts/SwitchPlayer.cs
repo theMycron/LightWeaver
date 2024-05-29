@@ -94,23 +94,25 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
+
         // Update the UI image of the selected robot
         UpdateRobotImage(robotNumber);
         activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
+
         // Can't switch to robot if it is disabled
         if (!script.isActive)
         {
             return;
         }
+
         DisableAllRobots();
         SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
-        //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
     }
 
-    // New method to update the UI image of the selected robot
+    // Method to update the UI image of the selected robot
     private void UpdateRobotImage(int robotNumber)
     {
         for (int i = 0; i < robotImages.Length; i++)
@@ -118,7 +120,7 @@ public class SwitchPlayer : MonoBehaviour
             if (i < robots.Length)
             {
                 // Grey out the image
-                robotImages[i].color = new Color(robotImages[i].color.r, robotImages[i].color.g, robotImages[i].color.b, 0.5f);
+                robotImages[i].color = new Color(robotImages[i].color.r, robotImages[i].color.g, robotImages[i].color.b, 0.5f); // Adjust the alpha value to make the image semi-transparent
             }
             else
             {
@@ -129,10 +131,9 @@ public class SwitchPlayer : MonoBehaviour
 
         // Select the new robot
         robotImages[robotNumber].color = Color.white; // Change color to white
-        robotImages[robotNumber].gameObject.SetActive(true); // Ensure the selected robot image is active
     }
 
-    // New method to update the visibility of robot images based on the number of robots
+    // Method to update the visibility of robot images based on the number of robots
     private void UpdateRobotImagesVisibility()
     {
         for (int i = 0; i < robotImages.Length; i++)
@@ -155,7 +156,6 @@ public class SwitchPlayer : MonoBehaviour
             PlayerController script = robot.GetComponent<PlayerController>();
             robot.GetComponent<Rigidbody>().isKinematic = true;
             script.DisableInput();
-            //robot.tag = "Undefined";
         }
     }
 
