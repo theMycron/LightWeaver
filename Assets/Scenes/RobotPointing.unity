@@ -2582,6 +2582,11 @@ PrefabInstance:
       propertyPath: robotNumber
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: startingPoint
+      value: 
+      objectReference: {fileID: 1127064283}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
@@ -8159,6 +8164,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 742409989658684309, guid: e63afbb72f520f74ea9e64da38f0b7c1,
     type: 3}
   m_PrefabInstance: {fileID: 1123457653}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1127064283 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3127514055863360777, guid: 5b3d66b25ebcce74f9e1361537346509,
+    type: 3}
+  m_PrefabInstance: {fileID: 364093706}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1129438560
 PrefabInstance:

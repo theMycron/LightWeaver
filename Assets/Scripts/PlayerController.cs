@@ -56,12 +56,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public bool isRobotPointing;
     [SerializeField] GameObject startingPoint;
     [SerializeField] Laser laserScript;
+    private Vector3 mousePosition;
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
-
-    [SerializeField]
-    private GameObject basicTarget;
 
     private enum AnimationState
     {
@@ -100,7 +98,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         CheckIfActive();
 
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
-
+        mousePosition = Vector3.zero;
     }
 
     public void EnableInput()
@@ -143,11 +141,17 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         
         if (isRobotPointing) {
             // get mosue position
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Vector3 camPos = ray.origin;
-            Vector3 mouseDir = ray.direction;
-            
-            startingPoint.transform.position = mouseDir;
+            RaycastHit hit;
+            Vector3 mouse = Input.mousePosition;
+            Ray castPoint = mainCamera.ScreenPointToRay(mouse);
+
+            if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~robotLayer))
+            {
+                mousePosition = hit.point;
+            }
+            Debug.Log(mousePosition);
+
+            //startingPoint.transform.position = mouseDir;
         }
         
     }
@@ -546,8 +550,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         // aiming hand at target IK logic
         if (isRobotPointing)
         {
+            // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
-            anim.SetIKPosition(AvatarIKGoal.RightHand, basicTarget.transform.position);
+            anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
+
+            Debug.Log(mousePosition);
         }
         
     }
