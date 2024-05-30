@@ -9,7 +9,7 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public GameObject hudDisplay;
-    [SerializeField] private Canvas settings;
+    [SerializeField] private GameObject settings;
 
     private LevelManager levelManager;
 
@@ -53,11 +53,11 @@ public class PauseMenu : MonoBehaviour
 
     public void ExitSettings()
     {
-        settings.gameObject.SetActive(false);
+        settings.SetActive(false);
     }
     public void LoadMenu()
     {
-        settings.gameObject.SetActive(true);
+        settings.SetActive(true);
     }
 
     public void QuitGame()
