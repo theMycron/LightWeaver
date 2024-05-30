@@ -143,12 +143,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             Vector3 mouse = Input.mousePosition;
             Ray castPoint = mainCamera.ScreenPointToRay(mouse);
 
-            if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~robotLayer))
+            if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
             {
                 mousePosition = hit.point;
+                GetComponent<Laser>().direction = (mousePosition - startingPoint.transform.position).normalized;
+                Debug.DrawRay(mousePosition, Vector3.up, Color.green, 30);
             }
             Debug.Log(mousePosition);
-            GetComponent<Laser>().direction = mousePosition;
+
             //startingPoint.transform.position = mouseDir;
         }
         
@@ -537,8 +539,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
-            GetComponent<Laser>().direction = mousePosition;
-            Debug.Log(mousePosition);
         }
         
     }
