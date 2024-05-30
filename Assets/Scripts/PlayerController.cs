@@ -25,6 +25,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
     [SerializeField] float groundDrag;
+    [SerializeField] float maxSpeed = 4f;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -32,10 +33,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     float jumpForceCounter;
-    [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
-    [SerializeField] float airMultiplier = .2f;
-    Boolean readyToJump;
     [SerializeField] float JumpTime;
     [SerializeField] float minJumpTime;
     float jumpTimeCounter;
@@ -94,7 +92,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
-        ResetJump();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
@@ -195,17 +192,19 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
     {
+        if (rb.isKinematic)
+            return;
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
-        if(xSpeed > 3f)
+        if(xSpeed > maxSpeed)
         {
-            xSpeed = 3f;
+            xSpeed = maxSpeed;
         }
 
-        if (zSpeed > 3f)
+        if (zSpeed > maxSpeed)
         {
-            zSpeed = 3f;
+            zSpeed = maxSpeed;
         }
 
         rb.velocity = new Vector3(
@@ -230,20 +229,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        
         Vector3 force;
-        // Adjust velocity if the player is grounded
-        if (IsGrounded())
-        {
-            // drag will be applied when grounded
-            force = targetVector.normalized * moveSpeed * 10f;
-
-        }
-        else
-        {
-            // no drag will be applied when airborne (because it messes with the jump height)
-            // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed * airMultiplier;
-        }
+        force = targetVector.normalized * moveSpeed * 10f;
 
         rb.AddForce(force, ForceMode.Force);
 
@@ -381,11 +369,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     }
     
-
-    private void ResetJump()
-    {
-        readyToJump = true;
-    }
     void Jump()
     {
         // if player attempted to cancel jump, dont stop the jump until minimum time limit
@@ -545,6 +528,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         return isCarryingObject;
     }
 
+
     private void OnAnimatorIK()
     {
         // aiming hand at target IK logic
@@ -563,5 +547,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         laserScript.enabled = isRobotPointing;
         GetComponent<LineRenderer>().enabled = isRobotPointing;
+    }
+
+    private void OnDestroy()
+    {
+        DisableInput();
     }
 }

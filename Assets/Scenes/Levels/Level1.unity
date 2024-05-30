@@ -3780,7 +3780,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638711148}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &638711150
 Camera:
   m_ObjectHideFlags: 0
@@ -4116,7 +4116,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &681162313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4157,7 +4157,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5fcba2d9f23db144b345f7d43f323e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevelScene: Level2
+  levels: []
+  audioManager: {fileID: 0}
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -4269,7 +4270,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &688019008
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13319,11 +13320,6 @@ PrefabInstance:
         type: 3}
       propertyPath: robotNumber
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: ground.m_Bits
-      value: 704
       objectReference: {fileID: 0}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
