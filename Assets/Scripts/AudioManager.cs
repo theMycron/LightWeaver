@@ -5,24 +5,14 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     [Header("----------- Audio Source -----------")]
-    [SerializeField] AudioSource musicSource;
-    [SerializeField] AudioSource SFXSource;
-
-    private void start() {
-        
-        musicSource.clip = mainMenu;
-        musicSource.Play();
-    
-    }
-
-
+    [SerializeField] private AudioSource MusicPlayer;
+    [SerializeField] private AudioSource SFXSource;
 
     [Header("----------- Music -----------")]
     [SerializeField] private AudioClip mainMenu;
     [SerializeField] private AudioClip level;
     [SerializeField] private AudioClip end;
 
-    private AudioSource player;
 
     public enum MusicEnum
     {
@@ -31,27 +21,23 @@ public class AudioManager : MonoBehaviour
         End = 3
     }
 
-    private void Awake()
-    {
-        player = GetComponent<AudioSource>();
-    }
 
     public void PlayMusic(MusicEnum track)
     {
-        player.Stop();
+        MusicPlayer.Stop();
         switch (track)
         {
             case MusicEnum.MainMenu:
-                player.clip = mainMenu;
+                MusicPlayer.clip = mainMenu;
                 break;
                 case MusicEnum.Level:
-                player.clip = level;
+                MusicPlayer.clip = level;
                 break;
                 case MusicEnum.End:
-                player.clip = end;
+                MusicPlayer.clip = end;
                 break;
         }
-        player.Play();
+        MusicPlayer.Play();
     }
     
     public void PlaySFX(AudioClip clip) {

@@ -5881,6 +5881,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -9301,8 +9302,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85ba8e4841142f741bf165926662d7e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  virtualCamera: {fileID: 0}
-  followRobot: 0
+  virtualCamera: {fileID: 1916338517}
 --- !u!4 &1076052869
 Transform:
   m_ObjectHideFlags: 0

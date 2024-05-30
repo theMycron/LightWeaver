@@ -9,6 +9,14 @@ public class PauseMenu : MonoBehaviour
 
     public GameObject pauseMenuUI;
     public GameObject hudDisplay;
+    [SerializeField] private Canvas settings;
+
+    private LevelManager levelManager;
+
+    private void Awake()
+    {
+        levelManager = FindAnyObjectByType<LevelManager>();
+    }
 
     void Update()
     {
@@ -27,55 +35,58 @@ public class PauseMenu : MonoBehaviour
 
     public void Resume()
     {
+        if (!GameIsPaused) return; 
         pauseMenuUI.SetActive(false);
         hudDisplay.SetActive(true);
-        Time.timeScale = 0.5f;
+        Time.timeScale = 1f;
         GameIsPaused = false;
     }
 
     void Pause()
     {
+        if (GameIsPaused) return;
         pauseMenuUI.SetActive(true);
         hudDisplay.SetActive(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
 
+    public void ExitSettings()
+    {
+        settings.gameObject.SetActive(false);
+    }
     public void LoadMenu()
     {
-        Time.timeScale = 0.5f;
-        SettingsMenu.SetMenuOrigin(MenuOrigin.PauseMenu);
-        SceneManager.LoadScene("Settings");
+        settings.gameObject.SetActive(true);
     }
 
     public void QuitGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
+        levelManager.ReturnToMenu();
     }
 
     // Method to restart the current level
     public void RestartLevel()
     {
-        Time.timeScale = 1f;  // Ensure the game time is running
-        string currentSceneName = SceneManager.GetActiveScene().name;  // Get the current scene name
-        SceneManager.LoadScene(currentSceneName);  // Reload the current scene
+        levelManager.RestartLevel();
+        Resume();
     }
 
     // Method to resume the game from the settings menu
-    public static void ResumeGameFromSettings()
-    {
-        if (GameIsPaused)
-        {
-            GameObject pauseMenu = GameObject.FindWithTag("PauseMenu");
-            if (pauseMenu != null)
-            {
-                PauseMenu pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
-                if (pauseMenuScript != null)
-                {
-                    pauseMenuScript.Resume();
-                }
-            }
-        }
-    }
+    //public static void ResumeGameFromSettings()
+    //{
+    //    if (GameIsPaused)
+    //    {
+    //        GameObject pauseMenu = GameObject.FindWithTag("PauseMenu");
+    //        if (pauseMenu != null)
+    //        {
+    //            PauseMenu pauseMenuScript = pauseMenu.GetComponent<PauseMenu>();
+    //            if (pauseMenuScript != null)
+    //            {
+    //                pauseMenuScript.Resume();
+    //            }
+    //        }
+    //    }
+    //}
 }

@@ -156,6 +156,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3732337571811495221, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24100000, guid: fc9e83f08bfcf3647bddaf2e8005ebf1,
+        type: 2}
     - target: {fileID: 6008556012766704718, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_RootOrder
@@ -218,12 +224,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704013352948163628, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7704013352948163628, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
       propertyPath: globalState
       value: 
       objectReference: {fileID: 11400000, guid: 89de8f64d95da634ea2d40965cb0be95,
         type: 2}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3078353319485034625, guid: 79ebc15e02c932447892c3d15bff9892, type: 3}
+    - {fileID: 2939471302677816879, guid: 79ebc15e02c932447892c3d15bff9892, type: 3}
+    - {fileID: 6847751664540609394, guid: 79ebc15e02c932447892c3d15bff9892, type: 3}
+    - {fileID: 7661622481307722000, guid: 79ebc15e02c932447892c3d15bff9892, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79ebc15e02c932447892c3d15bff9892, type: 3}

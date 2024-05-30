@@ -6081,6 +6081,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -12136,7 +12137,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -12185,8 +12185,8 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 1637423251}
           m_TargetAssemblyTypeName: SwitchPlayer, Assembly-CSharp
-          m_MethodName: ActivateFirstRobot
-          m_Mode: 1
+          m_MethodName: ActivateRobot
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

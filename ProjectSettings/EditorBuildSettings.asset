@@ -5,12 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/LevelManager.unity
+    guid: 1e2de4665283d9249bb37e48498bea14
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: cda8b334b3510aa449cb6df2cb9890c9
+  - enabled: 1
+    path: Assets/Scenes/HUD.unity
+    guid: a3a29165dd29e6048a5f433b710a6508
   - enabled: 1
     path: Assets/Scenes/Settings.unity
     guid: cfca88cc18f5970428aab3a13e5f0f2f
@@ -21,8 +24,41 @@ EditorBuildSettings:
     path: Assets/Scenes/Credits.unity
     guid: 28c1569212c71bf4aa334394e1d23b07
   - enabled: 1
-    path: Assets/Scenes/HUD-CharacterController.unity
-    guid: 6ae3f9315fe4ef448a3f812603434c50
+    path: Assets/Scenes/Levels/Level0.unity
+    guid: 7d4355379c59c8a4cb7ab2f50845788e
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: c787e2fab1cd9e4449c5deef48fcd67b
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level2.unity
+    guid: 44bbe88ac860b604e818b3909ab19a66
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level3.unity
+    guid: a0c892a692b87224a9fa9eb81f2dd780
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level4.unity
+    guid: 1eb94c3524b3b254c85ac319a438b80f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level5.unity
+    guid: 9c585f842a03d154da662be71eee60c8
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level6.unity
+    guid: 9b6828b6122c6ce408c453e04cd36642
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level7.unity
+    guid: dcdc8564adb4a3441a3d1eb5efa1e690
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level8.unity
+    guid: 496d6aa457abcc54582e81589b7479fd
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level9.unity
+    guid: 863193be8a11ed743824202c487157e7
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level10.unity
+    guid: 0164870a043e3084ba090a191f93a37f
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level11.unity
+    guid: f55fa92dc99f1dc4e8a4901ed7d33376
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 1948a01b952956a4eb0a19331b9b4716,
       type: 2}

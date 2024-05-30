@@ -9,12 +9,11 @@ using static Cinemachine.CinemachineFreeLook;
 
 public class SwitchPlayer : MonoBehaviour
 {
-    [SerializeField] private GameObject[] robots;
-    [SerializeField] private Image[] robotImages;
+    private GameObject[] robots;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
-  
-static GameObject activeRobot;
+    private RobotHUD robotHUD;
+    static GameObject activeRobot;
     int activeRobotIndex = 0; // Track the current active robot index
 
 
@@ -23,6 +22,17 @@ static GameObject activeRobot;
     private void Awake()
     {
         inputManager = new InputManager();
+
+        // get children robots
+        robots = new GameObject[transform.childCount];
+        for (int i = 0; i<robots.Length; i++)
+        {
+            Transform robot = transform.GetChild(i);
+            robots[i] = robot.gameObject;
+        }
+
+        robotHUD = FindAnyObjectByType<RobotHUD>();
+        
     }
     private void Start()
     {
@@ -89,14 +99,15 @@ static GameObject activeRobot;
         ActivateRobot(activeRobotIndex);
     }
 
-    void ActivateRobot(int robotNumber)
+    public void ActivateRobot(int robotNumber)
     {
         if (robotNumber >= robots.Length || robotNumber < 0)
         {
             return;
         }
         // Update the UI image of the selected robot
-        UpdateRobotImage(robotNumber);
+        if (robotHUD != null)
+            robotHUD.UpdateRobotImage(robotNumber);
         activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
         // cant switch to robot if it is disabled
@@ -111,18 +122,6 @@ static GameObject activeRobot;
         script.EnableInput();
     }
 
-    // New method to update the UI image of the selected robot
-    private void UpdateRobotImage(int robotNumber)
-    {
-        foreach (var image in robotImages)
-        {
-            // Grey out the image
-            image.color = new Color(image.color.r, image.color.g, image.color.b, 0.5f); // Adjust the alpha value to make the image semi-transparent
-        }
-
-        // Select the new robot
-        robotImages[robotNumber].color = Color.white; // Change color to white
-    }
 
     void DisableAllRobots()
     {

@@ -149,16 +149,16 @@ public class SettingsMenu : MonoBehaviour
         fullScreenToggle.isOn = defaultFullScreen;
 
         // Check menu origin and handle transition
-        switch (GetMenuOrigin())
-        {
-            case MenuOrigin.MainMenu:
-                // Handle transition from main menu
-                break;
-            case MenuOrigin.PauseMenu:
-                // Handle transition from pause menu
-                PauseMenu.ResumeGameFromSettings();
-                break;
-        }
+        //switch (GetMenuOrigin())
+        //{
+        //    case MenuOrigin.MainMenu:
+        //        // Handle transition from main menu
+        //        break;
+        //    case MenuOrigin.PauseMenu:
+        //        // Handle transition from pause menu
+        //        PauseMenu.ResumeGameFromSettings();
+        //        break;
+        //}
     }
 
     public static void SetMenuOrigin(MenuOrigin origin)

@@ -9,12 +9,11 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private Overlay overlay;
     private int currentLevel = -1;
-    
+
 
     private void Start()
     {
-        StartCoroutine(PlayLevel(0));
-        audioManager.PlayMusic(AudioManager.MusicEnum.Level);
+        ReturnToMenu();
     }
 
     public void OnLevelDone(Component sender, int objectNum, string channel, object data)
@@ -25,8 +24,28 @@ public class LevelManager : MonoBehaviour
     public void OnPlayLevel(Component sender, int objectNum, string channel, object data)
     {
         if (channel != "Level") return;
+        // if data is not null, assume that the level manager is trying to unload the main menu
+        if (data != null)
+        {
+            StartCoroutine(UnloadScene("MainMenu"));
+            LoadScene("HUD");
+            audioManager.PlayMusic(AudioManager.MusicEnum.Level);
+        }
         StartCoroutine(PlayLevel(objectNum));
     }
+
+    public void RestartLevel()
+    {
+        StartCoroutine(PlayLevel(currentLevel));
+    }
+
+    public void ReturnToMenu()
+    {
+        LoadScene("MainMenu");
+        StartCoroutine(UnloadScene("HUD"));
+        audioManager.PlayMusic(AudioManager.MusicEnum.MainMenu);
+    }
+
     private IEnumerator NextLevel()
     {
         Debug.Log("Going to next level. Currently: "+currentLevel);
@@ -40,7 +59,7 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(nextLevel, LoadSceneMode.Additive);
         if (currentLevel >= 0)
         {
-            StartCoroutine(UnloadCurrentLevel());
+            StartCoroutine(UnloadScene(levels[currentLevel]));
         } else
         {
             Debug.Log("Not unloading. Current scene is "+currentLevel);
@@ -52,7 +71,7 @@ public class LevelManager : MonoBehaviour
     private IEnumerator PlayLevel(int level)
     {
         Debug.Log($"Going to level {level}. Currently: " + currentLevel);
-        if (level >= levels.Count || level == currentLevel)
+        if (level >= levels.Count)
         {
             yield return null;
         }
@@ -64,7 +83,7 @@ public class LevelManager : MonoBehaviour
 
         if (currentLevel >= 0)
         {
-            UnloadCurrentLevel();
+            StartCoroutine(UnloadScene(levels[currentLevel]));
             Debug.Log("Unload complete");
         }
         else
@@ -76,6 +95,20 @@ public class LevelManager : MonoBehaviour
         overlay.StartFadeIn();
     }
 
+    private void LoadScene(string scene)
+    {
+        SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+    }
+    private IEnumerator UnloadScene(string sceneName)
+    {
+        // get scene and dont unload if invalid
+        Scene scene = SceneManager.GetSceneByName(sceneName);
+        if (!scene.IsValid()) yield break;
+
+        AsyncOperation ao = SceneManager.UnloadSceneAsync(scene);
+        Resources.UnloadUnusedAssets();
+        yield return ao;
+    }
     private IEnumerator FadeOut()
     {
         overlay.StartFadeOut();
@@ -86,12 +119,5 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         overlay.StartFadeIn();
-    }
-    private IEnumerator UnloadCurrentLevel()
-    {
-        Debug.Log("Unloading scene " + levels[currentLevel]);
-        AsyncOperation ao = SceneManager.UnloadSceneAsync(levels[currentLevel]);
-        Resources.UnloadUnusedAssets();
-        yield return ao;
     }
 }
