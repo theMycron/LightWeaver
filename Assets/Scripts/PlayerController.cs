@@ -334,7 +334,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     void OnRotateRobotStarted(InputAction.CallbackContext context)
     {
         isRotating = true;
-        isRobotPointing = true;
     }
 
     void OnRotateRobotCancelled(InputAction.CallbackContext context)
