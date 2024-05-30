@@ -4,6 +4,20 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    [Header("----------- Audio Source -----------")]
+    [SerializeField] AudioSource musicSource;
+    [SerializeField] AudioSource SFXSource;
+
+    private void start() {
+        
+        musicSource.clip = mainMenu;
+        musicSource.Play();
+    
+    }
+
+
+
+    [Header("----------- Music -----------")]
     [SerializeField] private AudioClip mainMenu;
     [SerializeField] private AudioClip level;
     [SerializeField] private AudioClip end;
@@ -38,5 +52,10 @@ public class AudioManager : MonoBehaviour
                 break;
         }
         player.Play();
+    }
+    
+    public void PlaySFX(AudioClip clip) {
+
+        SFXSource.PlayOneShot(clip);
     }
 }
