@@ -540,6 +540,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void OnAnimatorIK()
     {
         // aiming hand at target IK logic
+
         if (isRobotPointing)
         {
             Debug.Log("what is going on here");
