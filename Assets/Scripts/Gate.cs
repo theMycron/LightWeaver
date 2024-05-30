@@ -57,7 +57,7 @@ public class Gate : MonoBehaviour, IActivable
             collider.enabled = !open;
         }
         animator.SetBool("isOpened", open);
-        if (open)
+/*        if (open)
         {
             AudioManager.instance.PlayRobotSFX(AudioManager.instance.gateOpen);
             wasOpened = true;
@@ -66,7 +66,7 @@ public class Gate : MonoBehaviour, IActivable
         {
             AudioManager.instance.PlayRobotSFX(AudioManager.instance.gateClosed);
             wasOpened = false;
-        }
+        }*/
         animator.speed = 1f;
     }
 

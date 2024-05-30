@@ -65,7 +65,7 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
-        AudioManager.instance.PlayRobotSFX(AudioManager.instance.robotSwitch);
+        AudioManager.instance.PlayObjectSFX(AudioManager.instance.robotSwitch);
         DisableAllRobots();
         SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;

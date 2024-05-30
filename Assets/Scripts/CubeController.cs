@@ -184,7 +184,7 @@ public class CubeController : MonoBehaviour
         if (isRaised && activeRobot == robotRaisingCube)
         {
             Debug.Log("Placing Cube ");
-            AudioManager.instance.PlayRobotSFX(AudioManager.instance.cubePickup);
+            AudioManager.instance.PlayObjectSFX(AudioManager.instance.cubePickup);
             rb.useGravity = true;
             rb.drag = 0;
             rb.velocity = new Vector3(0f,rb.velocity.y,0f);
@@ -206,7 +206,7 @@ public class CubeController : MonoBehaviour
                 FindCubePosition();
                 if (IsRobotNearCube())
                 {
-                    AudioManager.instance.PlayRobotSFX(AudioManager.instance.cubePickup);
+                    AudioManager.instance.PlayObjectSFX(AudioManager.instance.cubePickup);
                     rb.mass = 1;
                     rb.useGravity = false;
                     rb.drag = 12; // drag helps with dampening

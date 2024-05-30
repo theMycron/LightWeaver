@@ -168,14 +168,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         }
 
-        if (IsGrounded() && isMoving)
+/*        if (IsGrounded() && isMoving)
         {
             AudioManager.instance.StartWalkingSound();
             AudioManager.instance.PlayFootstepSounds();
         } else
         {
             AudioManager.instance.StopWalkingSound();
-        }
+        }*/
 
     }
 
@@ -280,7 +280,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //Debug.Log("Jump Started!!!");
         if (IsGrounded() && !isJumping)
         {
-            AudioManager.instance.StartJumpingSound();
+/*            AudioManager.instance.StartJumpingSound();*/
             isJumping = true;
             isJumpCancelled = false;
             anim.SetInteger("BaseState", (int)AnimationState.jumping);
@@ -422,7 +422,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         if (isFalling && IsGrounded())
         {
-            AudioManager.instance.StartLandingSound();
+            /*AudioManager.instance.StartLandingSound();*/
             // only play the landing animation if the player isnt trying to move
             // if the player is trying to move, play the walking animation
             if (moveDirection == Vector2.zero)

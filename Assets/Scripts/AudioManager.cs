@@ -8,13 +8,13 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource ObjectsSFX;
-    [SerializeField] AudioSource RobotMovementSFX;
+/*    [SerializeField] AudioSource RobotMovementSFX;*/
 
     [Header("Audio Clips")]
-    public AudioClip gateOpen;
-    public AudioClip gateClosed;
-    public AudioClip Jumping;
-    public AudioClip landing;
+/*    public AudioClip gateOpen;
+    public AudioClip gateClosed;*/
+    /*    public AudioClip Jumping;
+        public AudioClip landing;*/
 
     public AudioClip cubePickup;
     public AudioClip robotSwitch;
@@ -22,13 +22,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip floorButton;
     public AudioClip collectible;
 
-    [Header("FootSteps")]
+/*    [Header("FootSteps")]
     public AudioClip[] footstepSounds;
     public float minTimeBetweenFootsteps = 0.3f; // Minimum time between footstep sounds
     public float maxTimeBetweenFootsteps = 0.6f; // Maximum time between footstep sounds
 
     public bool isWalking = false; // Flag to track if the player is walking
-    private float timeSinceLastFootstep; // Time since the last footstep sound
+*//*    private float timeSinceLastFootstep; // Time since the last footstep sound*/
 
 
     [Header("Pitch Variation")]
@@ -47,22 +47,18 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Update()
-    {
-       /* PlayFootstepSounds();*/
-    }
 
     public void PlayObjectSFX(AudioClip clip)
     {
         ObjectsSFX.pitch = Random.Range(minPitch, maxPitch);
         ObjectsSFX.PlayOneShot(clip);
     }
-    public void PlayRobotSFX(AudioClip clip)
+/*    public void PlayRobotSFX(AudioClip clip)
     {
         RobotMovementSFX.pitch = Random.Range(minPitch, maxPitch);
         RobotMovementSFX.PlayOneShot(clip);
-    }
-    public void PlayFootstepSounds()
+    }*/
+/*    public void PlayFootstepSounds()
     {
         // Check if the player is walking
         if (isWalking)
@@ -78,9 +74,9 @@ public class AudioManager : MonoBehaviour
                 timeSinceLastFootstep = Time.time; // Update the time since the last footstep sound
             }
         }
-    }
+    }*/
 
-    public void StartWalkingSound()
+/*    public void StartWalkingSound()
     {
         isWalking = true;
     }
@@ -98,7 +94,7 @@ public class AudioManager : MonoBehaviour
     public void StartJumpingSound()
     {
         PlayRobotSFX(Jumping);
-    }
+    }*/
 
 
 }
