@@ -437,8 +437,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public void LaserCollide(Laser sender)
     {
         // laser pointing logic
-        ShouldActivateRobotPointing();
-        laserScript.SetLaserColor(sender.colorEnum);
+        if (Input.GetMouseButtonDown(1))
+        {
+            isRobotPointing = true;
+            ShouldActivateRobotPointing();
+            laserScript.SetLaserColor(sender.colorEnum);
+        }
+        
         switch (sender.colorEnum)
         {
             case LaserColors.red:
@@ -535,13 +540,18 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void OnAnimatorIK()
     {
         // aiming hand at target IK logic
-        if (isRobotPointing && Input.GetMouseButtonDown(1))
+        if (isRobotPointing)
         {
+            Debug.Log("what is going on here");
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
+        } else
+        {
+            Debug.Log("a");
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         }
-        
+
     }
 
     private void ShouldActivateRobotPointing()
