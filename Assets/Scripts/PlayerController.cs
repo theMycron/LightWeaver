@@ -97,6 +97,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
         mousePosition = Vector3.zero;
+
+        anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+        anim.SetIKPosition(AvatarIKGoal.RightHand, Vector3.zero);
+        anim.SetIKPosition(AvatarIKGoal.LeftHand, Vector3.up);
+        
     }
 
     public void EnableInput()
