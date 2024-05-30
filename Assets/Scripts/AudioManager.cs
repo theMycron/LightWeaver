@@ -12,6 +12,7 @@ public class AudioManager : MonoBehaviour
 
     [Header("Audio Clips")]
     public AudioClip gateOpen;
+    public AudioClip gateClosed;
     public AudioClip Jumping;
     public AudioClip landing;
 
@@ -25,7 +26,7 @@ public class AudioManager : MonoBehaviour
     public float minTimeBetweenFootsteps = 0.3f; // Minimum time between footstep sounds
     public float maxTimeBetweenFootsteps = 0.6f; // Maximum time between footstep sounds
 
-    private bool isWalking = false; // Flag to track if the player is walking
+    public bool isWalking = false; // Flag to track if the player is walking
     private float timeSinceLastFootstep; // Time since the last footstep sound
 
     private bool isLanding = false;
@@ -45,7 +46,7 @@ public class AudioManager : MonoBehaviour
     }
     private void Update()
     {
-        PlayFootstepSounds();
+       /* PlayFootstepSounds();*/
     }
 
     public void PlayObjectSFX(AudioClip clip)

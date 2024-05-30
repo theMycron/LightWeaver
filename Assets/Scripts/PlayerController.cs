@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool isJumpCancelled = false;
     private bool isCarryingObject;
     private bool isRotating;
+    private bool isMoving;
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
@@ -167,6 +168,15 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         }
 
+        if (IsGrounded() && isMoving)
+        {
+            AudioManager.instance.StartWalkingSound();
+            AudioManager.instance.PlayFootstepSounds();
+        } else
+        {
+            AudioManager.instance.StopWalkingSound();
+        }
+
     }
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
@@ -195,13 +205,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         moveDirection = context.ReadValue<Vector2>();
         anim.SetInteger("BaseState", (int)AnimationState.walking);
-        AudioManager.instance.StartWalkingSound();
+        isMoving = true;
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
         anim.SetInteger("BaseState", (int)AnimationState.idle);
-        AudioManager.instance.StopWalkingSound();
+        isMoving = false;
     }
     Vector3 MovePlayer()
     {

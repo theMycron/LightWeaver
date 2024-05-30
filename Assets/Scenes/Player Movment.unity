@@ -8923,25 +8923,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ObjectsSFX: {fileID: 1196778307}
   RobotMovementSFX: {fileID: 1681493389}
-  gateOpen: {fileID: 8300000, guid: 22d50b55249fa5642a6494cc90707c10, type: 3}
-  Jumping: {fileID: 8300000, guid: f42760acdd77d6c459020ab0f9db4f30, type: 3}
-  landing: {fileID: 8300000, guid: 304f2bf2228cba94e91cd22803e54bcf, type: 3}
+  gateOpen: {fileID: 8300000, guid: ccc8a8a2c30e71441a657e304e6bba98, type: 3}
+  gateClosed: {fileID: 8300000, guid: b07c78b64bab0f24890d076717b36c67, type: 3}
+  Jumping: {fileID: 8300000, guid: 7f4bb31f06728be4ba0bed5c2641896c, type: 3}
+  landing: {fileID: 8300000, guid: 5e94f3d51023c5446b59f52c71e0cade, type: 3}
   cubePickup: {fileID: 8300000, guid: 6101dd6802b26094f9ad804ff949156c, type: 3}
-  robotSwitch: {fileID: 8300000, guid: 7caf0009352a47f4ca659d8449f581cf, type: 3}
-  laserReceiver: {fileID: 8300000, guid: c867b4435d0942c4fb81f563e1d0417c, type: 3}
-  floorButton: {fileID: 8300000, guid: a8e75765e5947a443a726cdcdc3898a9, type: 3}
-  collectible: {fileID: 8300000, guid: 79b7d9878c1516849b80a688637a6f27, type: 3}
+  robotSwitch: {fileID: 8300000, guid: c6eac2c593371e34e96f0b9242778642, type: 3}
+  laserReceiver: {fileID: 0}
+  floorButton: {fileID: 0}
+  collectible: {fileID: 0}
   footstepSounds:
-  - {fileID: 8300000, guid: b993df4a93c1d304ab19d8b2eb88c9a5, type: 3}
-  - {fileID: 8300000, guid: 5c9bdbce37b06a24fa6ea793bcfd1907, type: 3}
-  - {fileID: 8300000, guid: 0909de896e9029541b92ae05fe15e4b6, type: 3}
-  - {fileID: 8300000, guid: 6ad0cf00f050bee41a2dee098475dc78, type: 3}
-  - {fileID: 8300000, guid: 7ca5a9710db4327439c9f8cb8204615e, type: 3}
-  - {fileID: 8300000, guid: 14ae706fef2303e4cb71112dbd5d250b, type: 3}
-  - {fileID: 8300000, guid: b995bc1775ea83b4b8f861763e9a1424, type: 3}
-  - {fileID: 8300000, guid: d15f7338d693f0343843a6b9096d27f6, type: 3}
+  - {fileID: 8300000, guid: e5b9a63e11f3a8b4a8fef1eb139cc786, type: 3}
+  - {fileID: 8300000, guid: 4ebaaf27aa23a0446b8fd874d60909e5, type: 3}
+  - {fileID: 8300000, guid: ab66dccbdeb63b5449db73ad92f21711, type: 3}
+  - {fileID: 8300000, guid: b2d0936410eda534bb65c5f1794cb663, type: 3}
+  - {fileID: 8300000, guid: d2b2858ce5c7ca9428bfd0e424d5a82d, type: 3}
+  - {fileID: 8300000, guid: 644dc4517bc1c9c40bf1e80d0b048f5b, type: 3}
+  - {fileID: 8300000, guid: 48470fafc45f3c04792793e1005e62e9, type: 3}
+  - {fileID: 8300000, guid: 403d45f89131a5a4f9afe643ccbf4f18, type: 3}
+  - {fileID: 8300000, guid: 9535c599feb8b7a4990789aebab305e4, type: 3}
+  - {fileID: 8300000, guid: b6da35e1befe0014da25418951455674, type: 3}
+  - {fileID: 8300000, guid: 7c85c1193002215499b462f763701072, type: 3}
+  - {fileID: 8300000, guid: 6b7628f8c05047a4fbef52fe3ed4729d, type: 3}
+  - {fileID: 8300000, guid: 65507879ee055e648b1de3581c284cca, type: 3}
+  - {fileID: 8300000, guid: 8a2c7093236272043805ca942d893d01, type: 3}
+  - {fileID: 8300000, guid: 5e0fe368d9a158a46b0fe96e660e78cc, type: 3}
   minTimeBetweenFootsteps: 0.3
   maxTimeBetweenFootsteps: 0.6
+  isWalking: 0
 --- !u!4 &810902258
 Transform:
   m_ObjectHideFlags: 0
