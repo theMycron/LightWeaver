@@ -8951,6 +8951,8 @@ MonoBehaviour:
   minTimeBetweenFootsteps: 0.3
   maxTimeBetweenFootsteps: 0.6
   isWalking: 0
+  minPitch: 0.7
+  maxPitch: 1.2
 --- !u!4 &810902258
 Transform:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip floorButton;
     public AudioClip collectible;
 
+    [Header("FootSteps")]
     public AudioClip[] footstepSounds;
     public float minTimeBetweenFootsteps = 0.3f; // Minimum time between footstep sounds
     public float maxTimeBetweenFootsteps = 0.6f; // Maximum time between footstep sounds
@@ -29,8 +30,10 @@ public class AudioManager : MonoBehaviour
     public bool isWalking = false; // Flag to track if the player is walking
     private float timeSinceLastFootstep; // Time since the last footstep sound
 
-    private bool isLanding = false;
-    private bool isJumping = false;
+
+    [Header("Pitch Variation")]
+    public float minPitch = 0.8f; // Minimum pitch value
+    public float maxPitch = 1.2f; // Maximum pitch value
 
     private void Awake()
     {
@@ -51,10 +54,12 @@ public class AudioManager : MonoBehaviour
 
     public void PlayObjectSFX(AudioClip clip)
     {
+        ObjectsSFX.pitch = Random.Range(minPitch, maxPitch);
         ObjectsSFX.PlayOneShot(clip);
     }
     public void PlayRobotSFX(AudioClip clip)
     {
+        RobotMovementSFX.pitch = Random.Range(minPitch, maxPitch);
         RobotMovementSFX.PlayOneShot(clip);
     }
     public void PlayFootstepSounds()
@@ -67,6 +72,7 @@ public class AudioManager : MonoBehaviour
             {
                 // Play a random footstep sound from the array
                 AudioClip footstepSound = footstepSounds[Random.Range(0, footstepSounds.Length)];
+                RobotMovementSFX.pitch = Random.Range(minPitch, maxPitch); // Set pitch variation
                 RobotMovementSFX.PlayOneShot(footstepSound);
 
                 timeSinceLastFootstep = Time.time; // Update the time since the last footstep sound
