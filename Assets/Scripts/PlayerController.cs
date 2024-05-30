@@ -438,6 +438,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         // laser pointing logic
         ShouldActivateRobotPointing();
+        laserScript.SetLaserColor(sender.colorEnum);
         switch (sender.colorEnum)
         {
             case LaserColors.red:
