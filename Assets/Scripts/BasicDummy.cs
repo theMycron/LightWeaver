@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class BasicDummy : MonoBehaviour
 {
@@ -48,10 +49,29 @@ public class BasicDummy : MonoBehaviour
         
         direction = -1 * direction;
 
-
-
     }
 
-    
-    
+    public void LaserCollide(Laser sender)
+    {
+        switch (sender.colorEnum)
+        {
+            case LaserColors.red:
+                Destroy(gameObject, 0.1f); break;
+            case LaserColors.blue:
+                //animator.StopPlayback();
+                animator.enabled = false;
+                break;
+        }
+    }
+
+    public void LaserExit(Laser sender)
+    {
+        // only for freeze
+        if (sender.colorEnum == LaserColors.red) return;
+        animator.enabled = true;
+        Debug.Log("unFreeze logic");
+    }
+
+
+
 }

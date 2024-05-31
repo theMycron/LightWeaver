@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
@@ -414,6 +415,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
+
+        // check if dummy
+        if (tag.Equals("Dummy"))
+        {
+            gameObject.GetComponent<BasicDummy>().LaserCollide(sender);
+            return;
+        }
+
         if (isLaserColliding || laserHitBy != null) return;
         // laser pointing logic
         currentLaserColor = sender.colorEnum;
@@ -430,6 +439,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserExit(Laser sender)
     {
+        // check if dummy
+        if (tag.Equals("Dummy"))
+        {
+            gameObject.GetComponent<BasicDummy>().LaserExit(sender);
+            return;
+        }
+
         if (!isLaserColliding || laserHitBy != sender.gameObject) return;
         isLaserColliding = false;
         laserHitBy = null;
