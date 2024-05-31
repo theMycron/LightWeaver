@@ -45,8 +45,8 @@ public class BasicDummy : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //Debug.Log(other.transform.tag);        
-        
+        //Debug.Log(other.transform.tag);
+
         direction = -1 * direction;
 
     }
@@ -60,6 +60,7 @@ public class BasicDummy : MonoBehaviour
             case LaserColors.blue:
                 //animator.StopPlayback();
                 animator.enabled = false;
+                controller.enabled = false;
                 break;
         }
     }
@@ -69,6 +70,7 @@ public class BasicDummy : MonoBehaviour
         // only for freeze
         if (sender.colorEnum == LaserColors.red) return;
         animator.enabled = true;
+        controller.enabled = true;
         Debug.Log("unFreeze logic");
     }
 
