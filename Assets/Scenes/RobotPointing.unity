@@ -2686,24 +2686,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
-      propertyPath: multiAim
-      value: 
-      objectReference: {fileID: 396447651}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: headTarget
-      value: 
-      objectReference: {fileID: 2021116326}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 638711150}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: rigBuilder
-      value: 
-      objectReference: {fileID: 2082056496}
     - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: basicTarget
@@ -2724,11 +2709,6 @@ PrefabInstance:
       propertyPath: startingPoint
       value: 
       objectReference: {fileID: 1502972502}
-    - target: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,
-        type: 3}
-      propertyPath: headConstraint
-      value: 
-      objectReference: {fileID: 396447651}
     - target: {fileID: 5795324030262706768, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
       propertyPath: m_RootOrder
