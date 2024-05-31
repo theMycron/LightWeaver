@@ -233,7 +233,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         Vector3 force;
         force = targetVector.normalized * moveSpeed * 10f;
 
-        rb.AddForce(force, ForceMode.Force);
+        rb.AddForce(force, ForceMode.Acceleration);
 
         // Return the movement vector
         return targetVector;
