@@ -44,6 +44,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
 
+    [HideInInspector] public bool isControlling = false;
     private RobotTextureController texture;
     private Animator anim;
     private bool isFalling;
@@ -177,16 +178,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         if (IsGrounded() && moveDirection == Vector2.zero)
         {
             //rotate robot when press/hold right click
-            if (isRotating)
+            if (isRotating && isControlling)
                 SetMouseRotatePosition();
             HandleLaserPointing();
         } else
         {
             SetRobotPointing(false);
         }
-
-        
-
     }
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
@@ -414,7 +412,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-        if (isLaserColliding || laserHitBy != null) return;
+        if (isLaserColliding || laserHitBy != null || !isActive) return;
         // laser pointing logic
         currentLaserColor = sender.colorEnum;
         isLaserColliding = true;
@@ -430,7 +428,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserExit(Laser sender)
     {
-        if (!isLaserColliding || laserHitBy != sender.gameObject) return;
+        if (!isLaserColliding || laserHitBy != sender.gameObject || !isActive) return;
         isLaserColliding = false;
         laserHitBy = null;
         Debug.Log("Laser exited. isRobotPointing: " + isRobotPointing);
@@ -440,7 +438,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     private void HandleLaserPointing()
     {
-        if (!isLaserColliding || isCarryingObject) return;
+        if (!isLaserColliding || isCarryingObject || !isActive) return;
 
         if (!isRobotPointing && isRotating)
         {
@@ -466,7 +464,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     void CarryObject()
     {
-
+        if (!isControlling) return;
         if (isCarryingObject)
         {
             //anim.SetLayerWeight(1, 1f);
@@ -499,6 +497,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void SetCarryingObject(bool value)
     {
+        if (!isControlling) return;
         isCarryingObject = value;
         CarryObject();
     }
@@ -570,6 +569,17 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         isRobotPointing = value;
     }
 
+    public void ChangeControlling(bool value)
+    {
+        isControlling = value;
+        if (isControlling)
+        {
+            EnableInput();
+        } else
+        {
+            DisableInput();
+        }
+    }
     private void OnDestroy()
     {
         DisableInput();

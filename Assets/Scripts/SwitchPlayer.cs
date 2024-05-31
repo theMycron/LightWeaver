@@ -117,7 +117,7 @@ public class SwitchPlayer : MonoBehaviour
         }
         DisableAllRobots();
         SetCameraTarget();
-        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        script.ChangeControlling(true);
         //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
     }
@@ -128,7 +128,7 @@ public class SwitchPlayer : MonoBehaviour
         foreach (var robot in robots)
         {
             PlayerController script = robot.GetComponent<PlayerController>();
-            robot.GetComponent<Rigidbody>().isKinematic = true;
+            script.ChangeControlling(false);
             script.DisableInput();
             //robot.tag = "Undefined";
         }
