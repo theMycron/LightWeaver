@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Laser Pointing")]
     private bool isRobotPointing;
     [SerializeField] GameObject startingPoint;
-    [SerializeField] Laser laserScript;
+    private Laser laserScript;
     private Vector3 mousePosition;
 
     [SerializeField] LayerMask robotLayer;
@@ -90,6 +90,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void Awake()
     {
         InputManager = new InputManager();
+        laserScript = GetComponent<Laser>();
     }
     private void Start()
     {
@@ -173,10 +174,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             Jump();
         }
 
-        //rotate robot when press/hold right click
-        if (IsGrounded() && isRotating && moveDirection == Vector2.zero)
+        if (IsGrounded() && moveDirection == Vector2.zero)
         {
-            SetMouseRotatePosition();
+            //rotate robot when press/hold right click
+            if (isRotating)
+                SetMouseRotatePosition();
             HandleLaserPointing();
         } else
         {
@@ -440,7 +442,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         if (!isLaserColliding) return;
 
-        if (!isRobotPointing)
+        if (!isRobotPointing && isRotating)
         {
             SetRobotPointing(true);
         }
@@ -451,7 +453,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         Vector3 mouse = Input.mousePosition;
         Ray castPoint = mainCamera.ScreenPointToRay(mouse);
 
-        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity))
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity) && isRotating)
         {
             mousePosition = hit.point;
             // set head and hand target positions based on where the mouse clicks
