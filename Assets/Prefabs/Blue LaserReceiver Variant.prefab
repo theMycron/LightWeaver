@@ -11,7 +11,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 716953d07e36ebf42b74da47be0d07dc,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 716953d07e36ebf42b74da47be0d07dc,
         type: 3}
@@ -88,6 +88,11 @@ PrefabInstance:
       propertyPath: m_TagString
       value: BlueLaserReceiver
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 8029106800918022278, guid: 716953d07e36ebf42b74da47be0d07dc,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -105,14 +110,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5306372810489551572}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8266480206907902621}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 716953d07e36ebf42b74da47be0d07dc,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4380429391971094568}
   m_SourcePrefab: {fileID: 100100000, guid: 716953d07e36ebf42b74da47be0d07dc, type: 3}
 --- !u!1 &8662479949214641675 stripped
 GameObject:
@@ -155,64 +152,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receiverNumber: 0
   selectedLaserColor: 1
-  gateNumber: 0
-  emitterNumber: 0
-  robotNumber: 0
-  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
-  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
---- !u!114 &8266480206907902621
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8662479949214641675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5306372810489551572}
-        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
-        m_MethodName: LaserCollided
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &4380429391971094568
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8662479949214641675}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7605760a266c7c04498f1ea08cb82466, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5306372810489551572}
-        m_TargetAssemblyTypeName: LaserReceiver, Assembly-CSharp
-        m_MethodName: LaserBlocked
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  activateList: []

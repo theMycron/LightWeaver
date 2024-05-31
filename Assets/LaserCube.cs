@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserCube : MonoBehaviour, IActivable, IDisable
+public class LaserCube : MonoBehaviour, ILaserInteractable
 {
     [SerializeField]
     private Material redMaterial;
@@ -19,15 +19,11 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
     private Transform startPoint;
     private Laser laserScript;
 
+
     [SerializeField]
     private bool isActive;
 
-    [Header("LaserCube Number")]
-    [SerializeField]
-    private int cubeNumber;
-
     private GameObject activatedBy;
-    public int CubeNumber { get { return this.cubeNumber; } }
 
 
     // Start is called before the first frame update
@@ -83,27 +79,6 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
         this.color = (Color) Colors.GetLaserColor(color);
     }
 
-    public void Activate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (isActive || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-        activatedBy = sender.gameObject;
-
-        ToggleLaserCube(true);
-    }
-
-    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (!isActive || activatedBy != sender.gameObject || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-
-        activatedBy = null;
-        ToggleLaserCube(false);
-    }
 
     private void ToggleLaserCube(bool value)
     {
@@ -112,9 +87,8 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
             Debug.Log("Redirect Laser called!");
             isActive = true;
             ChangeCubeColor(activatedBy.GetComponent<Laser>().colorEnum);
-            if (!lineRenderer.enabled)
+            if (!laserScript.enabled)
             {
-                lineRenderer.enabled = true;
                 laserScript.enabled = true;
                 laserScript.SetLaserColor(colorEnum);
                 laserScript.direction = transform.forward;
@@ -123,19 +97,30 @@ public class LaserCube : MonoBehaviour, IActivable, IDisable
             }
         } else
         {
-            laserScript.BlockLaserFromAll();
-            laserScript.HideCollisionEffect();
             isActive = false;
             //ToggleLaserCube(isActive);
-            lineRenderer.enabled = false;
             laserScript.enabled = false;
 
             Debug.Log($"laser cube stopped redirecting");
         }
     }
 
-    private bool CheckLaserCubeNmber(int laserCubeNumber)
+    public void LaserCollide(Laser sender)
     {
-        return this.cubeNumber == laserCubeNumber;
+        if (!isActive && activatedBy == null)
+        {
+            Debug.Log("Laser entered cube");
+            activatedBy = sender.gameObject;
+            ToggleLaserCube(true);
+        }
+    }
+    public void LaserExit(Laser sender)
+    {
+        if (isActive && activatedBy == sender.gameObject)
+        {
+            Debug.Log("Laser exited cube");
+            activatedBy = null;
+            ToggleLaserCube(false);
+        }
     }
 }
