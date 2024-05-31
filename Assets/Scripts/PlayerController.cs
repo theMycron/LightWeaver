@@ -187,10 +187,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //rotate robot when press/hold right click
         if (IsGrounded() && isRotating && moveDirection == Vector2.zero)
         {
-            var direction = GetRotatePosition() - transform.position;
-            direction.y = 0;
-            transform.forward = direction;
-
+            SetMouseRotatePosition();
         }
 
         
@@ -340,39 +337,21 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         isRotating = false;
     }
-    Vector3 GetRotatePosition()
+
+    // sets the robot rotation to wherever the mouse is
+    // used to rotate robot on right click
+    void SetMouseRotatePosition()
     {
         Vector3 mouse = Input.mousePosition;
         Ray castPoint = mainCamera.ScreenPointToRay(mouse);
         RaycastHit hit;
+
         if (Physics.Raycast(castPoint, out hit,Mathf.Infinity,~robotLayer))
         {
-            //length of triangle
-            Vector3 playerHeight = new Vector3(hit.point.x,transform.position.y,hit.point.z);
-            Vector3 hitPoint = new Vector3(hit.point.x,hit.point.y,hit.point.z);
-            float length = Vector3.Distance(playerHeight, hitPoint);
-
-            //length of hypotenuse
-            var deg = 30;
-            var rad = deg * Mathf.Deg2Rad;
-            float hypote = (length / Mathf.Sin(rad));
-            float distanceFromCamera = hit.distance;
-
-            //changes based on player height
-            if (transform.position.y > hit.point.y)
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera-hypote);
-            }else if (transform.position.y < hit.point.y)
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera - hypote);
-            }else
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera);
-            }
-            
+            Vector3 directionToMouse = (hit.point - transform.position).normalized;
+            directionToMouse.y = 0f;
+            transform.rotation = Quaternion.LookRotation(directionToMouse);
         }
-        return requiredHitPoint;
-
     }
     
     void Jump()
