@@ -6081,6 +6081,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -9791,6 +9795,8 @@ PlayableDirector:
     value: {fileID: 1637423253}
   - key: {fileID: 7271216763922773738, guid: 3d249f01d7d12d543a9d40ffe35cbf96, type: 2}
     value: {fileID: 1236088061}
+  - key: {fileID: -6013801982179169906, guid: 3d249f01d7d12d543a9d40ffe35cbf96, type: 2}
+    value: {fileID: 2074918523}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &1310595178
@@ -12136,7 +12142,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -12185,8 +12190,8 @@ MonoBehaviour:
           m_CallState: 2
         - m_Target: {fileID: 1637423251}
           m_TargetAssemblyTypeName: SwitchPlayer, Assembly-CSharp
-          m_MethodName: ActivateFirstRobot
-          m_Mode: 1
+          m_MethodName: ActivateRobot
+          m_Mode: 3
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -16945,7 +16950,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2074918521}
-  - component: {fileID: 2074918520}
+  - component: {fileID: 2074918522}
+  - component: {fileID: 2074918523}
   m_Layer: 0
   m_Name: TerminalController
   m_TagString: Untagged
@@ -16953,27 +16959,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!95 &2074918520
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2074918519}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &2074918521
 Transform:
   m_ObjectHideFlags: 0
@@ -16989,6 +16974,63 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2074918522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074918519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31b4f402820bdc43b3f95991132da46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageList:
+  - r:External access requested.
+  - r:External access denied.
+  - r:External access requested.
+  - r:External access denied.
+  - r:External access requested.
+  - r:External access granted.
+  - r:Starting bootup sequence...
+  - r:Bootup complete.
+  - p:I'm in. This thing is resilient.
+  - p:Looks like I can move it with WASD. It's like I'm playing a video game.
+  - p:Let's get this door open...
+  - s:Opening Robot Storage Gate...
+  - s:Robot Storage Gate opened.
+  - p:That was... easy.
+--- !u!114 &2074918523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2074918519}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: c731fb8ef6f735f47b15e2257599d8e5, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2074918522}
+          m_TargetAssemblyTypeName: TerminalInterface, Assembly-CSharp
+          m_MethodName: PrintNextMessage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: External entry requested.
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1001 &2078556390
 PrefabInstance:
   m_ObjectHideFlags: 0
