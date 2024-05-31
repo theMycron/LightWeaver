@@ -440,7 +440,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     private void HandleLaserPointing()
     {
-        if (!isLaserColliding) return;
+        if (!isLaserColliding || isCarryingObject) return;
 
         if (!isRobotPointing && isRotating)
         {
@@ -471,6 +471,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
+            SetRobotPointing(false);
             //Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
         }
         else
