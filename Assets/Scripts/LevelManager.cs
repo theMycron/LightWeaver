@@ -10,9 +10,15 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Overlay overlay;
     private int currentLevel = -1;
 
+    public SaveProfile gameSave;
 
+    private void Awake()
+    {
+        gameSave = SaveManager.Load();
+    }
     private void Start()
     {
+        // loads main menu at start
         ReturnToMenu();
     }
 
@@ -24,13 +30,6 @@ public class LevelManager : MonoBehaviour
     public void OnPlayLevel(Component sender, int objectNum, string channel, object data)
     {
         if (channel != "Level") return;
-        // if data is not null, assume that the level manager is trying to unload the main menu
-        if (data != null)
-        {
-            StartCoroutine(UnloadScene("MainMenu"));
-            LoadScene("HUD");
-            audioManager.PlayMusic(AudioManager.MusicEnum.Level);
-        }
         StartCoroutine(PlayLevel(objectNum));
     }
 
@@ -42,8 +41,30 @@ public class LevelManager : MonoBehaviour
     public void ReturnToMenu()
     {
         LoadScene("MainMenu");
+
         StartCoroutine(UnloadScene("HUD"));
+        if (currentLevel >= 0)
+            StartCoroutine(UnloadScene(levels[currentLevel]));
+
         audioManager.PlayMusic(AudioManager.MusicEnum.MainMenu);
+    }
+
+    public void ContinueGame()
+    {
+        // will start at 0 if there is no save
+        // if there is a save, start at the last level unlocked
+        int level = 0;
+        if (gameSave != null)
+            level = gameSave.lastUnlockedLevel;
+        ExitMainMenu();
+        StartCoroutine(PlayLevel(level));
+    }
+
+    private void ExitMainMenu()
+    {
+        StartCoroutine(UnloadScene("MainMenu"));
+        LoadScene("HUD");
+        audioManager.PlayMusic(AudioManager.MusicEnum.Level);
     }
 
     private IEnumerator NextLevel()
@@ -52,7 +73,7 @@ public class LevelManager : MonoBehaviour
         if (currentLevel >= levels.Count)
         {
             // no levels after
-            yield return null;
+            yield break;
         }
         string nextLevel = levels[currentLevel + 1];
         yield return StartCoroutine(FadeOut());
@@ -66,6 +87,17 @@ public class LevelManager : MonoBehaviour
         }
         currentLevel++;
         overlay.StartFadeIn();
+
+        // update last level unlocked
+
+        if (gameSave == null)
+            gameSave = new SaveProfile { lastUnlockedLevel = 0 };
+
+        if (gameSave.lastUnlockedLevel < currentLevel)
+        {
+            gameSave.lastUnlockedLevel = currentLevel;
+            SaveManager.Save(gameSave);
+        }
     }
 
     private IEnumerator PlayLevel(int level)
@@ -73,7 +105,7 @@ public class LevelManager : MonoBehaviour
         Debug.Log($"Going to level {level}. Currently: " + currentLevel);
         if (level >= levels.Count)
         {
-            yield return null;
+            yield break;
         }
 
         string nextLevel = levels[level];

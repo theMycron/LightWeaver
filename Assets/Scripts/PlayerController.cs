@@ -111,8 +111,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         InputManager.Player.RotateRobot.started += OnRotateRobotStarted;
         InputManager.Player.RotateRobot.canceled += OnRotateRobotCancelled;
-
-        Debug.Log("Enabled input for robot");
     }
 
     public void DisableInput()
@@ -127,7 +125,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         InputManager.Player.RotateRobot.started -= OnRotateRobotStarted;
         InputManager.Player.RotateRobot.canceled -= OnRotateRobotCancelled;
-        Debug.Log("Disabled input for robot");
 
     }
     private void Update()

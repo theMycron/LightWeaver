@@ -1,5 +1,6 @@
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using TMPro;
 
 public class NavigatebetweenScenes : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class NavigatebetweenScenes : MonoBehaviour
     [SerializeField] private Canvas settings;
     [SerializeField] private Canvas levelSelect;
     [SerializeField] private Canvas credits;
+    [SerializeField] private TextMeshProUGUI startButtonText;
 
     private Canvas currentMenu;
     private LevelManager levelManager;
@@ -28,6 +30,12 @@ public class NavigatebetweenScenes : MonoBehaviour
         levelManager = FindAnyObjectByType<LevelManager>();
         audioManager = FindAnyObjectByType<AudioManager>();
         //clickSound = GetComponent<AudioSource>();
+
+        // if this is a new save, show "New Game" instead of "Continue"
+        if (levelManager.gameSave == null)
+        {
+            startButtonText.text = "New Game";
+        }
     }
 
     public void OnButtonClick()
@@ -66,8 +74,7 @@ public class NavigatebetweenScenes : MonoBehaviour
 
     public void ContinueGame()
     {
-        // TODO: change to use the last level the player reached
-        levelManager.OnPlayLevel(this, 0, "Level", 1);
+        levelManager.ContinueGame();
     }
 
     public void exitGame() {

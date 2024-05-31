@@ -2109,7 +2109,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Countinue
+  m_text: Continue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a8d0a2907ce9da4dbe19376d96a0c90, type: 2}
   m_sharedMaterial: {fileID: -630547897573068829, guid: 4a8d0a2907ce9da4dbe19376d96a0c90,
@@ -2827,6 +2827,7 @@ MonoBehaviour:
   settings: {fileID: 229905925}
   levelSelect: {fileID: 911185620}
   credits: {fileID: 1989992960}
+  startButtonText: {fileID: 505188842}
 --- !u!4 &618078392
 Transform:
   m_ObjectHideFlags: 0
@@ -7155,7 +7156,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1606832334}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 803ae0158a9a27245979e3c42f5bc170, type: 3}
   m_Name: 
