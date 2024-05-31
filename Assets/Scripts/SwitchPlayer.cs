@@ -13,7 +13,7 @@ public class SwitchPlayer : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
 
     static GameObject activeRobot; 
-
+    static int activeRobotNum;
 
     InputManager inputManager;
     private void Awake()
@@ -60,17 +60,24 @@ public class SwitchPlayer : MonoBehaviour
         }
         activeRobot = robots[robotNumber - 1];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
+        
         // cant switch to robot if it is disabled
         if (!script.isActive)
         {
             return;
         }
+
+        if (robotNumber == activeRobotNum)
+            return;
         AudioManager.instance.PlayObjectSFX(AudioManager.instance.robotSwitch);
+
+        activeRobotNum = robotNumber;
         DisableAllRobots();
         SetCameraTarget();
         activeRobot.GetComponent<Rigidbody>().isKinematic = false;
         //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
+
     }
     void DisableAllRobots()
     {

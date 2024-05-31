@@ -168,19 +168,23 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         }
 
-/*        if (IsGrounded() && isMoving)
-        {
-            AudioManager.instance.StartWalkingSound();
-            AudioManager.instance.PlayFootstepSounds();
-        } else
-        {
-            AudioManager.instance.StopWalkingSound();
-        }*/
+        /*        if (IsGrounded() && isMoving)
+                {
+                    AudioManager.instance.StartWalkingSound();
+                    AudioManager.instance.PlayFootstepSounds();
+                } else
+                {
+                    AudioManager.instance.StopWalkingSound();
+                }*/
 
     }
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
     {
+        if (rb.isKinematic)
+        {
+            return;
+        }
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
