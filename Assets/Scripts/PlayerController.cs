@@ -228,8 +228,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
-        targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
-        
+        // if this is attached to a dummy dont apply offset
+        if (!this.tag.Equals("Dummy"))
+        {
+            targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        }
+        //targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+
         Vector3 force;
         force = targetVector.normalized * moveSpeed * 10f;
 

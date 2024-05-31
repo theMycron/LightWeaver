@@ -1069,6 +1069,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Red LaserEmitter Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 7346507605021596449, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7980335739608285595, guid: 8e49152ba9ecbea41a4d5a9b416bb1f1,
         type: 3}
       propertyPath: m_RootOrder
@@ -1310,7 +1315,7 @@ PrefabInstance:
     - target: {fileID: 2614152224387511309, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3390231084764130999, guid: 17c777680c01cc34a8718a1db0559d24,
         type: 3}
@@ -2172,7 +2177,7 @@ PrefabInstance:
     - target: {fileID: 9028021698960905182, guid: f37996425b0216a449d0c779a59b1ef3,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9028021698960905182, guid: f37996425b0216a449d0c779a59b1ef3,
         type: 3}
