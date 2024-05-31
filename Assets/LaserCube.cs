@@ -87,9 +87,8 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
             Debug.Log("Redirect Laser called!");
             isActive = true;
             ChangeCubeColor(activatedBy.GetComponent<Laser>().colorEnum);
-            if (!lineRenderer.enabled)
+            if (!laserScript.enabled)
             {
-                lineRenderer.enabled = true;
                 laserScript.enabled = true;
                 laserScript.SetLaserColor(colorEnum);
                 laserScript.direction = transform.forward;
@@ -99,10 +98,7 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
         } else
         {
             isActive = false;
-            laserScript.BlockLaser();
-            laserScript.HideCollisionEffect();
             //ToggleLaserCube(isActive);
-            lineRenderer.enabled = false;
             laserScript.enabled = false;
 
             Debug.Log($"laser cube stopped redirecting");
