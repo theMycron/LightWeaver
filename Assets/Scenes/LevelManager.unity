@@ -733,6 +733,9 @@ MonoBehaviour:
   - Level11
   audioManager: {fileID: 1942048568}
   overlay: {fileID: 686930269}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &1517926455
 Transform:
   m_ObjectHideFlags: 0
@@ -781,8 +784,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MusicPlayer: {fileID: 1327103928}
   SFXSource: {fileID: 43440464}
-  mainMenu: {fileID: 8300000, guid: ed4521d9e6948a14d863cda545f8485c, type: 3}
-  level: {fileID: 8300000, guid: 8355d982bd83a7a4ebb1f67f84335260, type: 3}
+  mainMenu: {fileID: 8300000, guid: bd4abfad9bb7c054ead8d83044e7ad5e, type: 3}
+  level: {fileID: 8300000, guid: 92e576333bc97b14985480e271b4cba3, type: 3}
   end: {fileID: 8300000, guid: 6221ec1587b193e45b3c5f9de3214ed7, type: 3}
 --- !u!82 &1942048569
 AudioSource:

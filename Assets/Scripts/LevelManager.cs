@@ -10,6 +10,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Overlay overlay;
     private int currentLevel = -1;
 
+    [HideInInspector]
     public SaveProfile gameSave;
 
     private void Awake()
