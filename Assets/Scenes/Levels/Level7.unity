@@ -6910,7 +6910,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1030851397}
-  m_PathPosition: 1
+  m_PathPosition: 0
   m_PositionUnits: 0
   m_PathOffset: {x: 28.2, y: 30, z: 22.7}
   m_XDamping: 0
@@ -8277,7 +8277,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638711148}
   m_LocalRotation: {x: 0.23911764, y: 0.3696438, z: -0.099045776, w: 0.89239913}
-  m_LocalPosition: {x: -22.2, y: 30, z: -22.7}
+  m_LocalPosition: {x: -22.2, y: 30, z: 3.2999992}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9087,6 +9087,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -18273,13 +18277,18 @@ PrefabInstance:
     - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
         type: 3}
       propertyPath: activateList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
         type: 3}
       propertyPath: activateList.Array.data[0]
       value: 
       objectReference: {fileID: 1077992945}
+    - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
+        type: 3}
+      propertyPath: activateList.Array.data[1]
+      value: 
+      objectReference: {fileID: 1194041996}
     - target: {fileID: 8321701251462050993, guid: b3c8b17e72ef2f64680c7eab54f80569,
         type: 3}
       propertyPath: m_RootOrder
@@ -21745,7 +21754,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 1
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -27204,7 +27212,7 @@ PrefabInstance:
     - target: {fileID: 6531617082783573151, guid: 149f385bfeb7bb748995fa9453403a38,
         type: 3}
       propertyPath: activationsRequired
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7864880517276823190, guid: 149f385bfeb7bb748995fa9453403a38,
         type: 3}
