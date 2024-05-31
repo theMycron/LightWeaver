@@ -19,9 +19,9 @@ public class TerminalTextManager : MonoBehaviour
 
     private void Start()
     {
-        AddNewLine("This is a new message. This game is beautiful. I love swimming");
-        AddNewLine("Another message to display.");
-        AddNewLine("Another message to display. qlrth9wuiteojrpt iqowerjwq fdisf sdfsdfw");
+        //AddNewLine("This is a new message. This game is beautiful. I love swimming");
+        //AddNewLine("Another message to display.");
+        //AddNewLine("Another message to display. qlrth9wuiteojrpt iqowerjwq fdisf sdfsdfw");
     }
 
     public void AddNewLine(string message)
