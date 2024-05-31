@@ -56,6 +56,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] GameObject startingPoint;
     [SerializeField] Laser laserScript;
     private Vector3 mousePosition;
+    //[SerializeField] MultiAimConstraint headConstraint;
+    [SerializeField] private GameObject headTarget;
+    [SerializeField] private MultiAimConstraint multiAim;
+    [SerializeField] private RigBuilder rigBuilder;
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
@@ -551,12 +555,24 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
+            SetHeadAim();
         } else
         {
             Debug.Log("a");
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         }
 
+    }
+
+    private void SetHeadAim()
+    {
+        //Debug.Log(headConstraint.data.sourceObjects[0].transform.position + " pos");
+        headTarget.transform.position = mousePosition;
+        var data = multiAim.data.sourceObjects;
+        data.SetTransform(0, headTarget.transform);
+        multiAim.data.sourceObjects = data;
+        rigBuilder.Build();
+        
     }
 
     private void ShouldActivateRobotPointing()
