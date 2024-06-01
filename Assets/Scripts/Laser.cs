@@ -23,14 +23,21 @@ public class Laser : MonoBehaviour
     private void OnEnable()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = true;
         //HideCollisionEffect();
+    }
+
+    private void OnDisable()
+    {
+        lineRenderer.enabled = false;
+        BlockLaser();
+        HideCollisionEffect();
     }
 
     void Start()
     {
         dummyGameObject = gameObject;
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, startPoint.position);
         collisionEffectInstance = Instantiate(collisionEffect);
         collisionEffect.SetActive(false);
 
@@ -49,55 +56,95 @@ public class Laser : MonoBehaviour
         //Debug.DrawRay(startPoint.position,direction*10, Color.blue, 3);
         //Debug.Log(startPoint.position);
         //lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
-        RaycastHit hit;
+        FireRaycast();
+    }
+    
+    private void FireRaycast()
+    {
+        RaycastHit[] hits = Physics.RaycastAll(startPoint.position, direction, 100f);
+        lineRenderer.SetPosition(0, startPoint.position);
 
-        if (Physics.Raycast(startPoint.position, direction, out hit))
+        if (hits != null && hits.Length > 0)
         {
-            bool hitLaserInteractable = false;
-
-            if (hit.collider)
+            RaycastHit closestHit = GetClosestHit(hits);
+            if (closestHit.transform.gameObject != this.gameObject)
             {
-                //Debug.Log("I have hit by: " +  hit.collider);
-
-                lineRenderer.SetPosition(1, hit.point);
-
-                currentHitObject = hit.collider.gameObject;
-                if (!lastHitObject) { lastHitObject = currentHitObject; }
+                HandleLaserCollision(closestHit);
+                return;
             }
-            ILaserInteractable currentObject = currentHitObject.GetComponent<ILaserInteractable>();
-            ILaserInteractable lastObject = lastHitObject.GetComponent<ILaserInteractable>();
-            //Debug.Log($"Currenthit object: {currentHitObject}, Lasthit object: {lastHitObject}, Last object: {lastObject}");
-            if (currentObject != null)
-            {
-                currentObject.LaserCollide(this);
-                hitLaserInteractable = true;
-            } 
-            if (lastObject != null && lastHitObject != currentHitObject)
-            {
-                //Debug.Log($"Exiting last object: {lastHitObject}");
-                lastObject.LaserExit(this);
-            }
-
-            lastHitObject = currentHitObject;
-
-            if (hitLaserInteractable)
-            {
-                HideCollisionEffect();
-            } else
-            {
-                SetCollisionEffect(hit.point, hit.normal);
-            }
-        }
-        else
-        {
-            lineRenderer.SetPosition(1, startPoint.position + direction * laserDistance );
+            // if didnt hit anything, extend laser renderer and exit from the last hit object
+            lineRenderer.SetPosition(1, startPoint.position + direction * laserDistance);
             if (lastHitObject != null && lastHitObject.GetComponent<ILaserInteractable>() != null)
             {
                 lastHitObject.GetComponent<ILaserInteractable>().LaserExit(this);
             }
         }
     }
-    
+
+    // get all objects the raycast hit, and make sure to ignore
+    // a hit if it hit the source of this laser
+    private RaycastHit GetClosestHit(RaycastHit[] hits)
+    {
+        RaycastHit hit = hits[0];
+        float minDistance = 100f;
+        foreach (RaycastHit h in hits)
+        {
+            // ignore self
+            if (h.transform.gameObject != this.gameObject)
+            {
+                // get closest hit
+                float distance = Mathf.Abs((h.transform.position - transform.position).magnitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    hit = h;
+                }
+            }
+        }
+        return hit;
+    }
+
+    private void HandleLaserCollision(RaycastHit hit)
+    {
+        if (hit.transform.gameObject == this.gameObject) return;
+
+        bool hitLaserInteractable = false;
+
+        if (hit.collider)
+        {
+            //Debug.Log("I have hit by: " +  hit.collider);
+
+            lineRenderer.SetPosition(1, hit.point);
+
+            currentHitObject = hit.collider.gameObject;
+            if (currentHitObject == this.gameObject) { Debug.Log("Laser hit its own source object!"); }
+            if (!lastHitObject) { lastHitObject = currentHitObject; }
+        }
+        ILaserInteractable currentObject = currentHitObject.GetComponent<ILaserInteractable>();
+        ILaserInteractable lastObject = lastHitObject.GetComponent<ILaserInteractable>();
+        //Debug.Log($"Currenthit object: {currentHitObject}, Lasthit object: {lastHitObject}, Last object: {lastObject}");
+        if (currentObject != null)
+        {
+            currentObject.LaserCollide(this);
+            hitLaserInteractable = true;
+        }
+        if (lastObject != null && lastHitObject != currentHitObject)
+        {
+            //Debug.Log($"Exiting last object: {lastHitObject}");
+            lastObject.LaserExit(this);
+        }
+        
+        lastHitObject = currentHitObject;
+
+        if (hitLaserInteractable)
+        {
+            HideCollisionEffect();
+        }
+        else
+        {
+            SetCollisionEffect(hit.point, hit.normal);
+        }
+    }
 
     // this will block laser from any object hit in the last frame
     public void BlockLaser()
