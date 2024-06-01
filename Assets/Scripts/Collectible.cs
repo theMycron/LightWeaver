@@ -31,6 +31,7 @@ public class Collectible : MonoBehaviour
         if (!collected && other.tag.StartsWith("Robot"))
         {
             // play collection sound here
+            EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.collectible);
             collected = true;
             levelManager.CollectCollectible();
         }

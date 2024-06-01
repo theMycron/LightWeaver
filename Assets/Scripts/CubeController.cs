@@ -15,6 +15,7 @@ public class CubeController : MonoBehaviour
     [SerializeField] float cubeHeight;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask cubeLayer;
+    [SerializeField] LayerMask robotLayer;
 
 
     [Header("Cube Movement")]

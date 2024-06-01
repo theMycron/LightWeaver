@@ -160,7 +160,7 @@ Transform:
   m_Children:
   - {fileID: 7646477902267319225}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4742986320615916700
 MonoBehaviour:
@@ -179,6 +179,6 @@ MonoBehaviour:
   robotSwitch: {fileID: 8300000, guid: 05b6931d6d3ffe6449e19a35d11bc0f3, type: 3}
   laserReceiver: {fileID: 0}
   floorButton: {fileID: 0}
-  collectible: {fileID: 0}
+  collectible: {fileID: 8300000, guid: aa34a8fa63a1a0946b4baccdbaddd470, type: 3}
   minPitch: 0.8
   maxPitch: 1.2

@@ -15,7 +15,6 @@ public class SwitchPlayer : MonoBehaviour
 
 
     static GameObject activeRobot; 
-    static int activeRobotNum;
 
     private RobotHUD robotHUD;
 
@@ -122,11 +121,11 @@ public class SwitchPlayer : MonoBehaviour
             return;
         }
 
-/*        if (robotNumber == activeRobotNum)
-            return;*/
+        if (robotNumber-1 == activeRobotIndex)
+            return;
         EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.robotSwitch);
-/*
-        activeRobotNum = robotNumber;*/
+
+        activeRobotIndex = robotNumber-1;
         DisableAllRobots();
         SetCameraTarget();
         script.ChangeControlling(true);
