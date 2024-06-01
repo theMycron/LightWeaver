@@ -8,8 +8,13 @@ using UnityEngine.Rendering;
 public class BasicDummy : MonoBehaviour
 {
 
-    private NavMeshAgent agent;
-    private Rigidbody rigidbody;
+    enum Directions
+    {
+        North,
+        South,
+        East,
+        West
+    }
 
     [SerializeField]
     private int dummyNumber;
@@ -26,17 +31,21 @@ public class BasicDummy : MonoBehaviour
     [SerializeField] GameObject shoulderLevel;
     [SerializeField] GameObject kneesLevel;
 
+    [Header("Direction")]
+    [SerializeField] private Directions selectedDirection; 
+
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(-transform.forward);
+        Debug.Log(-transform.right);
         animator = GetComponent<Animator>();
         controller = GetComponent<PlayerController>();
-        //agent = GetComponent<NavMeshAgent>();
-        rigidbody = GetComponent<Rigidbody>();
-        //agent.destination = target.transform.position;
-        direction = new Vector3(transform.forward.x ,0f, transform.forward.z);
+
+        //direction = -transform.forward;
+        SetDirection();
         direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
-        
+
     }
 
     private void Update()
@@ -55,7 +64,7 @@ public class BasicDummy : MonoBehaviour
         controller.moveDirection = direction;
 
         animator.SetInteger("BaseState", (int)PlayerController.AnimationState.walking);
-        //rigidbody.AddForce(direction * 100);
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -107,6 +116,21 @@ public class BasicDummy : MonoBehaviour
     {
         animator.enabled = isMoving;
         controller.enabled = isMoving;
+    }
+
+    private void SetDirection()
+    {
+        switch (selectedDirection)
+        {
+            case Directions.North:
+                direction = -transform.forward; break;
+            case Directions.South:
+                direction = new Vector3(10f, 0f, 10f); break;
+            case Directions.East:
+                direction = transform.right; break;
+            case Directions.West:
+                direction = -transform.right; break;
+        }
     }
 
 }
