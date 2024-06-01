@@ -12,8 +12,8 @@ public class EnvSFX : MonoBehaviour
 
     public AudioClip cubePickup;
     public AudioClip robotSwitch;
-    public AudioClip laserReceiver;
-    public AudioClip floorButton;
+    public AudioClip riserSound;
+    public AudioClip activationSound;
     public AudioClip collectible;
 
 
@@ -37,6 +37,21 @@ public class EnvSFX : MonoBehaviour
     public void PlayObjectSFX(AudioClip clip)
     {
         ObjectsSFX.pitch = Random.Range(minPitch, maxPitch);
-        ObjectsSFX.PlayOneShot(clip);
+        ObjectsSFX.clip = clip;
+        ObjectsSFX.Play();
+    }
+
+    public void StopObjectSFX()
+    {
+        ObjectsSFX.pitch = Random.Range(minPitch, maxPitch);
+        ObjectsSFX.Stop();
+    }
+
+    public void StopRiserSound()
+    {
+        if (ObjectsSFX != null && ObjectsSFX.clip == riserSound)
+        {
+            ObjectsSFX.Stop();
+        }
     }
 }

@@ -52,6 +52,8 @@ public class FloorButton : MonoBehaviour
         if (activationRoutine != null)
         {
             StopCoroutine(activationRoutine);
+            //stop riser sound
+            EnvSFX.instance.StopRiserSound();
             activationRoutine = null;
         }
         triggeredBy = null;
@@ -62,7 +64,14 @@ public class FloorButton : MonoBehaviour
     {
         if (toggle)
         {
+            //play riser sound
+            EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.riserSound);
             yield return new WaitForSeconds(seconds);
+
+            //stop riser sound and play activation sound
+            EnvSFX.instance.StopRiserSound();
+            EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.activationSound);
+
             activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
         }
     }

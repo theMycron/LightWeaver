@@ -177,8 +177,8 @@ MonoBehaviour:
   ObjectsSFX: {fileID: 4808462076779267069}
   cubePickup: {fileID: 8300000, guid: 384dafa41e474454c8e9dfdbb872d2fb, type: 3}
   robotSwitch: {fileID: 8300000, guid: 05b6931d6d3ffe6449e19a35d11bc0f3, type: 3}
-  laserReceiver: {fileID: 0}
-  floorButton: {fileID: 0}
+  riserSound: {fileID: 8300000, guid: c94449441d0cb7547b7612cab2a2792f, type: 3}
+  activationSound: {fileID: 8300000, guid: af7c88755492e564b86aaaa68192b4e7, type: 3}
   collectible: {fileID: 8300000, guid: aa34a8fa63a1a0946b4baccdbaddd470, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
