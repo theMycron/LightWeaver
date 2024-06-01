@@ -68,6 +68,7 @@ public class BasicDummy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.transform.tag);
+        if (!other.gameObject.layer.Equals("Wall")) return;
         direction = -1 * direction;
     }
 
