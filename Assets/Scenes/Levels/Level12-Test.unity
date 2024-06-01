@@ -3068,7 +3068,7 @@ PrefabInstance:
     - target: {fileID: 8844787805857247576, guid: a24aeaacda24c3c4a8c8534a9d4fbacd,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.82
       objectReference: {fileID: 0}
     - target: {fileID: 8844787805857247576, guid: a24aeaacda24c3c4a8c8534a9d4fbacd,
         type: 3}
@@ -16531,11 +16531,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorButton Variant (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 4751109859275766412, guid: 78b1fb928697cd14a87f5fe6b189841e,
-        type: 3}
-      propertyPath: m_TagString
-      value: FloorButton
-      objectReference: {fileID: 0}
     - target: {fileID: 5378570717103956022, guid: 78b1fb928697cd14a87f5fe6b189841e,
         type: 3}
       propertyPath: m_RootOrder
@@ -16590,11 +16585,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9127963175507331515, guid: 78b1fb928697cd14a87f5fe6b189841e,
-        type: 3}
-      propertyPath: activateList.Array.size
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9127963175507331515, guid: 78b1fb928697cd14a87f5fe6b189841e,
         type: 3}

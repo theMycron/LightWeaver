@@ -11,22 +11,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
@@ -68,6 +68,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 43cb55977b1b465478ba8df08420756e, type: 2}
+    - target: {fileID: -3133498875991405556, guid: ed8319412f0f0e141a15479979b55664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: -2859109400176981367, guid: ed8319412f0f0e141a15479979b55664,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -77,6 +82,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FloorButton Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed8319412f0f0e141a15479979b55664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ed8319412f0f0e141a15479979b55664,
+        type: 3}
+      propertyPath: m_TagString
+      value: FloorButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582541446099607143, guid: ed8319412f0f0e141a15479979b55664,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -159,7 +179,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18d0849d7b026c94dad7016dcfa3ba67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activateList: []
+  activateList:
+  - {fileID: 0}
 --- !u!1 &4751109859275766412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed8319412f0f0e141a15479979b55664,

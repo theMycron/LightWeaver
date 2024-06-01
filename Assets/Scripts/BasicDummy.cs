@@ -57,6 +57,14 @@ public class BasicDummy : MonoBehaviour
         {
             SetDummyMovement(true);
         }
+
+        if (CheckIfHitted())
+        {
+            direction *= -1;
+        } else
+        {
+            Debug.Log("didn't reverse");
+        }
     }
 
     private void FixedUpdate()
@@ -67,13 +75,13 @@ public class BasicDummy : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log(other.transform.tag);
-        Debug.Log(other.gameObject);
-        if (!other.gameObject.tag.Equals("FloorButton")) return;
-        direction = -1 * direction;
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    //Debug.Log(other.transform.tag);
+        
+    //    //if (other.gameObject.tag.Equals("FloorButton")) return;
+    //    direction = -1 * direction;
+    //}
 
     public void LaserCollide(Laser sender)
     {
@@ -98,20 +106,38 @@ public class BasicDummy : MonoBehaviour
 
     private bool CheckIfSurronded()
     {
-        RaycastHit kneehit;
-        RaycastHit shoulderhit;
+        RaycastHit kneeHit;
+        RaycastHit shoulderHit;
         //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 4, Color.red, 30f);
         //Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 4, Color.blue, 30);
 
         //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 4, Color.red, 30f);
         //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 4, Color.blue, 30);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneehit, 5);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneehit, 5);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderhit, 5);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderhit, 5);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 5);
+        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 5);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 5);
+        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 5);
 
         return forwardKneeCheck && backwardKneeCheck && forwardshoulderCheck && backwardshoulderCheck;
+    }
+
+    private bool CheckIfHitted()
+    {
+        RaycastHit kneeHit;
+        RaycastHit shoulderHit;
+
+        Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 1.5f, Color.red, 30f);
+        Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 1.5f, Color.blue, 30f);
+        Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 1.5f, Color.red, 30f);
+        Debug.DrawRay(kneesLevel.transform.position, transform.forward * 1.5f, Color.blue, 30f);
+
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 1.5f);
+        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 1.5f);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 1.5f);
+        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 1.5f);
+
+        return forwardKneeCheck && forwardshoulderCheck;
     }
 
     private void SetDummyMovement(bool isMoving)
