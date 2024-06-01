@@ -9,14 +9,6 @@ using UnityEngine.Rendering;
 public class BasicDummy : MonoBehaviour
 {
 
-    enum Directions
-    {
-        North,
-        South,
-        East,
-        West
-    }
-
     [SerializeField]
     private int dummyNumber;
 
@@ -33,25 +25,17 @@ public class BasicDummy : MonoBehaviour
     [SerializeField] GameObject shoulderLevel;
     [SerializeField] GameObject kneesLevel;
 
-    [Header("Direction")]
-    [SerializeField] private Directions selectedDirection; 
-
     // Start is called before the first frame update
     void Start()
     {
-        //animator = GetComponent<Animator>();
-        //controller = GetComponent<PlayerController>();
-
         direction = new Vector2(transform.forward.x, transform.forward.z);
-        //SetRotation();
-        //direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
-
     }
 
     private void Update()
     {
         if(CheckIfSurronded())
         {
+            animator.SetInteger("BaseState", (int)PlayerController.AnimationState.idle);
             SetDummyMovement(false);
         } else
         {
@@ -75,14 +59,6 @@ public class BasicDummy : MonoBehaviour
         
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    //Debug.Log(other.transform.tag);
-        
-    //    //if (other.gameObject.tag.Equals("FloorButton")) return;
-    //    direction = -1 * direction;
-    //}
-
     public void LaserCollide(Laser sender)
     {
         switch (sender.colorEnum)
@@ -90,7 +66,7 @@ public class BasicDummy : MonoBehaviour
             case LaserColors.red:
                 Destroy(gameObject, 0.1f); break;
             case LaserColors.blue:
-                //animator.StopPlayback();
+                animator.enabled = false;
                 SetDummyMovement(false);
                 break;
         }
@@ -101,7 +77,7 @@ public class BasicDummy : MonoBehaviour
         // only for freeze
         if (sender.colorEnum == LaserColors.red) return;
         SetDummyMovement(true);
-        
+        animator.enabled = true;
     }
 
     private bool CheckIfSurronded()
@@ -127,46 +103,22 @@ public class BasicDummy : MonoBehaviour
         RaycastHit kneeHit;
         RaycastHit shoulderHit;
 
-        Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 1.5f, Color.red, 30f);
-        Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 1.5f, Color.blue, 30f);
-        Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 1.5f, Color.red, 30f);
-        Debug.DrawRay(kneesLevel.transform.position, transform.forward * 1.5f, Color.blue, 30f);
+        //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 2f, Color.red, 30f);
+        //Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 2f, Color.blue, 30f);
+        //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.red, 30f);
+        //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 30f);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 1.5f);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 1.5f);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 1.5f);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 1.5f);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f);
+        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 2f);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f);
+        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 2f);
 
         return forwardKneeCheck && forwardshoulderCheck;
     }
 
     private void SetDummyMovement(bool isMoving)
     {
-        animator.enabled = isMoving;
         controller.enabled = isMoving;
-    }
-
-    private void SetRotation()
-    {
-        switch (selectedDirection)
-        {
-            case Directions.North:
-                direction = -transform.forward;
-                transform.Rotate(0f, 0f, 0f);
-                break;
-            case Directions.South:
-                direction = transform.forward;
-                transform.Rotate(0f, 180f, 0f);                
-                break;
-            case Directions.East:
-                direction = transform.right;
-                transform.Rotate(0f, 90f, 0f); 
-                break;
-            case Directions.West:
-                direction = -transform.right;
-                transform.Rotate(0f, 270f, 0f);
-                break;
-        }
     }
 
 }
