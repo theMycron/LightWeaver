@@ -6082,6 +6082,7 @@ MonoBehaviour:
   levels: []
   audioManager: {fileID: 0}
   overlay: {fileID: 0}
+  terminalInterface: {fileID: 0}
   gameSave:
     lastUnlockedLevel: 0
     collectiblesCollected: 0
@@ -12142,6 +12143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
+  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -16958,7 +16960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2074918521
 Transform:
   m_ObjectHideFlags: 0
