@@ -486,11 +486,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         if (isActive)
         {
+            anim.enabled = true;
             anim.SetInteger("BaseState", (int)AnimationState.idle);
             texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
         }
         else
         {
+            anim.enabled = false;
             texture.SetRobotColor(RobotTextureController.ROBOT_GREY);
         }
     }
