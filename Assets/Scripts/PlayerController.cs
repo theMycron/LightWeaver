@@ -467,7 +467,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             SetRobotPointing(true);
         }
-        Debug.Log("Handling Laser pointing. isRobotPointing: " + isRobotPointing);
 
         // get mosue position
         RaycastHit hit;
@@ -572,13 +571,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         if (isRobotPointing)
         {
-            Debug.Log("Setting IK positions");
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
         } else
         {
-            Debug.Log("Resetting IK positions");
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         }
 
