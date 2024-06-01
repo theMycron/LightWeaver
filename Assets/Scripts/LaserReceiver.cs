@@ -9,6 +9,9 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
     [SerializeField] public LaserColors selectedLaserColor;
     private Color color;
 
+    [SerializeField]
+    private float seconds;
+
     // this is the list of gameobjects that will be activated by the receiver.
     // they must implement the IActivable interface
     public List<GameObject> activateList; 
@@ -23,12 +26,7 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-        // use ? to check if they have an IActivable component
-        if (sender.colorEnum != selectedLaserColor)
-        {
-            return;
-        }
-        activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
+        StartCoroutine(Wait(sender));
     }
 
     public void LaserExit(Laser sender)
@@ -38,5 +36,18 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
             return;
         }
         activateList.ForEach(c => c.GetComponent<IActivable>()?.Deactivate(this));
+    }
+
+    private IEnumerator Wait(Laser sender)
+    {
+        
+
+        // use ? to check if they have an IActivable component
+        if (sender.colorEnum != selectedLaserColor)
+        {
+            yield break;
+        }
+        yield return new WaitForSecondsRealtime(seconds);
+        activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
     }
 }

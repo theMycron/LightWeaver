@@ -14,6 +14,8 @@ public class FloorButton : MonoBehaviour
     public List<GameObject> activateList;
 
     //private GameObject gate;
+    [SerializeField]
+    private float seconds;
 
     // Start is called before the first frame update
     void Start()
@@ -25,13 +27,7 @@ public class FloorButton : MonoBehaviour
 
     private void ToggleButton(bool toggle)
     {
-        animator.SetBool("isObjectOver", toggle);
-        Debug.Log("Floor button pressed");
-        if (toggle)
-            activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
-        else
-            activateList.ForEach(c => c.GetComponent<IActivable>()?.Deactivate(this));
-        
+        StartCoroutine(Wait(toggle));
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,5 +38,20 @@ public class FloorButton : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         ToggleButton(false);
+    }
+
+    private IEnumerator Wait(bool toggle)
+    {
+        animator.SetBool("isObjectOver", toggle);
+        Debug.Log("Floor button pressed");
+        if (toggle)
+        {
+            yield return new WaitForSeconds(seconds);
+            activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
+        }
+        else
+        {
+            activateList.ForEach(c => c.GetComponent<IActivable>()?.Deactivate(this));
+        }
     }
 }
