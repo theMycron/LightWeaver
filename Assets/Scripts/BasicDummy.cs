@@ -10,16 +10,13 @@ public class BasicDummy : MonoBehaviour
 {
 
     [SerializeField]
-    private int dummyNumber;
-
-    public int DummyNumber { get { return dummyNumber; } }
-
-    [SerializeField]
     private PlayerController controller;
     [SerializeField]
     private Animator animator;
 
     Vector2 direction;
+
+    [SerializeField] LayerMask turnMask;
 
     [Header("Surronded")]
     [SerializeField] GameObject shoulderLevel;
@@ -108,10 +105,8 @@ public class BasicDummy : MonoBehaviour
         //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.red, 30f);
         //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 30f);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 2f);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 2f);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f, turnMask);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f, turnMask);
 
         return forwardKneeCheck && forwardshoulderCheck;
     }
