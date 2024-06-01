@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     [HideInInspector]
     public SaveProfile gameSave;
 
+    public int LevelCount { get { return levels.Count; } }
     private void Awake()
     {
         gameSave = SaveManager.Load();
@@ -69,6 +70,13 @@ public class LevelManager : MonoBehaviour
         int level = 0;
         if (gameSave != null)
             level = gameSave.lastUnlockedLevel;
+        ExitMainMenu();
+        StartCoroutine(PlayLevel(level));
+    }
+
+    // should be called from main menu
+    public void SelectLevel(int level)
+    {
         ExitMainMenu();
         StartCoroutine(PlayLevel(level));
     }
