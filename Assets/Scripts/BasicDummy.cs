@@ -37,13 +37,11 @@ public class BasicDummy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(-transform.forward);
-        Debug.Log(-transform.right);
         animator = GetComponent<Animator>();
         controller = GetComponent<PlayerController>();
 
-        //direction = -transform.forward;
-        SetDirection();
+        direction = -transform.forward;
+        SetRotation();
         direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
 
     }
@@ -118,18 +116,18 @@ public class BasicDummy : MonoBehaviour
         controller.enabled = isMoving;
     }
 
-    private void SetDirection()
+    private void SetRotation()
     {
         switch (selectedDirection)
         {
             case Directions.North:
-                direction = -transform.forward; break;
+                transform.Rotate(0f, 0f, 0f); break;
             case Directions.South:
-                direction = new Vector3(10f, 0f, 10f); break;
+                transform.Rotate(0f, 180f, 0f); break;
             case Directions.East:
-                direction = transform.right; break;
+                transform.Rotate(0f, 90f, 0f); break;
             case Directions.West:
-                direction = -transform.right; break;
+                transform.Rotate(0f, 270f, 0f); break;
         }
     }
 
