@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
@@ -15,7 +16,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public Rigidbody rb;
 
-    Vector2 moveDirection = Vector2.zero;
+    public Vector2 moveDirection = Vector2.zero;
 
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
@@ -28,7 +29,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] float maxSpeed = 4f;
 
     [Header("Camera")]
-    [SerializeField] Camera mainCamera;
+    [SerializeField] public Camera mainCamera;
 
     [Header("Jumping")]
     [SerializeField] float jumpForce;
@@ -66,7 +67,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     [SerializeField] MultiAimConstraint headAim;
 
-    private enum AnimationState
+    public enum AnimationState
     {
         disabled = 0,
         idle = 1,
@@ -75,7 +76,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         jumping = 4,
         falling = 5,
     }
-    private enum UpperAnimationState
+    public enum UpperAnimationState
     {
         none = 0,
         carryObject = 1,
@@ -99,6 +100,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
+        texture.SetDefaultColor();
+
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
@@ -221,16 +224,21 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         moveDirection = Vector2.zero;
         anim.SetInteger("BaseState", (int)AnimationState.idle);
     }
-    Vector3 MovePlayer()
+    public Vector3 MovePlayer()
     {
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
-        targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
-        
+        // if this is attached to a dummy dont apply offset
+        if (!this.tag.Equals("Dummy"))
+        {
+            targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        }
+        //targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+
         Vector3 force;
         force = targetVector.normalized * moveSpeed * 10f;
 
-        rb.AddForce(force, ForceMode.Force);
+        rb.AddForce(force, ForceMode.Acceleration);
 
         // Return the movement vector
         return targetVector;
@@ -412,7 +420,17 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
+
+
+        // check if dummy
+        if (tag.Equals("Dummy"))
+        {
+            gameObject.GetComponent<BasicDummy>().LaserCollide(sender);
+            return;
+        }
+
         if (isLaserColliding || laserHitBy != null || !isActive) return;
+
         // laser pointing logic
         currentLaserColor = sender.colorEnum;
         isLaserColliding = true;
@@ -428,12 +446,19 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserExit(Laser sender)
     {
+        // check if dummy
+        if (tag.Equals("Dummy"))
+        {
+            gameObject.GetComponent<BasicDummy>().LaserExit(sender);
+            return;
+        }
+
         if (!isLaserColliding || laserHitBy != sender.gameObject || !isActive) return;
         isLaserColliding = false;
         laserHitBy = null;
         Debug.Log("Laser exited. isRobotPointing: " + isRobotPointing);
         SetRobotPointing(false);
-        texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+        texture.SetDefaultColor();
     }
 
     private void HandleLaserPointing()
@@ -444,7 +469,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             SetRobotPointing(true);
         }
-        Debug.Log("Handling Laser pointing. isRobotPointing: " + isRobotPointing);
 
         // get mosue position
         RaycastHit hit;
@@ -488,7 +512,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             anim.enabled = true;
             anim.SetInteger("BaseState", (int)AnimationState.idle);
-            texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+            texture.SetDefaultColor();
         }
         else
         {
@@ -549,13 +573,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
         if (isRobotPointing)
         {
-            Debug.Log("Setting IK positions");
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
         } else
         {
-            Debug.Log("Resetting IK positions");
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         }
 

@@ -133,7 +133,7 @@ public class Laser : MonoBehaviour
             //Debug.Log($"Exiting last object: {lastHitObject}");
             lastObject.LaserExit(this);
         }
-
+        
         lastHitObject = currentHitObject;
 
         if (hitLaserInteractable)
