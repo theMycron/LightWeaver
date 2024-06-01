@@ -31,7 +31,7 @@ public class LevelManager : MonoBehaviour
             gameSave.collectiblesCollected++;
             if (!terminalInterface.HasTerminalManager())
                 terminalInterface.SetTerminalManager(FindAnyObjectByType<TerminalTextManager>());
-            terminalInterface.AddSystemMessage("Plutonium Shard Collected. Total: "+gameSave.collectiblesCollected);
+            terminalInterface.AddSystemMessage("Plutonium Solid Collected. Total: "+gameSave.collectiblesCollected);
         }
     }
 
