@@ -23,12 +23,7 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
     [SerializeField]
     private bool isActive;
 
-    [Header("LaserCube Number")]
-    [SerializeField]
-    private int cubeNumber;
-
     private GameObject activatedBy;
-    public int CubeNumber { get { return this.cubeNumber; } }
 
 
     // Start is called before the first frame update
@@ -84,28 +79,6 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
         this.color = (Color) Colors.GetLaserColor(color);
     }
 
-    public void Activate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (isActive || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-        activatedBy = sender.gameObject;
-
-        ToggleLaserCube(true);
-    }
-
-    public void Deactivate(Component sender, int objectNumber, string targetName, object data)
-    {
-        if (!isActive || activatedBy != sender.gameObject || !CheckLaserCubeNmber(objectNumber) || targetName != "LaserCube")
-        {
-            return;
-        }
-
-        activatedBy = null;
-        ToggleLaserCube(false);
-    }
-
 
     private void ToggleLaserCube(bool value)
     {
@@ -114,9 +87,8 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
             Debug.Log("Redirect Laser called!");
             isActive = true;
             ChangeCubeColor(activatedBy.GetComponent<Laser>().colorEnum);
-            if (!lineRenderer.enabled)
+            if (!laserScript.enabled)
             {
-                lineRenderer.enabled = true;
                 laserScript.enabled = true;
                 laserScript.SetLaserColor(colorEnum);
                 laserScript.direction = transform.forward;
@@ -126,10 +98,7 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
         } else
         {
             isActive = false;
-            laserScript.BlockLaser();
-            laserScript.HideCollisionEffect();
             //ToggleLaserCube(isActive);
-            lineRenderer.enabled = false;
             laserScript.enabled = false;
 
             Debug.Log($"laser cube stopped redirecting");
@@ -153,10 +122,5 @@ public class LaserCube : MonoBehaviour, ILaserInteractable
             activatedBy = null;
             ToggleLaserCube(false);
         }
-    }
-
-    private bool CheckLaserCubeNmber(int laserCubeNumber)
-    {
-        return this.cubeNumber == laserCubeNumber;
     }
 }

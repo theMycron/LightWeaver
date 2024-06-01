@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using static UnityEngine.Rendering.DebugUI;
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
     [SerializeField] float groundDrag;
+    [SerializeField] float maxSpeed = 4f;
 
     [Header("Camera")]
     [SerializeField] Camera mainCamera;
@@ -31,10 +33,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Jumping")]
     [SerializeField] float jumpForce;
     float jumpForceCounter;
-    [SerializeField] float jumpCooldown = .2f;
     [SerializeField] float fallSpeed = 50f;
-    [SerializeField] float airMultiplier = .2f;
-    Boolean readyToJump;
     [SerializeField] float JumpTime;
     [SerializeField] float minJumpTime;
     float jumpTimeCounter;
@@ -45,16 +44,31 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [SerializeField] LayerMask ground;
     [SerializeField] float groundCheckDistance = 0.1f;
 
+    [HideInInspector] public bool isControlling = false;
     private RobotTextureController texture;
     private Animator anim;
     private bool isFalling;
     private bool isJumpCancelled = false;
     private bool isCarryingObject;
     private bool isRotating;
+
     private bool isMoving;
+
+    private bool isLaserColliding = false;
+    private LaserColors currentLaserColor = LaserColors.red;
+    private GameObject laserHitBy;
+    
+    [Header("Laser Pointing")]
+    private bool isRobotPointing;
+    [SerializeField] GameObject startingPoint;
+    private Laser laserScript;
+    private Vector3 mousePosition;
+
 
     [SerializeField] LayerMask robotLayer;
     Vector3 requiredHitPoint;
+
+    [SerializeField] MultiAimConstraint headAim;
 
     private enum AnimationState
     {
@@ -81,6 +95,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private void Awake()
     {
         InputManager = new InputManager();
+        laserScript = GetComponent<Laser>();
     }
     private void Start()
     {
@@ -88,12 +103,16 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
-        ResetJump();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
         anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
+        mousePosition = Vector3.zero;
 
+        //anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+        //anim.SetIKPosition(AvatarIKGoal.RightHand, Vector3.zero);
+        //anim.SetIKPosition(AvatarIKGoal.LeftHand, Vector3.up);
+        
     }
 
     public void EnableInput()
@@ -133,7 +152,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     }
     private void Update()
     {
-
+        
+        
     }
     private void FixedUpdate()
     {
@@ -159,24 +179,16 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             Jump();
         }
 
-        //rotate robot when press/hold right click
-        if (IsGrounded() && isRotating && moveDirection == Vector2.zero)
+        if (IsGrounded() && moveDirection == Vector2.zero)
         {
-            var direction = GetRotatePosition() - transform.position;
-            direction.y = 0;
-            transform.forward = direction;
-
+            //rotate robot when press/hold right click
+            if (isRotating && isControlling)
+                SetMouseRotatePosition();
+            HandleLaserPointing();
+        } else
+        {
+            SetRobotPointing(false);
         }
-
-        /*        if (IsGrounded() && isMoving)
-                {
-                    AudioManager.instance.StartWalkingSound();
-                    AudioManager.instance.PlayFootstepSounds();
-                } else
-                {
-                    AudioManager.instance.StopWalkingSound();
-                }*/
-
     }
 
     private void EnsurePlayerIsNotMovingAtSpeedOfLight()
@@ -188,14 +200,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
-        if(xSpeed > 3f)
+        if(xSpeed > maxSpeed)
         {
-            xSpeed = 3f;
+            xSpeed = maxSpeed;
         }
 
-        if (zSpeed > 3f)
+        if (zSpeed > maxSpeed)
         {
-            zSpeed = 3f;
+            zSpeed = maxSpeed;
         }
 
         rb.velocity = new Vector3(
@@ -222,20 +234,9 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         // Calculate movement vector
         Vector3 targetVector = new Vector3(moveDirection.x, 0.0f, moveDirection.y);
         targetVector = Quaternion.Euler(0, mainCamera.gameObject.transform.eulerAngles.y, 0) * targetVector;
+        
         Vector3 force;
-        // Adjust velocity if the player is grounded
-        if (IsGrounded())
-        {
-            // drag will be applied when grounded
-            force = targetVector.normalized * moveSpeed * 10f;
-
-        }
-        else
-        {
-            // no drag will be applied when airborne (because it messes with the jump height)
-            // so limit horizontal movement
-            force = targetVector.normalized * moveSpeed * airMultiplier;
-        }
+        force = targetVector.normalized * moveSpeed * 10f;
 
         rb.AddForce(force, ForceMode.Force);
 
@@ -332,53 +333,29 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     void OnRotateRobotStarted(InputAction.CallbackContext context)
     {
         isRotating = true;
-
     }
 
     void OnRotateRobotCancelled(InputAction.CallbackContext context)
     {
         isRotating = false;
     }
-    Vector3 GetRotatePosition()
+
+    // sets the robot rotation to wherever the mouse is
+    // used to rotate robot on right click
+    void SetMouseRotatePosition()
     {
         Vector3 mouse = Input.mousePosition;
         Ray castPoint = mainCamera.ScreenPointToRay(mouse);
         RaycastHit hit;
+
         if (Physics.Raycast(castPoint, out hit,Mathf.Infinity,~robotLayer))
         {
-            //length of triangle
-            Vector3 playerHeight = new Vector3(hit.point.x,transform.position.y,hit.point.z);
-            Vector3 hitPoint = new Vector3(hit.point.x,hit.point.y,hit.point.z);
-            float length = Vector3.Distance(playerHeight, hitPoint);
-
-            //length of hypotenuse
-            var deg = 30;
-            var rad = deg * Mathf.Deg2Rad;
-            float hypote = (length / Mathf.Sin(rad));
-            float distanceFromCamera = hit.distance;
-
-            //changes based on player height
-            if (transform.position.y > hit.point.y)
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera-hypote);
-            }else if (transform.position.y < hit.point.y)
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera - hypote);
-            }else
-            {
-                requiredHitPoint = castPoint.GetPoint(distanceFromCamera);
-            }
-            
+            Vector3 directionToMouse = (hit.point - transform.position).normalized;
+            directionToMouse.y = 0f;
+            transform.rotation = Quaternion.LookRotation(directionToMouse);
         }
-        return requiredHitPoint;
-
     }
     
-
-    private void ResetJump()
-    {
-        readyToJump = true;
-    }
     void Jump()
     {
         // if player attempted to cancel jump, dont stop the jump until minimum time limit
@@ -445,7 +422,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
+        if (isLaserColliding || laserHitBy != null || !isActive) return;
         // laser pointing logic
+        currentLaserColor = sender.colorEnum;
+        isLaserColliding = true;
+        laserHitBy = sender.gameObject;
         switch (sender.colorEnum)
         {
             case LaserColors.red:
@@ -457,16 +438,48 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserExit(Laser sender)
     {
+        if (!isLaserColliding || laserHitBy != sender.gameObject || !isActive) return;
+        isLaserColliding = false;
+        laserHitBy = null;
+        Debug.Log("Laser exited. isRobotPointing: " + isRobotPointing);
+        SetRobotPointing(false);
         texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+    }
+
+    private void HandleLaserPointing()
+    {
+        if (!isLaserColliding || isCarryingObject || !isActive) return;
+
+        if (!isRobotPointing && isRotating)
+        {
+            SetRobotPointing(true);
+        }
+        Debug.Log("Handling Laser pointing. isRobotPointing: " + isRobotPointing);
+
+        // get mosue position
+        RaycastHit hit;
+        Vector3 mouse = Input.mousePosition;
+        Ray castPoint = mainCamera.ScreenPointToRay(mouse);
+
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity) && isRotating)
+        {
+            mousePosition = hit.point;
+            // set head and hand target positions based on where the mouse clicks
+            laserScript.direction = (hit.point - startingPoint.transform.position).normalized;
+            headAim.data.sourceObjects[0].transform.position = hit.point;
+            Debug.DrawRay(hit.point, Vector3.up*2, Color.green, 1);
+        }
+
     }
 
     void CarryObject()
     {
-
+        if (!isControlling) return;
         if (isCarryingObject)
         {
             //anim.SetLayerWeight(1, 1f);
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
+            SetRobotPointing(false);
             //Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
         }
         else
@@ -483,17 +496,20 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         if (isActive)
         {
+            anim.enabled = true;
             anim.SetInteger("BaseState", (int)AnimationState.idle);
             texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
         }
         else
         {
+            anim.enabled = false;
             texture.SetRobotColor(RobotTextureController.ROBOT_GREY);
         }
     }
 
     public void SetCarryingObject(bool value)
     {
+        if (!isControlling) return;
         isCarryingObject = value;
         CarryObject();
     }
@@ -534,5 +550,50 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public bool IsRobotCarryingObject()
     {
         return isCarryingObject;
+    }
+
+
+    private void OnAnimatorIK()
+    {
+        // aiming hand at target IK logic
+
+        if (isRobotPointing)
+        {
+            Debug.Log("Setting IK positions");
+            // set right hand to look at mouse
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
+            anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
+        } else
+        {
+            Debug.Log("Resetting IK positions");
+            anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
+        }
+
+    }
+
+
+    private void SetRobotPointing(bool value)
+    {
+        laserScript.enabled = value;
+        if (value)
+            laserScript.SetLaserColor(currentLaserColor);    
+        headAim.weight = value ? 1 : 0;
+        isRobotPointing = value;
+    }
+
+    public void ChangeControlling(bool value)
+    {
+        isControlling = value;
+        if (isControlling)
+        {
+            EnableInput();
+        } else
+        {
+            DisableInput();
+        }
+    }
+    private void OnDestroy()
+    {
+        DisableInput();
     }
 }

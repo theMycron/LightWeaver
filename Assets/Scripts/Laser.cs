@@ -15,17 +15,6 @@ public class Laser : MonoBehaviour
     public Color color;
     private int laserDistance = 1000;
 
-    [Header("Events")]
-    public GameEvent onLaserCollided;
-    public GameEvent onLaserBlocked;
-    public GameEvent onLaserStopped;
-    public GameEvent onLaserCollidedWithLaserCube;
-
-    private GameObject[] laserReceivers;
-    //private GameObject lastHittedRecevier;
-    //private GameObject lastHittedLaserCube;
-    //private bool hasLaserBlockedBefore = false;
-
     private GameObject currentHitObject;
     private GameObject lastHitObject;
     private GameObject dummyGameObject;
@@ -34,20 +23,26 @@ public class Laser : MonoBehaviour
     private void OnEnable()
     {
         lineRenderer = GetComponent<LineRenderer>();
+        lineRenderer.enabled = true;
         //HideCollisionEffect();
+    }
+
+    private void OnDisable()
+    {
+        lineRenderer.enabled = false;
+        BlockLaser();
+        HideCollisionEffect();
     }
 
     void Start()
     {
         dummyGameObject = gameObject;
         lineRenderer = GetComponent<LineRenderer>();
-        lineRenderer.SetPosition(0, startPoint.position);
         collisionEffectInstance = Instantiate(collisionEffect);
         collisionEffect.SetActive(false);
 
         //lineRenderer.startWidth = 0.5f;
         //lineRenderer.endWidth = 0.5f;
-        GetSimilarReceviers();
     }
 
 
@@ -61,112 +56,24 @@ public class Laser : MonoBehaviour
         //Debug.DrawRay(startPoint.position,direction*10, Color.blue, 3);
         //Debug.Log(startPoint.position);
         //lineRenderer.SetPosition(0, new Vector3(0, 0, 0));
-        RaycastHit hit;
+        FireRaycast();
+    }
+    
+    private void FireRaycast()
+    {
+        RaycastHit[] hits = Physics.RaycastAll(startPoint.position, direction, 100f);
+        lineRenderer.SetPosition(0, startPoint.position);
 
-        if (Physics.Raycast(startPoint.position, direction, out hit))
+        if (hits != null && hits.Length > 0)
         {
-            bool hitLaserInteractable = false;
-
-            if (hit.collider)
+            RaycastHit closestHit = GetClosestHit(hits);
+            if (closestHit.transform.gameObject != this.gameObject)
             {
-                //Debug.Log("I have hit by: " +  hit.collider);
-
-                lineRenderer.SetPosition(1, hit.point);
-
-                currentHitObject = hit.collider.gameObject;
-                if (!lastHitObject) { lastHitObject = currentHitObject; }
+                HandleLaserCollision(closestHit);
+                return;
             }
-            ILaserInteractable currentObject = currentHitObject.GetComponent<ILaserInteractable>();
-            ILaserInteractable lastObject = lastHitObject.GetComponent<ILaserInteractable>();
-            //Debug.Log($"Currenthit object: {currentHitObject}, Lasthit object: {lastHitObject}, Last object: {lastObject}");
-            if (currentObject != null)
-            {
-                currentObject.LaserCollide(this);
-                hitLaserInteractable = true;
-            } 
-            if (lastObject != null && lastHitObject != currentHitObject)
-            {
-                //Debug.Log($"Exiting last object: {lastHitObject}");
-                lastObject.LaserExit(this);
-            }
-
-            //if (currentHitObject.tag.EndsWith("LaserReceiver"))
-            //{
-
-            //    if (laserReceivers.Contains(currentHitObject))
-            //    {
-            //        int receiverNumber = currentHitObject.GetComponent<LaserReceiver>().ReceiverNumber;
-            //        Debug.Log("Receiver hit by correct laser! Raise onLaserCollided Event to receiver #"+ receiverNumber);
-            //        //onLaserCollided.Raise(this, null, lastHittedRecevier.gameObject.GetComponent<LaserReceiver>().GateNumber);
-
-            //        onLaserCollided.Raise(this, receiverNumber, "Receiver", null);
-
-            //        //hasLaserBlockedBefore = false;
-            //        //Debug.Log("Event raiser with this color: " + hit.transform.gameObject.tag);
-            //        hitLaserInteractable = true;
-            //    }
-            //    else
-            //    {
-            //        Debug.Log("Wrong receiver color: " + lastHitObject);
-            //    }
-
-            //}
-            //else
-            //{
-            //    //Debug.Log("Close Gate Logic!");
-            //    //Debug.Log("laser emitter gate number attached: " + laserReceivers[0].gameObject.GetComponent<LaserReceiver>().GateNumber);
-
-            //    BlockLaserFromReceiver();
-            //}
-
-            //if (currentHitObject.tag == "LaserCube")
-            //{
-            //    int laserCubeNumber = currentHitObject.GetComponent<LaserCube>().CubeNumber;
-            //    //onLaserCollidedWithLaserCube.Raise(this, null, -1);
-            //    //lastHittedLaserCube = hit.transform.gameObject;
-            //    //Debug.Log("Hit laserCube! Raise onLaserCollided Event to cube #" + laserCubeNumber);
-            //    onLaserCollidedWithLaserCube.Raise(this, laserCubeNumber, "LaserCube", null);
-            //    hitLaserInteractable = true;
-            //} else
-            //{
-            //    //if (lastHittedLaserCube != null)
-            //    BlockLaserFromLaserCube();
-            //}
-
-            // if hitted robot
-            //if (currentHitObject.tag.StartsWith("Robot"))
-            //{
-            //    Debug.Log("HIT ROBOT WITH LASER " + startPoint.position);
-            //    // TODO: change behaviour to perform laser pointing logic only when robot is active
-            //    // robot activation should have the same behaviour as opening a gate,
-            //    // either by floor button or laser receiver
-            //    // check if active
-            //    if (!currentHitObject.GetComponent<PlayerController>().isActive)
-            //    {
-            //        hitLaserInteractable = true;
-            //        currentHitObject.GetComponent<PlayerController>().ActivateRobot();
-            //        //Debug.Log("Active robot please");
-            //    }
-            //    else // if not active
-            //    {
-            //        //Debug.Log("Laser Pointing logic!");
-            //    }
-
-            //}
-
-            lastHitObject = currentHitObject;
-
-            if (hitLaserInteractable)
-            {
-                HideCollisionEffect();
-            } else
-            {
-                SetCollisionEffect(hit.point, hit.normal);
-            }
-        }
-        else
-        {
-            lineRenderer.SetPosition(1, startPoint.position + direction * laserDistance );
+            // if didnt hit anything, extend laser renderer and exit from the last hit object
+            lineRenderer.SetPosition(1, startPoint.position + direction * laserDistance);
             if (lastHitObject != null && lastHitObject.GetComponent<ILaserInteractable>() != null)
             {
                 lastHitObject.GetComponent<ILaserInteractable>().LaserExit(this);
@@ -174,47 +81,69 @@ public class Laser : MonoBehaviour
         }
     }
 
-    public void BlockLaserFromLaserCube()
+    // get all objects the raycast hit, and make sure to ignore
+    // a hit if it hit the source of this laser
+    private RaycastHit GetClosestHit(RaycastHit[] hits)
     {
-        if (!lastHitObject) { return; }
-        LaserCube lastHitLaserCube = lastHitObject.GetComponent<LaserCube>();
-        LaserCube currentHitLaserCube = currentHitObject.GetComponent<LaserCube>();
-        bool didntHitLaserCubeBefore = !lastHitLaserCube;
-        //Debug.Log("trying to block lasercube, did we hit laser cube now? "+(currentHitLaserCube != null));
-        // if a laser cube was hit last frame AND this frame BUT they are different numbers then raise blocked event
-        if (didntHitLaserCubeBefore || (currentHitLaserCube && lastHitLaserCube.CubeNumber == currentHitLaserCube.CubeNumber))
+        RaycastHit hit = hits[0];
+        float minDistance = 100f;
+        foreach (RaycastHit h in hits)
         {
-            return;
+            // ignore self
+            if (h.transform.gameObject != this.gameObject)
+            {
+                // get closest hit
+                float distance = Mathf.Abs((h.transform.position - transform.position).magnitude);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    hit = h;
+                }
+            }
         }
-        //Debug.Log("onLaserStopped is raised for laser cube number " + lastHitLaserCube.CubeNumber);
-        //onLaserBlocked.Raise(this, null,-1);
-        onLaserStopped.Raise(this, lastHitLaserCube.CubeNumber, "LaserCube", null);
-        
+        return hit;
     }
 
-    // used to raise laser blocked event for receiver if it was hit in the last frame
-    // but not in this frame
-    public void BlockLaserFromReceiver()
+    private void HandleLaserCollision(RaycastHit hit)
     {
-        if (!lastHitObject) { return; }
-        LaserReceiver lastHitReceiver = lastHitObject.GetComponent<LaserReceiver>();
-        LaserReceiver currentHitReceiver = currentHitObject.GetComponent<LaserReceiver>();
-        bool didntHitReceiverBefore = !lastHitReceiver;
-        //Debug.Log($"trying to block laser from receiver {lastHitObject}");
+        if (hit.transform.gameObject == this.gameObject) return;
 
-        // dont continue if last hit receiver doesnt exist
-        // or if it was different color
-        // or if the last hit receiver is the same as the current hit one
-        if (didntHitReceiverBefore || lastHitReceiver.selectedLaserColor != colorEnum
-            || (currentHitReceiver && lastHitReceiver.ReceiverNumber == currentHitReceiver.ReceiverNumber))
+        bool hitLaserInteractable = false;
+
+        if (hit.collider)
         {
-            return;
+            //Debug.Log("I have hit by: " +  hit.collider);
+
+            lineRenderer.SetPosition(1, hit.point);
+
+            currentHitObject = hit.collider.gameObject;
+            if (currentHitObject == this.gameObject) { Debug.Log("Laser hit its own source object!"); }
+            if (!lastHitObject) { lastHitObject = currentHitObject; }
+        }
+        ILaserInteractable currentObject = currentHitObject.GetComponent<ILaserInteractable>();
+        ILaserInteractable lastObject = lastHitObject.GetComponent<ILaserInteractable>();
+        //Debug.Log($"Currenthit object: {currentHitObject}, Lasthit object: {lastHitObject}, Last object: {lastObject}");
+        if (currentObject != null)
+        {
+            currentObject.LaserCollide(this);
+            hitLaserInteractable = true;
+        }
+        if (lastObject != null && lastHitObject != currentHitObject)
+        {
+            //Debug.Log($"Exiting last object: {lastHitObject}");
+            lastObject.LaserExit(this);
         }
 
-        onLaserBlocked.Raise(this, lastHitReceiver.ReceiverNumber, "Receiver", null);
-        //onLaserBlocked.Raise(this, null, 1);
-        //hasLaserBlockedBefore = true;
-        
+        lastHitObject = currentHitObject;
+
+        if (hitLaserInteractable)
+        {
+            HideCollisionEffect();
+        }
+        else
+        {
+            SetCollisionEffect(hit.point, hit.normal);
+        }
     }
 
     // this will block laser from any object hit in the last frame
@@ -227,12 +156,6 @@ public class Laser : MonoBehaviour
         lastObject.LaserExit(this);
     }
 
-    public void BlockLaserFromAllOld()
-    {
-        currentHitObject = dummyGameObject;
-        BlockLaserFromLaserCube();
-        BlockLaserFromReceiver();
-    }
     private void SetCollisionEffect(Vector3 position, Vector3 normal)
     {
         LaserCollision laserCollision = collisionEffectInstance.GetComponent<LaserCollision>();
@@ -271,17 +194,5 @@ public class Laser : MonoBehaviour
         Debug.Log($"laserscript new color: {this.color}");
 
         lineRenderer.colorGradient = gradient;
-        GetSimilarReceviers();
-    }
-
-    private void GetSimilarReceviers()
-    {
-        if (colorEnum == LaserColors.blue)
-        {
-            laserReceivers = GameObject.FindGameObjectsWithTag("BlueLaserReceiver");
-        } else if (colorEnum == LaserColors.red)
-        {
-            laserReceivers = GameObject.FindGameObjectsWithTag("RedLaserReceiver");
-        }
     }
 }

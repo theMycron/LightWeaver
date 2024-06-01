@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static Cinemachine.CinemachineFreeLook;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CubeController : MonoBehaviour
 {
@@ -199,31 +194,25 @@ public class CubeController : MonoBehaviour
     }
     void PickupCube()
     {
-        if (!isRaised)
-        {
-            if(!IsActiveRobotCarryingObject())
-            {
-                FindCubePosition();
-                if (IsRobotNearCube())
-                {
-                    EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.cubePickup);
-                    rb.mass = 1;
-                    rb.useGravity = false;
-                    rb.drag = 12; // drag helps with dampening
-                    isRaised = true;
-                    this.transform.position = CubeDes.position;
-                    Invoke(nameof(AddForce), 0.5f);
-                    bx.excludeLayers = LayerMask.GetMask("Robot");
-                    Debug.Log("Cube is Raised" + isRaised);
-                    Debug.Log("Cube is by:" + activeRobot.name);
-                    activeRobot.GetComponent<PlayerController>().SetCarryingObject(true);
-                    robotRaisingCube = activeRobot;
-                }
 
-            }
+        if (isRaised) return;
+        if (IsActiveRobotCarryingObject()) return;
+        FindCubePosition();
+        if (!IsRobotNearCube()) return;
 
-        }
-
+        EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.cubePickup);
+        rb.mass = 1;
+        rb.useGravity = false;
+        rb.drag = 12; // drag helps with dampening
+        isRaised = true;
+        this.transform.position = CubeDes.position;
+        //Invoke(nameof(AddForce), 0.5f);
+        strength = 75;
+        bx.excludeLayers = LayerMask.GetMask("Robot");
+        Debug.Log("Cube is Raised" + isRaised);
+        Debug.Log("Cube is by:" + activeRobot.name);
+        activeRobot.GetComponent<PlayerController>().SetCarryingObject(true);
+        robotRaisingCube = activeRobot;
     }
     void AddForce()
     {
@@ -233,11 +222,7 @@ public class CubeController : MonoBehaviour
     {
         activeRobot = SwitchPlayer.GetActiveRobot();
         var playerScript = activeRobot.GetComponent<PlayerController>();
-        if (playerScript.IsRobotCarryingObject())
-        {
-            return true;
-        }
-        return false;
+        return playerScript.IsRobotCarryingObject();
     }
     void FindCubePosition()
     {
@@ -261,11 +246,7 @@ public class CubeController : MonoBehaviour
     {
         float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
         Debug.Log("distance: " + distance);
-        if (distance > pickupDistance)
-        {
-            return false;
-        }
-        return true;
+        return distance <= pickupDistance;
     }
 
 /*    void CubeFalling()

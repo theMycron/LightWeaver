@@ -160,13 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activateList: []
-  gateNumber: 0
-  emitterNumber: 0
-  robotNumber: 0
-  onFloorButtonPressed: {fileID: 11400000, guid: 8c5cdfa470f362645be02eba59c9015a,
-    type: 2}
-  onFloorButtonDePressed: {fileID: 11400000, guid: 73c33978ae4e9424192d9183c460026b,
-    type: 2}
 --- !u!1 &4751109859275766412 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ed8319412f0f0e141a15479979b55664,
