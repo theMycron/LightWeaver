@@ -13,6 +13,8 @@ public class BasicDummy : MonoBehaviour
     private PlayerController controller;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private RobotTextureController texture;
 
     Vector2 direction;
 
@@ -26,6 +28,8 @@ public class BasicDummy : MonoBehaviour
     void Start()
     {
         direction = new Vector2(transform.forward.x, transform.forward.z);
+        // override default color
+        texture.defaultColor = RobotTextureController.ROBOT_PURPLE;
     }
 
     private void Update()
@@ -42,9 +46,6 @@ public class BasicDummy : MonoBehaviour
         if (CheckIfHitted())
         {
             direction *= -1;
-        } else
-        {
-            Debug.Log("didn't reverse");
         }
     }
 

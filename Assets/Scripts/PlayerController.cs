@@ -100,6 +100,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         anim = GetComponent<Animator>();
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
+        texture.SetDefaultColor();
+
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
@@ -456,7 +458,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         laserHitBy = null;
         Debug.Log("Laser exited. isRobotPointing: " + isRobotPointing);
         SetRobotPointing(false);
-        texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+        texture.SetDefaultColor();
     }
 
     private void HandleLaserPointing()
@@ -511,7 +513,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             anim.enabled = true;
             anim.SetInteger("BaseState", (int)AnimationState.idle);
-            texture.SetRobotColor(RobotTextureController.ROBOT_GREEN);
+            texture.SetDefaultColor();
         }
         else
         {
