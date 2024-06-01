@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 781846063814373048}
   - component: {fileID: 7781851340796772560}
-  - component: {fileID: 4102230144501375391}
   m_Layer: 0
   m_Name: BasicDummy
   m_TagString: Untagged
@@ -45,33 +44,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce3f7c3acc47254cae70423f90c8de2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dummyNumber: 0
   controller: {fileID: 8023931109980415225}
   animator: {fileID: 3197225269185096482}
+  texture: {fileID: 4573491498988946136}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 4737
   shoulderLevel: {fileID: 9123281117495234450}
   kneesLevel: {fileID: 7024258718006360581}
-  selectedDirection: 0
---- !u!65 &4102230144501375391
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1064086231777108270}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 1.26, y: 5.2817564, z: 0.31}
-  m_Center: {x: 0, y: 3.8, z: 1.52}
 --- !u!1 &7024258718006360581
 GameObject:
   m_ObjectHideFlags: 0
@@ -209,8 +189,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
         type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6568201181500823786, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
       propertyPath: m_TagString
       value: Dummy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993694809480805076, guid: 5b3d66b25ebcce74f9e1361537346509,
+        type: 3}
+      propertyPath: m_Mass
+      value: 100000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -241,6 +231,18 @@ Animator:
     type: 3}
   m_PrefabInstance: {fileID: 3086055523843044104}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &4573491498988946136 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -7661870445795561008, guid: 5b3d66b25ebcce74f9e1361537346509,
+    type: 3}
+  m_PrefabInstance: {fileID: 3086055523843044104}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e690b1f786b3269438457ab1f6f09b2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8023931109980415225 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5010648146445686769, guid: 5b3d66b25ebcce74f9e1361537346509,

@@ -10,16 +10,15 @@ public class BasicDummy : MonoBehaviour
 {
 
     [SerializeField]
-    private int dummyNumber;
-
-    public int DummyNumber { get { return dummyNumber; } }
-
-    [SerializeField]
     private PlayerController controller;
     [SerializeField]
     private Animator animator;
+    [SerializeField]
+    private RobotTextureController texture;
 
     Vector2 direction;
+
+    [SerializeField] LayerMask collisionMask;
 
     [Header("Surronded")]
     [SerializeField] GameObject shoulderLevel;
@@ -29,6 +28,8 @@ public class BasicDummy : MonoBehaviour
     void Start()
     {
         direction = new Vector2(transform.forward.x, transform.forward.z);
+        // override default color
+        texture.defaultColor = RobotTextureController.ROBOT_PURPLE;
     }
 
     private void Update()
@@ -45,9 +46,6 @@ public class BasicDummy : MonoBehaviour
         if (CheckIfHitted())
         {
             direction *= -1;
-        } else
-        {
-            Debug.Log("didn't reverse");
         }
     }
 
@@ -90,10 +88,10 @@ public class BasicDummy : MonoBehaviour
         //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 4, Color.red, 30f);
         //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 4, Color.blue, 30);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 5);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 5);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 5);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 5);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 5, collisionMask);
+        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 5, collisionMask);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 5, collisionMask);
+        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 5, collisionMask);
 
         return forwardKneeCheck && backwardKneeCheck && forwardshoulderCheck && backwardshoulderCheck;
     }
@@ -108,10 +106,8 @@ public class BasicDummy : MonoBehaviour
         //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.red, 30f);
         //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 30f);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 2f);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 2f);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f, collisionMask);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f, collisionMask);
 
         return forwardKneeCheck && forwardshoulderCheck;
     }

@@ -7,7 +7,7 @@ public class FloorButton : MonoBehaviour
 {
 
     private Animator animator;
-    private Animator gateAnimator;
+    private GameObject triggeredBy; // this is so that only one object can activate the button at a time
 
     // this is the list of gameobjects that will be activated by the receiver.
     // they must implement the IActivable interface
@@ -21,7 +21,6 @@ public class FloorButton : MonoBehaviour
     void Start()
     {
         animator = GetComponentInParent<Animator>();
-        //gateAnimator = gate.GetComponent<Animator>();
     }
 
 
@@ -32,11 +31,15 @@ public class FloorButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (triggeredBy != null) return;
+        triggeredBy = other.gameObject;
         ToggleButton(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (triggeredBy != other.gameObject) return;
+        triggeredBy = null;
         ToggleButton(false);
     }
 
