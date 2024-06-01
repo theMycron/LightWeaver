@@ -40,9 +40,9 @@ public class BasicDummy : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<PlayerController>();
 
-        //direction = -transform.forward;
-        SetRotation();
-        direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
+        direction = new Vector2(transform.forward.x, transform.forward.z);
+        //SetRotation();
+        //direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
 
     }
 
