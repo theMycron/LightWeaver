@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<string> levels = new List<string>();
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private Overlay overlay;
+    [SerializeField] private TerminalInterface terminalInterface;
     private int currentLevel = -1;
 
     [HideInInspector]
@@ -21,6 +22,17 @@ public class LevelManager : MonoBehaviour
     {
         // loads main menu at start
         ReturnToMenu();
+    }
+
+    public void CollectCollectible()
+    {
+        if (gameSave != null)
+        {
+            gameSave.collectiblesCollected++;
+            if (!terminalInterface.HasTerminalManager())
+                terminalInterface.SetTerminalManager(FindAnyObjectByType<TerminalTextManager>());
+            terminalInterface.AddSystemMessage("Plutonium Shard Collected. Total: "+gameSave.collectiblesCollected);
+        }
     }
 
     public void OnLevelDone(Component sender, int objectNum, string channel, object data)

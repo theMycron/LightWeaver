@@ -16,6 +16,16 @@ public class TerminalInterface : MonoBehaviour
         terminal = FindAnyObjectByType<TerminalTextManager>();
     }
 
+    public void SetTerminalManager(TerminalTextManager ttm)
+    {
+        if ( ttm != null )
+            terminal = ttm;
+    }
+    public bool HasTerminalManager()
+    {
+        return ( terminal != null );
+    }
+
     public void PrintNextMessage()
     {
         if (messageList != null && messageList.Count > 0)
