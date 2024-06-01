@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RobotTextureController : MonoBehaviour
 {
-    
+    // sets an offset on the texture atlas to apply different colors
     public const float ROBOT_GREEN = 0.075f;
     public const float ROBOT_BLUE = 1.215f;
     public const float ROBOT_PURPLE = 1.385f;
@@ -12,6 +12,14 @@ public class RobotTextureController : MonoBehaviour
     public const float ROBOT_GREY = -0.47f;
 
     Renderer[] renderers;
+
+    [HideInInspector]
+    public float defaultColor;
+
+    private void Awake()
+    {
+        defaultColor = ROBOT_GREEN;
+    }
 
     private void Start()
     {
@@ -22,6 +30,7 @@ public class RobotTextureController : MonoBehaviour
         }
     }
 
+    // sets an offset on the texture atlas to apply different colors
     public void SetRobotColor(float robotColor)
     {
         foreach (Renderer renderer in renderers)
@@ -33,5 +42,10 @@ public class RobotTextureController : MonoBehaviour
                 mat.mainTextureOffset = new Vector2(robotColor, 0);
             }
         }
+    }
+
+    public void SetDefaultColor()
+    {
+        SetRobotColor(defaultColor);
     }
 }

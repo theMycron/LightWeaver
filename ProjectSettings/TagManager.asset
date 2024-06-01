@@ -21,6 +21,8 @@ TagManager:
   - LaserCube
   - RedLaserReceiver
   - RedLaserEmitter
+  - Dummy
+  - FloorButton
   layers:
   - Default
   - TransparentFX

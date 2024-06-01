@@ -152,4 +152,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receiverNumber: 0
   selectedLaserColor: 1
+  seconds: 2
   activateList: []
