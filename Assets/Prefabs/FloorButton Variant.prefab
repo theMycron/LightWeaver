@@ -156,6 +156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activateList:
   - {fileID: 0}
+  seconds: 2
 --- !u!65 &3996577911035818369
 BoxCollider:
   m_ObjectHideFlags: 0
