@@ -8097,7 +8097,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8a2c7093236272043805ca942d893d01, type: 3}
   - {fileID: 8300000, guid: 5e0fe368d9a158a46b0fe96e660e78cc, type: 3}
   JumpingSound: {fileID: 8300000, guid: 937ce0cdb417d614fbc10927daeace8d, type: 3}
-  landingSound: {fileID: 8300000, guid: 304f2bf2228cba94e91cd22803e54bcf, type: 3}
+  landingSound: {fileID: 8300000, guid: 37cdbcb02c3324849ac457dfc5b1058e, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
 --- !u!1001 &754695144
@@ -8938,7 +8938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 810902258}
-  - component: {fileID: 810902257}
+  - component: {fileID: 810902259}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: Untagged
@@ -8946,26 +8946,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &810902257
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 810902256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3aac64f8135567c4caa328359e74f1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectsSFX: {fileID: 1196778307}
-  cubePickup: {fileID: 8300000, guid: 384dafa41e474454c8e9dfdbb872d2fb, type: 3}
-  robotSwitch: {fileID: 8300000, guid: 05b6931d6d3ffe6449e19a35d11bc0f3, type: 3}
-  laserReceiver: {fileID: 0}
-  floorButton: {fileID: 0}
-  collectible: {fileID: 0}
-  minPitch: 0.7
-  maxPitch: 1.2
 --- !u!4 &810902258
 Transform:
   m_ObjectHideFlags: 0
@@ -8984,6 +8964,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &810902259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 810902256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f3e1cab5e9c0114e8d34512cdbc6d65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObjectsSFX: {fileID: 1196778307}
+  cubePickup: {fileID: 8300000, guid: 384dafa41e474454c8e9dfdbb872d2fb, type: 3}
+  robotSwitch: {fileID: 8300000, guid: 05b6931d6d3ffe6449e19a35d11bc0f3, type: 3}
+  laserReceiver: {fileID: 0}
+  floorButton: {fileID: 0}
+  collectible: {fileID: 0}
+  minPitch: 0.8
+  maxPitch: 1.2
 --- !u!4 &811856884 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 742409989658684309, guid: 902a0e6f595eb724d993d5b85f393ef0,
@@ -13533,7 +13533,7 @@ GameObject:
   - component: {fileID: 1196778308}
   - component: {fileID: 1196778307}
   m_Layer: 0
-  m_Name: ObjectsSFX
+  m_Name: EnvSFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22719,7 +22719,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 8a2c7093236272043805ca942d893d01, type: 3}
   - {fileID: 8300000, guid: 5e0fe368d9a158a46b0fe96e660e78cc, type: 3}
   JumpingSound: {fileID: 8300000, guid: 937ce0cdb417d614fbc10927daeace8d, type: 3}
-  landingSound: {fileID: 8300000, guid: 304f2bf2228cba94e91cd22803e54bcf, type: 3}
+  landingSound: {fileID: 8300000, guid: 37cdbcb02c3324849ac457dfc5b1058e, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
 --- !u!1001 &2047848639

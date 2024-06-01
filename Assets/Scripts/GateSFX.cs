@@ -16,7 +16,8 @@ public class GateSFX : MonoBehaviour
     public void PlayGateSFX(AudioClip clip)
     {
         AudioSource.pitch = Random.Range(minPitch, maxPitch);
-        AudioSource.PlayOneShot(clip);
+        AudioSource.clip = clip;
+        AudioSource.Play();
     }
 
     public void PlayOpenSound()
