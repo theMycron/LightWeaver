@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &26378138 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4658812879050979828, guid: 2843120b092fb114a8b27a176227749c,
+    type: 3}
+  m_PrefabInstance: {fileID: 1548894653}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &43440462
 GameObject:
   m_ObjectHideFlags: 0
@@ -798,18 +804,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1817195629
+--- !u!1001 &1548894653
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 1942048570}
     m_Modifications:
     - target: {fileID: 4658812879050979828, guid: 2843120b092fb114a8b27a176227749c,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4658812879050979828, guid: 2843120b092fb114a8b27a176227749c,
         type: 3}
@@ -864,7 +870,7 @@ PrefabInstance:
     - target: {fileID: 8841322594305027758, guid: 2843120b092fb114a8b27a176227749c,
         type: 3}
       propertyPath: m_Name
-      value: Audio Manager
+      value: EnvSFXManager
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1018,6 +1024,7 @@ Transform:
   m_Children:
   - {fileID: 1327103929}
   - {fileID: 43440463}
+  - {fileID: 26378138}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

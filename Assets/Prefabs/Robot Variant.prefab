@@ -627,6 +627,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotMoventSFX
       objectReference: {fileID: 0}
+    - target: {fileID: 7946985903474327119, guid: 5c121ba8cca319f47ad347ce77cf23b8,
+        type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 1255722030986803023, guid: fc9e83f08bfcf3647bddaf2e8005ebf1,
+        type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
