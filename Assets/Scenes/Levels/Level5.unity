@@ -2099,6 +2099,84 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 430775521}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &438723672
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 438723675}
+  - component: {fileID: 438723674}
+  - component: {fileID: 438723673}
+  m_Layer: 0
+  m_Name: TerminalController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &438723673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438723672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: c731fb8ef6f735f47b15e2257599d8e5, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 438723674}
+          m_TargetAssemblyTypeName: TerminalInterface, Assembly-CSharp
+          m_MethodName: PrintNextMessage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: External entry requested.
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &438723674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438723672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31b4f402820bdc43b3f95991132da46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageList:
+  - p:There they are.
+  - p:These lasers are the reason I'm here.
+--- !u!4 &438723675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 438723672}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.006803, y: 6.677548, z: 18.029583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &450850319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3843,6 +3921,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -5881,7 +5963,7 @@ Transform:
   - {fileID: 1175219514}
   - {fileID: 1086340865}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &948060561
 PrefabInstance:
@@ -6068,7 +6150,7 @@ Transform:
   - {fileID: 978088429}
   - {fileID: 1808044143}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &955836626
 PrefabInstance:
@@ -6860,6 +6942,59 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1012209315}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1020254769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1020254771}
+  - component: {fileID: 1020254770}
+  m_Layer: 0
+  m_Name: LevelTimeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1020254770
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020254769}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 9d8294f1e43eca14686b38bf83047537, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2880358374456146480, guid: ad8cbfcb691572b4fba6140b6a123eb6, type: 2}
+    value: {fileID: 438723673}
+  - key: {fileID: 4350792712969615473, guid: 9d8294f1e43eca14686b38bf83047537, type: 2}
+    value: {fileID: 438723673}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &1020254771
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020254769}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1030851395
 GameObject:
   m_ObjectHideFlags: 0
@@ -10793,7 +10928,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -12571,7 +12705,7 @@ Transform:
   - {fileID: 1204899917}
   - {fileID: 1007860740}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1938363625
 PrefabInstance:

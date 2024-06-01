@@ -1,11 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
+
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static Cinemachine.CinemachineFreeLook;
-using static UnityEngine.Rendering.DebugUI.Table;
 
 public class CubeController : MonoBehaviour
 {

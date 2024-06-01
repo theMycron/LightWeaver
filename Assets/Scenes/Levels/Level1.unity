@@ -440,6 +440,83 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 72469347}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &83971671
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 83971674}
+  - component: {fileID: 83971673}
+  - component: {fileID: 83971672}
+  m_Layer: 0
+  m_Name: TerminalController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &83971672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83971671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: c731fb8ef6f735f47b15e2257599d8e5, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 83971673}
+          m_TargetAssemblyTypeName: TerminalInterface, Assembly-CSharp
+          m_MethodName: PrintNextMessage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: External entry requested.
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &83971673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83971671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31b4f402820bdc43b3f95991132da46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageList:
+  - p:Looks simple enough. I can jump with the spacebar.
+--- !u!4 &83971674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83971671}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.006803, y: 6.677548, z: 18.029583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &84518904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3184,7 +3261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1030851397}
-  m_PathPosition: 0.4402857
+  m_PathPosition: 0
   m_PositionUnits: 0
   m_PathOffset: {x: 28.2, y: 30, z: -33.7}
   m_XDamping: 0
@@ -3840,7 +3917,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638711148}
   m_LocalRotation: {x: 0.23911764, y: 0.3696438, z: -0.099045776, w: 0.89239913}
-  m_LocalPosition: {x: -25.65598, y: 30, z: -20.2}
+  m_LocalPosition: {x: -25.700008, y: 30, z: -20.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4159,6 +4236,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
+  terminalInterface: {fileID: 0}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -10473,7 +10555,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -12204,6 +12285,57 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1900116921}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1906234011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1906234013}
+  - component: {fileID: 1906234012}
+  m_Layer: 0
+  m_Name: LevelTimeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1906234012
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906234011}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: ad8cbfcb691572b4fba6140b6a123eb6, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -2880358374456146480, guid: ad8cbfcb691572b4fba6140b6a123eb6, type: 2}
+    value: {fileID: 83971672}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &1906234013
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906234011}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 13
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1916338516
 GameObject:
   m_ObjectHideFlags: 0

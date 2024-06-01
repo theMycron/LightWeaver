@@ -4714,7 +4714,7 @@ PrefabInstance:
     - target: {fileID: 8364906052100563688, guid: c6d1ee4727de7d44d9a61afeb541124e,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8364906052100563688, guid: c6d1ee4727de7d44d9a61afeb541124e,
         type: 3}
@@ -4934,6 +4934,84 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 515939785}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &522399498
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 522399501}
+  - component: {fileID: 522399500}
+  - component: {fileID: 522399499}
+  m_Layer: 0
+  m_Name: TerminalController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &522399499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522399498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: c731fb8ef6f735f47b15e2257599d8e5, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 522399500}
+          m_TargetAssemblyTypeName: TerminalInterface, Assembly-CSharp
+          m_MethodName: PrintNextMessage
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: External entry requested.
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &522399500
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522399498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31b4f402820bdc43b3f95991132da46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  messageList:
+  - p:Hmmm.. How does this work?
+  - p:Looks like I can point the cubes up by pressing C.
+--- !u!4 &522399501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522399498}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.006803, y: 6.677548, z: 18.029583}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &536246159
 GameObject:
   m_ObjectHideFlags: 3
@@ -7304,6 +7382,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levels: []
   audioManager: {fileID: 0}
+  overlay: {fileID: 0}
+  gameSave:
+    lastUnlockedLevel: 0
+    collectiblesCollected: 0
 --- !u!4 &681162315
 Transform:
   m_ObjectHideFlags: 0
@@ -7317,7 +7399,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &688019006
 GameObject:
@@ -7365,7 +7447,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &688019010
 MonoBehaviour:
@@ -9784,7 +9866,7 @@ Transform:
   - {fileID: 915736893}
   - {fileID: 2076945670}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &934679146
 PrefabInstance:
@@ -10034,7 +10116,7 @@ PrefabInstance:
     - target: {fileID: 926555661470301944, guid: 023570c0a439a354da4be1976afa5021,
         type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 926555661470301944, guid: 023570c0a439a354da4be1976afa5021,
         type: 3}
@@ -10224,7 +10306,7 @@ Transform:
   - {fileID: 68311945}
   - {fileID: 1862380103}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &952443939
 PrefabInstance:
@@ -16373,7 +16455,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
-  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
@@ -17733,6 +17814,57 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1800782537}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1814070892
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1814070894}
+  - component: {fileID: 1814070893}
+  m_Layer: 0
+  m_Name: LevelTimeline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!320 &1814070893
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814070892}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: 256ed47ebcfac6f43a59e9cf95c9f0f5, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -7824848279097027540, guid: 256ed47ebcfac6f43a59e9cf95c9f0f5, type: 2}
+    value: {fileID: 522399499}
+  m_ExposedReferences:
+    m_References: []
+--- !u!4 &1814070894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1814070892}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1817614696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19128,7 +19260,7 @@ Transform:
   - {fileID: 160933886}
   - {fileID: 1234960858}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1928117191
 PrefabInstance:

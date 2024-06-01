@@ -16,6 +16,16 @@ public class TerminalInterface : MonoBehaviour
         terminal = FindAnyObjectByType<TerminalTextManager>();
     }
 
+    public void SetTerminalManager(TerminalTextManager ttm)
+    {
+        if ( ttm != null )
+            terminal = ttm;
+    }
+    public bool HasTerminalManager()
+    {
+        return ( terminal != null );
+    }
+
     public void PrintNextMessage()
     {
         if (messageList != null && messageList.Count > 0)
@@ -50,17 +60,17 @@ public class TerminalInterface : MonoBehaviour
     // prints a line entered by the main character into the terminal
     public void AddProtagonistMessage(string message)
     {
-        AddPrefixedLine("MESSAGE (SLK-9): ", message);
+        AddPrefixedLine("MSG (SLK-9): ", message);
     }
     // prints a line entered by the system into the terminal
     public void AddSystemMessage(string message)
     {
-        AddPrefixedLine("MESSAGE (SYSTEM): ", message);
+        AddPrefixedLine("MSG (SYSTEM): ", message);
     }
     // prints a line entered by the robot system into the terminal
     public void AddRobotMessage(string message)
     {
-        AddPrefixedLine("MESSAGE (ROBOT): ", message);
+        AddPrefixedLine("MSG (ROBOT): ", message);
     }
 
     public void AddPrefixedLine(string prefix, string message)

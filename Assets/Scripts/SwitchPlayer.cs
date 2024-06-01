@@ -11,6 +11,7 @@ public class SwitchPlayer : MonoBehaviour
 {
     private GameObject[] robots;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private bool followRobot;
 
     private RobotHUD robotHUD;
     static GameObject activeRobot;
@@ -117,7 +118,7 @@ public class SwitchPlayer : MonoBehaviour
         }
         DisableAllRobots();
         SetCameraTarget();
-        activeRobot.GetComponent<Rigidbody>().isKinematic = false;
+        script.ChangeControlling(true);
         //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
     }
@@ -128,7 +129,7 @@ public class SwitchPlayer : MonoBehaviour
         foreach (var robot in robots)
         {
             PlayerController script = robot.GetComponent<PlayerController>();
-            robot.GetComponent<Rigidbody>().isKinematic = true;
+            script.ChangeControlling(false);
             script.DisableInput();
             //robot.tag = "Undefined";
         }
@@ -136,6 +137,7 @@ public class SwitchPlayer : MonoBehaviour
 
     void SetCameraTarget()
     {
+        if (!followRobot) return;
         virtualCamera.Follow = activeRobot.transform;
     }
 
