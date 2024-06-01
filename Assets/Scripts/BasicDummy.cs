@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using Unity.Profiling;
 using UnityEngine;
 using UnityEngine.AI;
@@ -21,11 +22,12 @@ public class BasicDummy : MonoBehaviour
 
     public int DummyNumber { get { return dummyNumber; } }
 
-    PlayerController controller;
+    [SerializeField]
+    private PlayerController controller;
+    [SerializeField]
+    private Animator animator;
 
     Vector2 direction;
-
-    private Animator animator;
 
     [Header("Surronded")]
     [SerializeField] GameObject shoulderLevel;
@@ -37,8 +39,8 @@ public class BasicDummy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        animator = GetComponent<Animator>();
-        controller = GetComponent<PlayerController>();
+        //animator = GetComponent<Animator>();
+        //controller = GetComponent<PlayerController>();
 
         direction = new Vector2(transform.forward.x, transform.forward.z);
         //SetRotation();
@@ -68,7 +70,8 @@ public class BasicDummy : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         //Debug.Log(other.transform.tag);
-        if (!other.gameObject.layer.Equals("Wall")) return;
+        Debug.Log(other.gameObject);
+        if (!other.gameObject.tag.Equals("FloorButton")) return;
         direction = -1 * direction;
     }
 
