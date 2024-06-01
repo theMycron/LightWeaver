@@ -40,7 +40,7 @@ public class BasicDummy : MonoBehaviour
         animator = GetComponent<Animator>();
         controller = GetComponent<PlayerController>();
 
-        direction = -transform.forward;
+        //direction = -transform.forward;
         SetRotation();
         direction = Quaternion.Euler(0, -controller.mainCamera.transform.eulerAngles.y, 0) * direction;
 
@@ -121,13 +121,21 @@ public class BasicDummy : MonoBehaviour
         switch (selectedDirection)
         {
             case Directions.North:
-                transform.Rotate(0f, 0f, 0f); break;
+                direction = -transform.forward;
+                transform.Rotate(0f, 0f, 0f);
+                break;
             case Directions.South:
-                transform.Rotate(0f, 180f, 0f); break;
+                direction = transform.forward;
+                transform.Rotate(0f, 180f, 0f);                
+                break;
             case Directions.East:
-                transform.Rotate(0f, 90f, 0f); break;
+                direction = transform.right;
+                transform.Rotate(0f, 90f, 0f); 
+                break;
             case Directions.West:
-                transform.Rotate(0f, 270f, 0f); break;
+                direction = -transform.right;
+                transform.Rotate(0f, 270f, 0f);
+                break;
         }
     }
 

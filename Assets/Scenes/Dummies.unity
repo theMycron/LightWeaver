@@ -2314,7 +2314,7 @@ PrefabInstance:
     - target: {fileID: 312557259987953696, guid: f37996425b0216a449d0c779a59b1ef3,
         type: 3}
       propertyPath: selectedDirection
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7542892304391997055, guid: f37996425b0216a449d0c779a59b1ef3,
         type: 3}
