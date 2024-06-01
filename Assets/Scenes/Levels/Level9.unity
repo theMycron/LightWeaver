@@ -1160,6 +1160,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8495158860195195582, guid: dfcd6e3be212404499cb493706ac5c7f,
         type: 3}
+      propertyPath: seconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8495158860195195582, guid: dfcd6e3be212404499cb493706ac5c7f,
+        type: 3}
       propertyPath: gateNumber
       value: 1
       objectReference: {fileID: 0}
@@ -16091,6 +16096,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
+        type: 3}
+      propertyPath: seconds
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
         type: 3}

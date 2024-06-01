@@ -147,9 +147,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   receiverNumber: 0
   selectedLaserColor: 0
+  seconds: 2
   activateList: []
-  gateNumber: 0
-  emitterNumber: 0
-  robotNumber: 0
-  onLaserBlocked: {fileID: 11400000, guid: 65eb886b2374a8848a24cd874ceb2d4c, type: 2}
-  onLaserCollided: {fileID: 11400000, guid: 710feecbddbea6248a4277e61e25b13f, type: 2}

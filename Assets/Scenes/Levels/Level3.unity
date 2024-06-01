@@ -3777,6 +3777,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5980451919958742224, guid: 78b1fb928697cd14a87f5fe6b189841e,
+        type: 3}
+      propertyPath: seconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980451919958742224, guid: 78b1fb928697cd14a87f5fe6b189841e,
+        type: 3}
+      propertyPath: activateList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1194041996}
     - target: {fileID: 9127963175507331515, guid: 78b1fb928697cd14a87f5fe6b189841e,
         type: 3}
       propertyPath: gateNumber
@@ -9380,6 +9390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
+  followRobot: 0
 --- !u!4 &1076052869
 Transform:
   m_ObjectHideFlags: 0
@@ -15489,6 +15500,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5980451919958742224, guid: 78b1fb928697cd14a87f5fe6b189841e,
+        type: 3}
+      propertyPath: seconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5980451919958742224, guid: 78b1fb928697cd14a87f5fe6b189841e,
+        type: 3}
+      propertyPath: activateList.Array.data[0]
+      value: 
+      objectReference: {fileID: 1194041996}
     - target: {fileID: 9127963175507331515, guid: 78b1fb928697cd14a87f5fe6b189841e,
         type: 3}
       propertyPath: gateNumber

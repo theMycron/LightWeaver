@@ -16291,6 +16291,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
         type: 3}
+      propertyPath: seconds
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5306372810489551572, guid: b3c8b17e72ef2f64680c7eab54f80569,
+        type: 3}
       propertyPath: activateList.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -16426,6 +16431,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
+  followRobot: 0
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
