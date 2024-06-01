@@ -123,9 +123,9 @@ public class SwitchPlayer : MonoBehaviour
         }
 
 /*        if (robotNumber == activeRobotNum)
-            return;
+            return;*/
         EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.robotSwitch);
-
+/*
         activeRobotNum = robotNumber;*/
         DisableAllRobots();
         SetCameraTarget();
