@@ -11,6 +11,7 @@ public class SwitchPlayer : MonoBehaviour
 {
     private GameObject[] robots;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
+    [SerializeField] private bool followRobot;
 
     private RobotHUD robotHUD;
     static GameObject activeRobot;
@@ -136,6 +137,7 @@ public class SwitchPlayer : MonoBehaviour
 
     void SetCameraTarget()
     {
+        if (!followRobot) return;
         virtualCamera.Follow = activeRobot.transform;
     }
 

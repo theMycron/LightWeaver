@@ -21770,6 +21770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualCamera: {fileID: 1916338517}
+  followRobot: 1
 --- !u!4 &1637423252
 Transform:
   m_ObjectHideFlags: 0
