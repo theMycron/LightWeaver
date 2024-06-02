@@ -8,6 +8,8 @@ public class BigCollectible : MonoBehaviour
     [SerializeField] private float maxSize;
     private LevelManager levelManager;
     private bool collected = false;
+    private bool gameEnded = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,11 +21,17 @@ public class BigCollectible : MonoBehaviour
         if (collected)
         {
             transform.localScale *= animationSpeed;
-            // if it gets too small, destroy
+
+            // end game
+            if (!gameEnded)
+            {
+                StartCoroutine(levelManager.EndGame());
+                gameEnded = true;
+            }
+
+            // if it gets too big, stop growing
             if (transform.localScale.x > maxSize)
             {
-                // end game
-                StartCoroutine(levelManager.EndGame());
                 collected = false;
             }
         }

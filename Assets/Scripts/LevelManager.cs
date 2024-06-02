@@ -84,20 +84,23 @@ public class LevelManager : MonoBehaviour
     public IEnumerator EndGame()
     {
         yield return StartCoroutine(FadeToWhite());
-        Debug.Log("FADED");
+
         AsyncOperation ao = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
         yield return ao;
-        Debug.Log("LOADED MENU");
+
         yield return StartCoroutine(UnloadScene("HUD"));
-        Debug.Log("UNLOADED HUD");
+
         if (currentLevel >= 0)
             StartCoroutine(UnloadScene(levels[currentLevel]));
-        Debug.Log("UNLOADED LEVEL");
+
+        audioManager.PlayMusic(AudioManager.MusicEnum.End);
+
         // take player to credits screen
         NavigatebetweenScenes nav = FindAnyObjectByType<NavigatebetweenScenes>();
         if (nav != null)
             nav.SwitchMenu((int)NavigatebetweenScenes.Menus.Credits);
         else Debug.Log("Nav not found :(");
+
         yield return StartCoroutine(FadeFromWhite());
     }
 
@@ -105,7 +108,6 @@ public class LevelManager : MonoBehaviour
     {
         StartCoroutine(UnloadScene("MainMenu"));
         LoadScene("HUD");
-        audioManager.PlayMusic(AudioManager.MusicEnum.Level);
     }
 
     private IEnumerator NextLevel()
@@ -126,8 +128,11 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("Not unloading. Current scene is "+currentLevel);
         }
-        currentLevel++;
+
         overlay.StartFadeIn();
+        currentLevel++;
+
+        PlayLevelMusic();
 
         // update last level unlocked
 
@@ -164,8 +169,10 @@ public class LevelManager : MonoBehaviour
             Debug.Log("Not unloading. Current scene is " + currentLevel);
         }
 
-        currentLevel = level;
         overlay.StartFadeIn();
+        currentLevel = level;
+
+        PlayLevelMusic();
     }
 
     private void LoadScene(string scene)
@@ -182,6 +189,20 @@ public class LevelManager : MonoBehaviour
         Resources.UnloadUnusedAssets();
         yield return ao;
     }
+
+    private void PlayLevelMusic()
+    {
+        // play ambience if this is first or last level
+        if (currentLevel == 0 || currentLevel == levels.Count - 1)
+        {
+            audioManager.PlayMusic(AudioManager.MusicEnum.Ambience);
+        }
+        else if (audioManager.GetCurrentlyPlayingTrack() != AudioManager.MusicEnum.Level)
+        {
+            audioManager.PlayMusic(AudioManager.MusicEnum.Level);
+        }
+    }
+
     private IEnumerator FadeOut()
     {
         overlay.StartFadeOut();

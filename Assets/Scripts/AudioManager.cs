@@ -12,13 +12,16 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip mainMenu;
     [SerializeField] private AudioClip level;
     [SerializeField] private AudioClip end;
+    [SerializeField] private AudioClip ambience;
 
+    private MusicEnum currentlyPlaying;
 
     public enum MusicEnum
     {
         MainMenu = 1,
         Level = 2,
-        End = 3
+        End = 3,
+        Ambience = 4
     }
 
 
@@ -36,12 +39,21 @@ public class AudioManager : MonoBehaviour
                 case MusicEnum.End:
                 MusicPlayer.clip = end;
                 break;
+                case MusicEnum.Ambience:
+                MusicPlayer.clip = ambience;
+                break;
         }
         MusicPlayer.Play();
+        currentlyPlaying = track;
     }
     
     public void PlaySFX(AudioClip clip) {
 
         SFXSource.PlayOneShot(clip);
+    }
+
+    public MusicEnum GetCurrentlyPlayingTrack()
+    {
+        return currentlyPlaying;
     }
 }

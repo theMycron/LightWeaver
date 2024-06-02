@@ -75,11 +75,13 @@ public class TerminalInterface : MonoBehaviour
 
     public void AddPrefixedLine(string prefix, string message)
     {
-        terminal.AddNewLine(prefix + message);
+        if (terminal != null)
+            terminal.AddNewLine(prefix + message);
     }
 
     public void AddTerminalLine(string text)
     {
-        terminal.AddNewLine(text);
+        if (terminal != null)
+            terminal.AddNewLine(text);
     }
 }

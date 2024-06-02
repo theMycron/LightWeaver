@@ -5,6 +5,7 @@ using UnityEngine;
 public class Collectible : MonoBehaviour
 {
     [SerializeField] private float animationSpeed;
+    [SerializeField] private bool realCollectible;
     private LevelManager levelManager;
     private bool collected = false;
     // Start is called before the first frame update
@@ -34,7 +35,8 @@ public class Collectible : MonoBehaviour
             if (EnvSFX.instance != null)
                 EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.collectible);
             collected = true;
-            if (levelManager != null)
+            // collectibles that arent real will not add to the score nor print to the terminal
+            if (levelManager != null && realCollectible)
                 levelManager.CollectCollectible();
         }
     }

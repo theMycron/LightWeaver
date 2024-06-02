@@ -151,6 +151,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationSpeed: 0.8
+  realCollectible: 1
 --- !u!1 &3276447815165583573
 GameObject:
   m_ObjectHideFlags: 0
