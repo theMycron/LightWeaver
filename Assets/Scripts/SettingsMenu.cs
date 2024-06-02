@@ -23,36 +23,7 @@ public class SettingsMenu : MonoBehaviour
 
     private void Awake()
     {
-        // Initialize resolutions
-        resolutions = Screen.resolutions;
-        resolutionDropdown.ClearOptions();
-
-        List<string> options = new List<string>();
-        int currentResolutionIndex = 0;
-
-        for (int i = 0; i < resolutions.Length; i++)
-        {
-            string option = resolutions[i].width + " x " + resolutions[i].height;
-            options.Add(option);
-
-            if (resolutions[i].width == Screen.currentResolution.width &&
-                resolutions[i].height == Screen.currentResolution.height)
-            {
-                currentResolutionIndex = i;
-            }
-        }
-
-        resolutionDropdown.AddOptions(options);
-
-        if (PlayerPrefs.HasKey("ResolutionIndex"))
-        {
-            currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
-        }
-
-        resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
-
-        Debug.Log($"Initial Resolution: {resolutions[currentResolutionIndex].width} x {resolutions[currentResolutionIndex].height}");
+        InitializeResolutions();
     }
 
     private void Start()
@@ -67,15 +38,22 @@ public class SettingsMenu : MonoBehaviour
             currentQualityIndex = PlayerPrefs.GetInt("QualityIndex");
         }
 
-        graphicsDropdown.value = currentQualityIndex;
-        graphicsDropdown.RefreshShownValue();
+        if (graphicsDropdown != null)
+        {
+            graphicsDropdown.value = currentQualityIndex;
+            graphicsDropdown.RefreshShownValue();
+        }
 
         // Initialize the full screen toggle
-        fullScreenToggle.isOn = Screen.fullScreen;
+        if (fullScreenToggle != null)
+        {
+            fullScreenToggle.isOn = Screen.fullScreen;
+        }
     }
 
     public void SetResolution(int resolutionIndex)
     {
+        if (resolutionDropdown == null) return;
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
         resolutionDropdown.value = resolutionIndex;
@@ -188,4 +166,38 @@ public class SettingsMenu : MonoBehaviour
         return menuOrigin;
     }
 
+    private void InitializeResolutions()
+    {
+        if (resolutionDropdown == null) return;
+        // Initialize resolutions
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+
+        List<string> options = new List<string>();
+        int currentResolutionIndex = 0;
+
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            string option = resolutions[i].width + " x " + resolutions[i].height;
+            options.Add(option);
+
+            if (resolutions[i].width == Screen.currentResolution.width &&
+                resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResolutionIndex = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(options);
+
+        if (PlayerPrefs.HasKey("ResolutionIndex"))
+        {
+            currentResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex");
+        }
+
+        resolutionDropdown.value = currentResolutionIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        Debug.Log($"Initial Resolution: {resolutions[currentResolutionIndex].width} x {resolutions[currentResolutionIndex].height}");
+    }
 }
