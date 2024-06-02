@@ -37,7 +37,8 @@ public class SwitchPlayer : MonoBehaviour
     {
         /*        activeRobot = robots[0];*/
         robotHUD = FindAnyObjectByType<RobotHUD>();
-        robotHUD.InitializeHUD(RobotCount);
+        if (robotHUD != null )
+            robotHUD.InitializeHUD(RobotCount);
         ActivateRobot(activeRobotIndex);
     }
 
