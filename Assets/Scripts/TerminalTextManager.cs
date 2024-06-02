@@ -47,6 +47,8 @@ public class TerminalTextManager : MonoBehaviour
     private IEnumerator DisplayLineCoroutine(string line)
     {
         TextMeshProUGUI temporaryText = Instantiate(temporaryTextPrefab, textContainer);
+        temporaryText.fontSize = 26f;
+        temporaryText.outlineWidth = 0.25f;
         temporaryText.text = "";
 
         activeTexts.Insert(0, temporaryText);
