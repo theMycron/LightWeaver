@@ -17,6 +17,7 @@ public class SwitchPlayer : MonoBehaviour
     static GameObject activeRobot;
     int activeRobotIndex = 0; // Track the current active robot index
 
+    public int RobotCount { get { return robots.Length; } }
 
     InputManager inputManager;
 
@@ -31,13 +32,12 @@ public class SwitchPlayer : MonoBehaviour
             Transform robot = transform.GetChild(i);
             robots[i] = robot.gameObject;
         }
-
-        robotHUD = FindAnyObjectByType<RobotHUD>();
-        
     }
     private void Start()
     {
         /*        activeRobot = robots[0];*/
+        robotHUD = FindAnyObjectByType<RobotHUD>();
+        robotHUD.InitializeHUD(RobotCount);
         ActivateRobot(activeRobotIndex);
     }
 
