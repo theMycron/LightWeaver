@@ -52,6 +52,7 @@ MonoBehaviour:
     m_Bits: 4737
   shoulderLevel: {fileID: 9123281117495234450}
   kneesLevel: {fileID: 7024258718006360581}
+  collisionCheckDelay: 0.2
 --- !u!1 &7024258718006360581
 GameObject:
   m_ObjectHideFlags: 0

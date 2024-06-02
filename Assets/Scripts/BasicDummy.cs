@@ -78,7 +78,10 @@ public class BasicDummy : MonoBehaviour
         switch (sender.colorEnum)
         {
             case LaserColors.red:
-                Destroy(gameObject, 0.1f); break;
+                Destroy(transform.parent.gameObject, 0.4f);
+                animator.enabled = false;
+                SetDummyMovement(false);
+                break;
             case LaserColors.blue:
                 animator.enabled = false;
                 SetDummyMovement(false);
