@@ -24,6 +24,10 @@ public class BasicDummy : MonoBehaviour
     [SerializeField] GameObject shoulderLevel;
     [SerializeField] GameObject kneesLevel;
 
+    [SerializeField] private float collisionCheckDelay;
+    private float timeSinceCollision = 0f;
+    private bool hasCollided = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,11 +46,6 @@ public class BasicDummy : MonoBehaviour
         {
             SetDummyMovement(true);
         }
-
-        if (CheckIfHitted())
-        {
-            direction *= -1;
-        }
     }
 
     private void FixedUpdate()
@@ -54,7 +53,24 @@ public class BasicDummy : MonoBehaviour
         controller.moveDirection = direction;
 
         animator.SetInteger("BaseState", (int)PlayerController.AnimationState.walking);
-        
+
+        if (timeSinceCollision >=  collisionCheckDelay)
+        {
+            timeSinceCollision = 0f;
+            hasCollided = false;
+        }
+
+        if (!hasCollided )
+        {
+            if (CheckIfHitted())
+            {
+                direction *= -1;
+                hasCollided |= true;
+            }
+        } else
+        {
+            timeSinceCollision += Time.deltaTime;
+        }
     }
 
     public void LaserCollide(Laser sender)

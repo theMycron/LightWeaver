@@ -420,15 +420,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     public void LaserCollide(Laser sender)
     {
-
-
         // check if dummy
-        if (tag.Equals("Dummy"))
+        var dummy = gameObject.GetComponentInChildren<BasicDummy>();
+        if (dummy != null)
         {
-            gameObject.GetComponent<BasicDummy>().LaserCollide(sender);
+            dummy.LaserCollide(sender);
             return;
         }
-
         if (isLaserColliding || laserHitBy != null || !isActive) return;
 
         // laser pointing logic
@@ -447,9 +445,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     public void LaserExit(Laser sender)
     {
         // check if dummy
-        if (tag.Equals("Dummy"))
+        var dummy = gameObject.GetComponentInChildren<BasicDummy>();
+        if (dummy != null)
         {
-            gameObject.GetComponent<BasicDummy>().LaserExit(sender);
+            dummy.LaserExit(sender);
             return;
         }
 
