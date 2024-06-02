@@ -63,11 +63,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
 
     [SerializeField] MultiAimConstraint headAim;
 
-    // prompts
-    PromptManager promptManager;
-    private GameObject dropPrompt;
-    private GameObject rotatePrompt;
-    private GameObject pointPrompt;
 
     public enum AnimationState
     {
@@ -103,7 +98,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         texture = GetComponent<RobotTextureController>();
         minJumpTimeLimit = JumpTime - minJumpTime;
         texture.SetDefaultColor();
-        promptManager = FindAnyObjectByType<PromptManager>();
         //set the states at the begining, if isActive == false then disabled
         CheckIfActive();
 
@@ -451,8 +445,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
                 texture.SetFaceColor(FaceColors.BLUE);
                 break;
         }
-        if (pointPrompt == null && !isCarryingObject)
-            pointPrompt = promptManager.AddPrompt("Laser Point", PromptManager.PromptIcons.Point);
     }
 
     public void LaserExit(Laser sender)
@@ -472,10 +464,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         SetRobotPointing(false);
         texture.SetDefaultColor();
 
-        if (pointPrompt != null)
-        {
-            promptManager.RemovePrompt(pointPrompt);
-        }
     }
 
     private void HandleLaserPointing()
@@ -512,34 +500,10 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.carryObject);
             SetRobotPointing(false);
             //Debug.Log("UpperBodyState" + (int)UpperAnimationState.carryObject);
-            if (pointPrompt != null)
-            {
-                promptManager.RemovePrompt(pointPrompt);
-                pointPrompt = null;
-            }
-            if (dropPrompt == null)
-            {
-                dropPrompt = promptManager.AddPrompt("Drop Cube", PromptManager.PromptIcons.Drop);
-            }
-
-            if (rotatePrompt == null)
-            {
-               rotatePrompt = promptManager.AddPrompt("Rotate Cube", PromptManager.PromptIcons.Rotate);                
-            }
         }
         else
         {
             anim.SetInteger("UpperBodyState", (int)UpperAnimationState.none);
-            if (dropPrompt != null)
-            {
-                promptManager.RemovePrompt(dropPrompt);
-            }
-
-            if (rotatePrompt != null)
-            {
-                promptManager.RemovePrompt(rotatePrompt);
-            }
-
             //  layer weight is always set to 1, will do empty animation if not carrying
             //  this is so that the animation transition (carrying > idle) plays 
             //  if layer weight is immediately set to 0, the transition wont be seen
