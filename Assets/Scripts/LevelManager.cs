@@ -9,6 +9,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioManager audioManager;
     [SerializeField] private Overlay overlay;
     [SerializeField] private TerminalInterface terminalInterface;
+    private PromptManager promptManager;
     private int currentLevel = -1;
 
     [HideInInspector]
@@ -23,6 +24,7 @@ public class LevelManager : MonoBehaviour
     {
         // loads main menu at start
         ReturnToMenu();
+        promptManager = FindAnyObjectByType<PromptManager>();
     }
 
     public void CollectCollectible()
@@ -39,6 +41,7 @@ public class LevelManager : MonoBehaviour
     public void OnLevelDone(Component sender, int objectNum, string channel, object data)
     {
         if (channel != "Level") return;
+        promptManager.ClearPrompts();
         StartCoroutine(NextLevel());
     }
     public void OnPlayLevel(Component sender, int objectNum, string channel, object data)

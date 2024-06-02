@@ -118,4 +118,12 @@ public class PromptManager : MonoBehaviour
             Debug.LogWarning("Attempted to remove a null prompt.");
         }
     }
+
+    public void ClearPrompts()
+    {
+        foreach (var item in promptParent.GetComponentsInChildren<GameObject>())
+        {
+            Destroy(item.gameObject);
+        }
+    }
 }
