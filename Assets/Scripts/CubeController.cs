@@ -242,14 +242,29 @@ public class CubeController : MonoBehaviour
 
     bool IsGrounded()
     {
-        Debug.DrawRay(transform.position, Vector3.down * (cubeHeight * 0.5f + 0.2f), Color.red);
+        Vector3 boxSize = new Vector3(3.0f, 3.0f, 3.0f); // Define the size of the box
+        float boxHalfHeight = boxSize.y * 0.5f; // Half of the height of the box
+        Vector3 boxCenter = transform.position; // The center of the box
 
-        bool placedOnGround = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer);
-/*        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
-        bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);*/
+        Debug.DrawRay(transform.position, Vector3.down * (boxHalfHeight + 0.2f), Color.red);
+
+        // Perform the box cast
+        bool placedOnGround = Physics.BoxCast(boxCenter, boxSize * 0.5f, Vector3.down, Quaternion.identity, boxHalfHeight + 0.2f, groundLayer);
+/*        bool placedOnCube = Physics.BoxCast(boxCenter, boxSize * 0.5f, Vector3.down, Quaternion.identity, boxHalfHeight + 0.2f, cubeLayer);
+        bool placedOnLaserCube = Physics.BoxCast(boxCenter, boxSize * 0.5f, Vector3.down, Quaternion.identity, boxHalfHeight + 0.2f, laserCubeLayer);*/
 
         return placedOnGround /*|| placedOnCube || placedOnLaserCube*/;
     }
+    /*    bool IsGrounded()
+        {
+            Debug.DrawRay(transform.position, Vector3.down * (cubeHeight * 0.5f + 0.2f), Color.red);
+
+            bool placedOnGround = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer);
+            *//*        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
+                    bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);*//*
+
+            return placedOnGround *//*|| placedOnCube || placedOnLaserCube*//*;
+        }*/
 
     /*    bool IsRobotNearCube()
         {
