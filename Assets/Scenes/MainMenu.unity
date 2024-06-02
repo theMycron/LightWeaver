@@ -1217,27 +1217,47 @@ PrefabInstance:
     - target: {fileID: 1592904605140496707, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592904605140496707, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1592904605140496707, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2268640540465049656, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2268640540465049656, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3056832627367751865, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3056832627367751865, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164574486220062818, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3164574486220062818, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3732337571811495221, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
@@ -1264,6 +1284,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350367025643008437, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350367025643008437, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4350367025643008437, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6008556012766704718, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
@@ -1320,6 +1355,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6754672137558603530, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754672137558603530, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6754672137558603530, guid: 79ebc15e02c932447892c3d15bff9892,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7184028986759024880, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_Name
@@ -1349,7 +1399,7 @@ PrefabInstance:
     - target: {fileID: 8097160516790391800, guid: 79ebc15e02c932447892c3d15bff9892,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -7299,7 +7349,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!81 &1698397911
 AudioListener:
   m_ObjectHideFlags: 0

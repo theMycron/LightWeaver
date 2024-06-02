@@ -14,7 +14,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public string parameterName;
-    public Slider volumeSlider;
+    public Slider masterVol, musicVol, sfxVol;
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown graphicsDropdown;
     public Toggle fullScreenToggle;
@@ -62,7 +62,7 @@ public class SettingsMenu : MonoBehaviour
         if (PlayerPrefs.HasKey("Volume"))
         {
             float savedVolume = PlayerPrefs.GetFloat("Volume");
-            volumeSlider.value = savedVolume;
+            masterVol.value = savedVolume;
             SetVolume(savedVolume);
         }
         else
@@ -70,7 +70,7 @@ public class SettingsMenu : MonoBehaviour
             // Initialize the volume slider to the current audio mixer volume
             if (audioMixer.GetFloat(parameterName, out float currentVolume))
             {
-                volumeSlider.value = Mathf.Pow(10, currentVolume / 20); // Convert dB to linear
+                masterVol.value = Mathf.Pow(10, currentVolume / 20); // Convert dB to linear
             }
             else
             {
@@ -130,7 +130,9 @@ public class SettingsMenu : MonoBehaviour
     {
         // Reset volume
         float defaultVolume = -10.0f; // Set your desired default volume value
-        volumeSlider.value = defaultVolume;
+        masterVol.value = defaultVolume;
+        musicVol.value = defaultVolume;
+        sfxVol.value = defaultVolume;
         SetVolume(defaultVolume);
 
         // Reset resolution
