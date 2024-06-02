@@ -24,10 +24,6 @@ public class BasicDummy : MonoBehaviour
     [SerializeField] GameObject shoulderLevel;
     [SerializeField] GameObject kneesLevel;
 
-    [SerializeField] private float collisionCheckDelay;
-    private float timeSinceCollision = 0f;
-    private bool hasCollided = false;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -55,23 +51,11 @@ public class BasicDummy : MonoBehaviour
 
         animator.SetInteger("BaseState", (int)PlayerController.AnimationState.walking);
 
-        if (timeSinceCollision >=  collisionCheckDelay)
+        if (CheckIfHitted())
         {
-            timeSinceCollision = 0f;
-            hasCollided = false;
+            direction *= -1;
         }
 
-        if (!hasCollided )
-        {
-            if (CheckIfHitted())
-            {
-                direction *= -1;
-                hasCollided |= true;
-            }
-        } else
-        {
-            timeSinceCollision += Time.deltaTime;
-        }
     }
 
     public void LaserCollide(Laser sender)
@@ -100,34 +84,38 @@ public class BasicDummy : MonoBehaviour
 
     private bool CheckIfSurronded()
     {
+        Vector3 checkDirection = new Vector3(direction.x, 0, direction.y);
+
         RaycastHit kneeHit;
         RaycastHit shoulderHit;
-        //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 4, Color.red, 30f);
-        //Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 4, Color.blue, 30);
+        Debug.DrawRay(kneesLevel.transform.position, checkDirection * 5, Color.red, 1);
+        Debug.DrawRay(kneesLevel.transform.position, -checkDirection * 5, Color.red, 1);
 
-        //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 4, Color.red, 30f);
-        //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 4, Color.blue, 30);
+        Debug.DrawRay(shoulderLevel.transform.position, checkDirection * 5, Color.red, 1);
+        Debug.DrawRay(shoulderLevel.transform.position, -checkDirection * 5, Color.red, 1);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 5, collisionMask);
-        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -transform.forward, out kneeHit, 5, collisionMask);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 5, collisionMask);
-        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 5, collisionMask);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, checkDirection, out kneeHit, 5, collisionMask);
+        bool backwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, -checkDirection, out kneeHit, 5, collisionMask);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, checkDirection, out shoulderHit, 5, collisionMask);
+        bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -checkDirection, out shoulderHit, 5, collisionMask);
 
         return (forwardKneeCheck && backwardKneeCheck) || (forwardshoulderCheck && backwardshoulderCheck);
     }
 
     private bool CheckIfHitted()
     {
+        Vector3 checkDirection = new Vector3(direction.x, 0, direction.y);
+
         RaycastHit kneeHit;
         RaycastHit shoulderHit;
 
         //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 2f, Color.red, 30f);
         //Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 2f, Color.blue, 30f);
-        Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.blue, 1f);
-        Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 1f);
+        Debug.DrawRay(shoulderLevel.transform.position, checkDirection * 2f, Color.blue, 1f);
+        Debug.DrawRay(kneesLevel.transform.position, checkDirection * 2f, Color.blue, 1f);
 
-        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f, collisionMask);
-        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f, collisionMask);
+        bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, checkDirection, out kneeHit, 2f, collisionMask);
+        bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, checkDirection, out shoulderHit, 2f, collisionMask);
 
         return forwardKneeCheck || forwardshoulderCheck;
     }
