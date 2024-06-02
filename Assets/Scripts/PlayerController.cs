@@ -1,12 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
+
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
-using static UnityEngine.Rendering.DebugUI;
 
 
 
@@ -25,7 +20,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
-    [SerializeField] float groundDrag;
     [SerializeField] float maxSpeed = 4f;
 
     [Header("Camera")]
@@ -52,8 +46,6 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool isJumpCancelled = false;
     private bool isCarryingObject;
     private bool isRotating;
-
-    private bool isMoving;
 
     private bool isLaserColliding = false;
     private LaserColors currentLaserColor = LaserColors.red;
@@ -231,13 +223,11 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         moveDirection = context.ReadValue<Vector2>();
         anim.SetInteger("BaseState", (int)AnimationState.walking);
-        isMoving = true;
     }
     private void OnMoveCancelled(InputAction.CallbackContext context)
     {
         moveDirection = Vector2.zero;
         anim.SetInteger("BaseState", (int)AnimationState.idle);
-        isMoving = false;
     }
     public Vector3 MovePlayer()
     {
