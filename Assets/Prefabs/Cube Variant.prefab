@@ -202,7 +202,7 @@ MonoBehaviour:
   rotateSpeed: 6
   horizontalPickupDistance: 10
   verticalPickupDistance: -1.4
-  cubeMassWhenPlaced: 1
+  cubeMassWhenPlaced: 2.5
 --- !u!114 &5031277240214526374
 MonoBehaviour:
   m_ObjectHideFlags: 0
