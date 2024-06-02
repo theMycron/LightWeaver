@@ -16,6 +16,7 @@ public class BasicDummy : MonoBehaviour
     [SerializeField]
     private RobotTextureController texture;
 
+    private bool hitByLaser = false;
     Vector2 direction;
 
     [SerializeField] LayerMask collisionMask;
@@ -33,18 +34,6 @@ public class BasicDummy : MonoBehaviour
         texture.defaultFaceColor = FaceColors.PURPLE;
     }
 
-    private void Update()
-    {
-        if(CheckIfSurronded())
-        {
-            animator.SetInteger("BaseState", (int)PlayerController.AnimationState.idle);
-            SetDummyMovement(false);
-        } else
-        {
-            SetDummyMovement(true);
-        }
-    }
-
     private void FixedUpdate()
     {
         controller.moveDirection = direction;
@@ -56,10 +45,23 @@ public class BasicDummy : MonoBehaviour
             direction *= -1;
         }
 
+        if (!hitByLaser)
+        {
+            if (CheckIfSurronded())
+            {
+                animator.SetInteger("BaseState", (int)PlayerController.AnimationState.idle);
+                SetDummyMovement(false);
+            }
+            else
+            {
+                SetDummyMovement(true);
+            }
+        }
     }
 
     public void LaserCollide(Laser sender)
     {
+        if (hitByLaser) return;
         switch (sender.colorEnum)
         {
             case LaserColors.red:
@@ -69,17 +71,21 @@ public class BasicDummy : MonoBehaviour
                 break;
             case LaserColors.blue:
                 animator.enabled = false;
+                Debug.Log("Got hit by blue, gonna deactivate");
                 SetDummyMovement(false);
                 break;
         }
+        hitByLaser = true;
     }
 
     public void LaserExit(Laser sender)
     {
+        if (!hitByLaser) return;
         // only for freeze
         if (sender.colorEnum == LaserColors.red) return;
         SetDummyMovement(true);
         animator.enabled = true;
+        hitByLaser = false;
     }
 
     private bool CheckIfSurronded()
@@ -123,6 +129,7 @@ public class BasicDummy : MonoBehaviour
     private void SetDummyMovement(bool isMoving)
     {
         controller.enabled = isMoving;
+        Debug.Log("Sheesh, now the controller is " + controller.enabled);
     }
 
 }
