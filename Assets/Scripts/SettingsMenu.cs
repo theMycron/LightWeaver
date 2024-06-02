@@ -59,24 +59,7 @@ public class SettingsMenu : MonoBehaviour
     private void Start()
     {
         // Load the saved volume from PlayerPrefs
-        if (PlayerPrefs.HasKey("Volume"))
-        {
-            float savedVolume = PlayerPrefs.GetFloat("Volume");
-            masterVol.value = savedVolume;
-            SetVolume(savedVolume);
-        }
-        else
-        {
-            // Initialize the volume slider to the current audio mixer volume
-            if (audioMixer.GetFloat(parameterName, out float currentVolume))
-            {
-                masterVol.value = Mathf.Pow(10, currentVolume / 20); // Convert dB to linear
-            }
-            else
-            {
-                Debug.LogWarning("Could not get the volume parameter from the Audio Mixer.");
-            }
-        }
+        SetSavedVolume();
 
         // Initialize the graphics dropdown
         int currentQualityIndex = QualitySettings.GetQualityLevel();
@@ -103,13 +86,42 @@ public class SettingsMenu : MonoBehaviour
         Debug.Log($"Resolution set to: {resolution.width} x {resolution.height}");
     }
 
-    public void SetVolume(float volume)
+    public void SetSavedVolume()
     {
-        float dB = Mathf.Log10(volume) * 20;
-        audioMixer.SetFloat(parameterName, dB);
-        PlayerPrefs.SetFloat("Volume", volume);
+        if (PlayerPrefs.HasKey("MasterVol"))
+        {
+            float savedVolume = PlayerPrefs.GetFloat("MasterVol");
+            masterVol.value = savedVolume;
+        }
+        if (PlayerPrefs.HasKey("MusicVol"))
+        {
+            float savedVolume = PlayerPrefs.GetFloat("MusicVol");
+            musicVol.value = savedVolume;
+        }
+        if (PlayerPrefs.HasKey("SfxVol"))
+        {
+            float savedVolume = PlayerPrefs.GetFloat("SfxVol");
+            musicVol.value = savedVolume;
+        }
+        AutoSetVolume();
+    }
+
+    // sets volumes for all channels based on slider values and saves it
+    public void AutoSetVolume()
+    {
+        float masterVolume = masterVol.value;
+        float musicVolume = musicVol.value;
+        float sfxVolume = sfxVol.value;
+        float masterdB = Mathf.Log10(masterVolume) * 20;
+        float musicdB = Mathf.Log10(musicVolume) * 20;
+        float sfxdB = Mathf.Log10(sfxVolume) * 20;
+        audioMixer.SetFloat("MasterVol", masterdB);
+        audioMixer.SetFloat("MusicVol", musicdB);
+        audioMixer.SetFloat("SfxVol", sfxdB);
+        PlayerPrefs.SetFloat("MasterVol", masterVolume);
+        PlayerPrefs.SetFloat("MusicVol", musicVolume);
+        PlayerPrefs.SetFloat("SfxVol", sfxVolume);
         PlayerPrefs.Save(); // Save PlayerPrefs
-        Debug.Log($"Setting volume to {dB} dB");
     }
 
     public void SetQuality(int qualityIndex)
@@ -133,7 +145,7 @@ public class SettingsMenu : MonoBehaviour
         masterVol.value = defaultVolume;
         musicVol.value = defaultVolume;
         sfxVol.value = defaultVolume;
-        SetVolume(defaultVolume);
+        AutoSetVolume();
 
         // Reset resolution
         int defaultResolutionIndex = resolutions.Length - 1; // Set the index of the last resolution in the options list
