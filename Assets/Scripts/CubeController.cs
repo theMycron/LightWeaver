@@ -29,8 +29,8 @@ public class CubeController : MonoBehaviour
 
     [Header("Pickup/Place Cube")]
     [SerializeField] float horizontalPickupDistance = 10f;
-    [SerializeField] float verticalPickupDistance = 3f;
-    [SerializeField] float cubeMassWhenPlaced = 1000f;
+    [SerializeField] float verticalPickupDistance = 7f;
+    [SerializeField] float cubeMassWhenPlaced = 10000f;
     GameObject activeRobot;
     GameObject robotRaisingCube;
 
@@ -197,7 +197,7 @@ public class CubeController : MonoBehaviour
     {
         if (isRaised) return;
         if (IsActiveRobotCarryingObject()) return;
-        if (!IsActiveRobotGrounded()) return;
+        if (!IsActiveRobotGrounded()) { Debug.Log("robot not grounded"); return; } 
         FindCubePosition();
         if (!IsRobotNearCube()) return;
 
@@ -206,7 +206,7 @@ public class CubeController : MonoBehaviour
         rb.useGravity = false;
         rb.drag = 12; // drag helps with dampening
         isRaised = true;
-        this.transform.position = CubeDes.position;
+/*        this.transform.position = CubeDes.position;*/
         //Invoke(nameof(AddForce), 0.5f);
         strength = 75;
         bx.excludeLayers = LayerMask.GetMask("Robot");
