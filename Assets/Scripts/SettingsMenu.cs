@@ -13,7 +13,6 @@ public enum MenuOrigin
 public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
-    public string parameterName;
     public Slider masterVol, musicVol, sfxVol;
     public TMP_Dropdown resolutionDropdown;
     public TMP_Dropdown graphicsDropdown;
@@ -82,7 +81,6 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.value = resolutionIndex;
         resolutionDropdown.RefreshShownValue();
         PlayerPrefs.SetInt("ResolutionIndex", resolutionIndex);
-        PlayerPrefs.Save();
         Debug.Log($"Resolution set to: {resolution.width} x {resolution.height}");
     }
 
@@ -92,16 +90,19 @@ public class SettingsMenu : MonoBehaviour
         {
             float savedVolume = PlayerPrefs.GetFloat("MasterVol");
             masterVol.value = savedVolume;
+            Debug.Log("Saved Master: " + savedVolume);
         }
         if (PlayerPrefs.HasKey("MusicVol"))
         {
             float savedVolume = PlayerPrefs.GetFloat("MusicVol");
             musicVol.value = savedVolume;
+            Debug.Log("Saved Music: " + savedVolume);
         }
         if (PlayerPrefs.HasKey("SfxVol"))
         {
             float savedVolume = PlayerPrefs.GetFloat("SfxVol");
-            musicVol.value = savedVolume;
+            sfxVol.value = savedVolume;
+            Debug.Log("Saved SFX: " + savedVolume);
         }
         AutoSetVolume();
     }
@@ -118,17 +119,11 @@ public class SettingsMenu : MonoBehaviour
         audioMixer.SetFloat("MasterVol", masterdB);
         audioMixer.SetFloat("MusicVol", musicdB);
         audioMixer.SetFloat("SfxVol", sfxdB);
-        PlayerPrefs.SetFloat("MasterVol", masterVolume);
-        PlayerPrefs.SetFloat("MusicVol", musicVolume);
-        PlayerPrefs.SetFloat("SfxVol", sfxVolume);
-        PlayerPrefs.Save(); // Save PlayerPrefs
     }
 
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
-        PlayerPrefs.SetInt("QualityIndex", qualityIndex);
-        PlayerPrefs.Save();
         Debug.Log($"Setting quality to {QualitySettings.names[qualityIndex]}");
     }
 
@@ -137,14 +132,22 @@ public class SettingsMenu : MonoBehaviour
         Screen.fullScreen = isFullscreen;
     }
 
+    public void SavePrefs()
+    {
+        PlayerPrefs.SetInt("QualityIndex", QualitySettings.GetQualityLevel());
+        PlayerPrefs.SetFloat("MasterVol", masterVol.value);
+        PlayerPrefs.SetFloat("MusicVol", musicVol.value);
+        PlayerPrefs.SetFloat("SfxVol", sfxVol.value);
+        PlayerPrefs.Save(); // Save PlayerPrefs
+        Debug.Log("SAVED PREFS");
+    }
 
     public void ResetSettings()
     {
         // Reset volume
-        float defaultVolume = -10.0f; // Set your desired default volume value
-        masterVol.value = defaultVolume;
-        musicVol.value = defaultVolume;
-        sfxVol.value = defaultVolume;
+        masterVol.value = 1f;
+        musicVol.value = 0.4f;
+        sfxVol.value = 0.8f;
         AutoSetVolume();
 
         // Reset resolution
