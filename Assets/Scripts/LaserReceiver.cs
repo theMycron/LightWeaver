@@ -56,12 +56,12 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
         Debug.Log("Started laser wait");
 
         //play riser sound
-        EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.riserSound);
+        EnvSFX.instance.PlayChargingSFX(EnvSFX.instance.riserSound);
         yield return new WaitForSeconds(seconds);
 
         //stop riser sound and play activation sound
         EnvSFX.instance.StopRiserSound();
-        EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.activationSound);
+        EnvSFX.instance.PlayChargingSFX(EnvSFX.instance.activationSound);
 
         // use ? to check if they have an IActivable component
         activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));

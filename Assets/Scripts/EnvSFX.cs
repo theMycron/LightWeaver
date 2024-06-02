@@ -8,13 +8,17 @@ public class EnvSFX : MonoBehaviour
 
     [Header("Audio Sources")]
     [SerializeField] AudioSource ObjectsSFX;
+    [SerializeField] AudioSource chargingSFX;
     [Header("Audio Clips")]
 
     public AudioClip cubePickup;
     public AudioClip robotSwitch;
+    public AudioClip collectible;
+
+
     public AudioClip riserSound;
     public AudioClip activationSound;
-    public AudioClip collectible;
+    
 
 
     [Header("Pitch Variation")]
@@ -37,8 +41,7 @@ public class EnvSFX : MonoBehaviour
     public void PlayObjectSFX(AudioClip clip)
     {
         ObjectsSFX.pitch = Random.Range(minPitch, maxPitch);
-        ObjectsSFX.clip = clip;
-        ObjectsSFX.Play();
+        ObjectsSFX.PlayOneShot(clip);
     }
 
     public void StopObjectSFX()
@@ -47,11 +50,18 @@ public class EnvSFX : MonoBehaviour
         ObjectsSFX.Stop();
     }
 
+    public void PlayChargingSFX(AudioClip clip)
+    {
+        chargingSFX.clip = clip;
+        chargingSFX.Play();
+
+    }
+
     public void StopRiserSound()
     {
-        if (ObjectsSFX != null && ObjectsSFX.clip == riserSound)
+        if (chargingSFX != null && chargingSFX.clip == riserSound)
         {
-            ObjectsSFX.Stop();
+            chargingSFX.Stop();
         }
     }
 }
