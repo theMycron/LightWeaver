@@ -191,16 +191,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRaised: 0
-  cubeHeight: 0
+  cubeHeight: 3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
   cubeLayer:
     serializedVersion: 2
-    m_Bits: 128
-  laserCubeLayer:
-    serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 640
   strength: 75
   rotateSpeed: 6
   pickupDistance: 10

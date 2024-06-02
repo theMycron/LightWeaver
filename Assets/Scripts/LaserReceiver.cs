@@ -48,6 +48,7 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
         if (activationRoutine != null)
         {
             StopCoroutine(activationRoutine);
+            EnvSFX.instance.StopRiserSound();
             activationRoutine = null;
             Debug.Log("Stopped activation");
         }
@@ -58,8 +59,16 @@ public class LaserReceiver : MonoBehaviour, ILaserInteractable
     private IEnumerator Wait(Laser sender)
     {
         Debug.Log("Started laser wait");
-        // use ? to check if they have an IActivable component
+
+        //play riser sound
+        EnvSFX.instance.PlayChargingSFX(EnvSFX.instance.riserSound);
         yield return new WaitForSeconds(seconds);
+
+        //stop riser sound and play activation sound
+        EnvSFX.instance.StopRiserSound();
+        EnvSFX.instance.PlayChargingSFX(EnvSFX.instance.activationSound);
+
+        // use ? to check if they have an IActivable component
         activateList.ForEach(c => c.GetComponent<IActivable>()?.Activate(this));
         activationRoutine = null;
         Debug.Log("Ended laser wait");

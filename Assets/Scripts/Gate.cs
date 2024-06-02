@@ -13,6 +13,8 @@ public class Gate : MonoBehaviour, IActivable
 
     private Collider staticCollider;
 
+    private bool wasOpened = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -25,6 +27,16 @@ public class Gate : MonoBehaviour, IActivable
     {
         staticCollider.enabled = !open;
         animator.SetBool("isOpened", open);
+/*        if (open)
+        {
+            AudioManager.instance.PlayRobotSFX(AudioManager.instance.gateOpen);
+            wasOpened = true;
+        }
+        else if (!open && wasOpened)
+        {
+            AudioManager.instance.PlayRobotSFX(AudioManager.instance.gateClosed);
+            wasOpened = false;
+        }*/
         animator.speed = 1f;
     }
 

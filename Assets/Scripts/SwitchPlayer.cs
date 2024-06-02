@@ -9,12 +9,15 @@ using static Cinemachine.CinemachineFreeLook;
 
 public class SwitchPlayer : MonoBehaviour
 {
-    private GameObject[] robots;
+     private GameObject[] robots;
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private bool followRobot;
 
+
+    static GameObject activeRobot; 
+
     private RobotHUD robotHUD;
-    static GameObject activeRobot;
+
     int activeRobotIndex = 0; // Track the current active robot index
 
     public int RobotCount { get { return robots.Length; } }
@@ -112,16 +115,25 @@ public class SwitchPlayer : MonoBehaviour
             robotHUD.UpdateRobotImage(robotNumber);
         activeRobot = robots[robotNumber];
         PlayerController script = activeRobot.GetComponent<PlayerController>();
+        
         // cant switch to robot if it is disabled
         if (!script.isActive)
         {
             return;
         }
+
+        if (robotNumber-1 == activeRobotIndex)
+            return;
+        if (EnvSFX.instance != null)
+            EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.robotSwitch);
+
+        activeRobotIndex = robotNumber-1;
         DisableAllRobots();
         SetCameraTarget();
         script.ChangeControlling(true);
         //activeRobot.tag = "ActiveRobot";
         script.EnableInput();
+
     }
 
 

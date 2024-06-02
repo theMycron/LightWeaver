@@ -334,13 +334,11 @@ MonoBehaviour:
     m_Bits: 64
   cubeLayer:
     serializedVersion: 2
-    m_Bits: 128
-  laserCubeLayer:
-    serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 640
   strength: 75
   rotateSpeed: 6
-  pickupDistance: 10
+  horizontalPickupDistance: 10
+  verticalPickupDistance: 7
   cubeMassWhenPlaced: 1000
 --- !u!54 &3014527623460407465
 Rigidbody:

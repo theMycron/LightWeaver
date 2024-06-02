@@ -15,7 +15,6 @@ public class CubeController : MonoBehaviour
     [SerializeField] float cubeHeight;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask cubeLayer;
-    [SerializeField] LayerMask laserCubeLayer;
 
 
     [Header("Cube Movement")]
@@ -29,8 +28,9 @@ public class CubeController : MonoBehaviour
 
 
     [Header("Pickup/Place Cube")]
-    [SerializeField] float pickupDistance = 10f;
-    [SerializeField] float cubeMassWhenPlaced = 1000f;
+    [SerializeField] float horizontalPickupDistance = 10f;
+    [SerializeField] float verticalPickupDistance = 7f;
+    [SerializeField] float cubeMassWhenPlaced = 10000f;
     GameObject activeRobot;
     GameObject robotRaisingCube;
 
@@ -104,7 +104,7 @@ public class CubeController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
             // Perform a raycast from the mouse position
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer + laserCubeLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer))
             {
                 if (hit.collider.gameObject == gameObject)
                 {
@@ -125,7 +125,7 @@ public class CubeController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
             // Perform a raycast from the mouse position
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer + laserCubeLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, cubeLayer))
             {
                 if (hit.collider.gameObject == gameObject)
                 {
@@ -147,7 +147,7 @@ public class CubeController : MonoBehaviour
     {
             RotationValue = inputManager.Player.RotateCube.ReadValue<float>() * rotateSpeed * Time.deltaTime;
 
-            if (RotationValue != 0)
+            if (RotationValue != 0 && horizontalRotation != -90)
             {
                 transform.Rotate(Vector3.up * RotationValue);
             }
@@ -180,7 +180,8 @@ public class CubeController : MonoBehaviour
         if (isRaised && activeRobot == robotRaisingCube)
         {
             Debug.Log("Placing Cube ");
-            
+            if (EnvSFX.instance != null)
+                EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.cubePickup);
             rb.useGravity = true;
             rb.drag = 0;
             rb.velocity = new Vector3(0f,rb.velocity.y,0f);
@@ -197,14 +198,17 @@ public class CubeController : MonoBehaviour
     {
         if (isRaised) return;
         if (IsActiveRobotCarryingObject()) return;
+        if (!IsActiveRobotGrounded()) { Debug.Log("robot not grounded"); return; } 
         FindCubePosition();
         if (!IsRobotNearCube()) return;
 
+        if (EnvSFX.instance != null)
+            EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.cubePickup);
         rb.mass = 1;
         rb.useGravity = false;
         rb.drag = 12; // drag helps with dampening
         isRaised = true;
-        this.transform.position = CubeDes.position;
+/*        this.transform.position = CubeDes.position;*/
         //Invoke(nameof(AddForce), 0.5f);
         strength = 75;
         bx.excludeLayers = LayerMask.GetMask("Robot");
@@ -223,6 +227,12 @@ public class CubeController : MonoBehaviour
         var playerScript = activeRobot.GetComponent<PlayerController>();
         return playerScript.IsRobotCarryingObject();
     }
+    bool IsActiveRobotGrounded()
+    {
+        activeRobot = SwitchPlayer.GetActiveRobot();
+        var playerScript = activeRobot.GetComponent<PlayerController>();
+        return playerScript.IsGrounded();
+    }
     void FindCubePosition()
     {
         activeRobot = SwitchPlayer.GetActiveRobot();
@@ -234,25 +244,44 @@ public class CubeController : MonoBehaviour
     {
         Debug.DrawRay(transform.position, Vector3.down * (cubeHeight * 0.5f + 0.2f), Color.red);
 
-        bool placed = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer + cubeLayer + laserCubeLayer);
+        bool placedOnGround = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, groundLayer);
+/*        bool placedOnCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, cubeLayer);
+        bool placedOnLaserCube = Physics.Raycast(transform.position, Vector3.down, cubeHeight * 0.5f + 0.2f, laserCubeLayer);*/
 
-        return placed;
+        return placedOnGround /*|| placedOnCube || placedOnLaserCube*/;
     }
 
+    /*    bool IsRobotNearCube()
+        {
+            float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
+            Debug.Log("distance: " + distance);
+            return distance <= horizontalPickupDistance;
+        }*/
     bool IsRobotNearCube()
     {
-        float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
-        Debug.Log("distance: " + distance);
-        return distance <= pickupDistance;
-    }
+        Vector3 cubePosition = gameObject.transform.position;
+        Vector3 robotPosition = activeRobot.transform.position;
 
-/*    void CubeFalling()
-    {
-        if (isFalling && rb.velocity.y <= 0)
+        // Calculate the horizontal distance X-Z
+        float horizontalDistance = Vector3.Distance(new Vector3(cubePosition.x, 0, cubePosition.z), new Vector3(robotPosition.x, 0, robotPosition.z));
+
+        // Calculate the vertical distance
+        float verticalDistance = Mathf.Abs(cubePosition.y - robotPosition.y);
+
+
+        Debug.Log("Horizontal Distance: " + horizontalDistance);
+        Debug.Log("Vertical Distance: " + verticalDistance);
+
+        // Check if both the horizontal and vertical distances are within their respective pickup distances
+        return horizontalDistance <= horizontalPickupDistance && verticalDistance <= verticalPickupDistance;
+    }
+    /*    void CubeFalling()
         {
-            rb.AddForce(Vector3.down * fallingSpeed * Time.deltaTime, ForceMode.VelocityChange);
-        }
-    }*/
+            if (isFalling && rb.velocity.y <= 0)
+            {
+                rb.AddForce(Vector3.down * fallingSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            }
+        }*/
 
 }
 
