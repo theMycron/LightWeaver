@@ -309,7 +309,7 @@ MonoBehaviour:
   cubePickup: {fileID: 8300000, guid: 384dafa41e474454c8e9dfdbb872d2fb, type: 3}
   robotSwitch: {fileID: 8300000, guid: 05b6931d6d3ffe6449e19a35d11bc0f3, type: 3}
   collectible: {fileID: 8300000, guid: aa34a8fa63a1a0946b4baccdbaddd470, type: 3}
-  riserSound: {fileID: 8300000, guid: 74f0c61f9452ffe40abf6f9e01c4a016, type: 3}
+  riserSound: {fileID: 8300000, guid: 0fce4c3f26ff78048aa59de96b51c7fa, type: 3}
   activationSound: {fileID: 8300000, guid: d3605f16d20f3fc49bc68a247b422f64, type: 3}
   minPitch: 0.8
   maxPitch: 1.2
