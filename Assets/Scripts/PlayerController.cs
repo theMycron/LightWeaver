@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     [Header("Activation")]
     [SerializeField] public bool isActive = false;
     [SerializeField] public int robotNumber;
-    
+
     [Header("Movement")]
     [SerializeField] float moveSpeed;
     [SerializeField] public float rotateSpeed;
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     private bool isLaserColliding = false;
     private LaserColors currentLaserColor = LaserColors.red;
     private GameObject laserHitBy;
-    
+
     [Header("Laser Pointing")]
     private bool isRobotPointing;
     [SerializeField] GameObject startingPoint;
@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         //anim.SetIKPosition(AvatarIKGoal.RightHand, Vector3.zero);
         //anim.SetIKPosition(AvatarIKGoal.LeftHand, Vector3.up);
-        
+
     }
 
     public void EnableInput()
@@ -155,8 +155,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     }
     private void Update()
     {
-        
-        
+
+
     }
     private void FixedUpdate()
     {
@@ -188,7 +188,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             if (isRotating && isControlling)
                 SetMouseRotatePosition();
             HandleLaserPointing();
-        } else
+        }
+        else
         {
             SetRobotPointing(false);
         }
@@ -203,7 +204,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         float xSpeed = Mathf.Abs(rb.velocity.x);
         float zSpeed = Mathf.Abs(rb.velocity.z);
 
-        if(xSpeed > maxSpeed)
+        if (xSpeed > maxSpeed)
         {
             xSpeed = maxSpeed;
         }
@@ -261,12 +262,12 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         transform.rotation = Quaternion.RotateTowards(transform.rotation, rotation, rotateSpeed);
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         // transform.position is at the very bottom of the robot
         // add a vertical offset to the raycast position to avoid creating it inside the ground
         Vector3 verticalOffset = new Vector3(0, 0.5f, 0);
-/*        LayerMask layersToCheck = (1 << 6) | (1 << 7) | (1 << 9);*/
+        /*        LayerMask layersToCheck = (1 << 6) | (1 << 7) | (1 << 9);*/
 
         Transform groundCheck1Trans = gameObject.transform.Find("GroundCheck1");
         Transform groundCheck2Trans = gameObject.transform.Find("GroundCheck2");
@@ -293,14 +294,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         //Debug.Log("Jump Started!!!");
         if (IsGrounded() && !isJumping)
         {
-/*            AudioManager.instance.StartJumpingSound();*/
+            /*            AudioManager.instance.StartJumpingSound();*/
             isJumping = true;
             isJumpCancelled = false;
             anim.SetInteger("BaseState", (int)AnimationState.jumping);
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             jumpTimeCounter = JumpTime;
             jumpForceCounter = jumpForce;
-            
+
             //Debug.Log("JumpStart Y Velocity: " + rb.velocity.y);
             //Debug.Log("JumpStart Y Position: " + rb.position.y);
         }
@@ -356,14 +357,14 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         Ray castPoint = mainCamera.ScreenPointToRay(mouse);
         RaycastHit hit;
 
-        if (Physics.Raycast(castPoint, out hit,Mathf.Infinity,~robotLayer))
+        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, ~robotLayer))
         {
             Vector3 directionToMouse = (hit.point - transform.position).normalized;
             directionToMouse.y = 0f;
             transform.rotation = Quaternion.LookRotation(directionToMouse);
         }
     }
-    
+
     void Jump()
     {
         // if player attempted to cancel jump, dont stop the jump until minimum time limit
@@ -374,7 +375,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         if (jumpTimeCounter > 0)
         {
             /*rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);*/
-            rb.AddForce(transform.up* jumpForceCounter, ForceMode.Impulse);
+            rb.AddForce(transform.up * jumpForceCounter, ForceMode.Impulse);
             jumpForceCounter *= 0.5f;
             jumpTimeCounter -= Time.deltaTime;
             //Debug.Log("Jumping! time: " + jumpTimeCounter + ", force: " + jumpForceCounter);
@@ -403,7 +404,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             anim.SetInteger("BaseState", (int)AnimationState.falling);
             //Debug.Log("BaseState"+ (int)AnimationState.falling);
             isFalling = true;
-            
+
         }
     }
 
@@ -421,7 +422,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
                 //Debug.Log("BaseState"+ (int)AnimationState.landing);
                 /*                anim.SetInteger("BaseState", (int)AnimationState.idle);*/
             }
-                
+
             else
                 anim.SetInteger("BaseState", (int)AnimationState.walking);
             isFalling = false;
@@ -491,7 +492,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             // set head and hand target positions based on where the mouse clicks
             laserScript.direction = (hit.point - startingPoint.transform.position).normalized;
             headAim.data.sourceObjects[0].transform.position = hit.point;
-            Debug.DrawRay(hit.point, Vector3.up*2, Color.green, 1);
+            Debug.DrawRay(hit.point, Vector3.up * 2, Color.green, 1);
         }
 
     }
@@ -586,7 +587,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
             // set right hand to look at mouse
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 1);
             anim.SetIKPosition(AvatarIKGoal.RightHand, mousePosition);
-        } else
+        }
+        else
         {
             anim.SetIKPositionWeight(AvatarIKGoal.RightHand, 0);
         }
@@ -598,7 +600,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
     {
         laserScript.enabled = value;
         if (value)
-            laserScript.SetLaserColor(currentLaserColor);    
+            laserScript.SetLaserColor(currentLaserColor);
         headAim.weight = value ? 1 : 0;
         isRobotPointing = value;
     }
@@ -609,7 +611,8 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         if (isControlling)
         {
             EnableInput();
-        } else
+        }
+        else
         {
             DisableInput();
         }

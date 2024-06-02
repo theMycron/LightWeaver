@@ -15,7 +15,6 @@ public class CubeController : MonoBehaviour
     [SerializeField] float cubeHeight;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] LayerMask cubeLayer;
-    [SerializeField] LayerMask robotLayer;
 
 
     [Header("Cube Movement")]
@@ -29,7 +28,8 @@ public class CubeController : MonoBehaviour
 
 
     [Header("Pickup/Place Cube")]
-    [SerializeField] float pickupDistance = 10f;
+    [SerializeField] float horizontalPickupDistance = 10f;
+    [SerializeField] float verticalPickupDistance = 3f;
     [SerializeField] float cubeMassWhenPlaced = 1000f;
     GameObject activeRobot;
     GameObject robotRaisingCube;
@@ -147,7 +147,7 @@ public class CubeController : MonoBehaviour
     {
             RotationValue = inputManager.Player.RotateCube.ReadValue<float>() * rotateSpeed * Time.deltaTime;
 
-            if (RotationValue != 0)
+            if (RotationValue != 0 && horizontalRotation != -90)
             {
                 transform.Rotate(Vector3.up * RotationValue);
             }
@@ -195,9 +195,9 @@ public class CubeController : MonoBehaviour
     }
     void PickupCube()
     {
-
         if (isRaised) return;
         if (IsActiveRobotCarryingObject()) return;
+        if (!IsActiveRobotGrounded()) return;
         FindCubePosition();
         if (!IsRobotNearCube()) return;
 
@@ -225,6 +225,12 @@ public class CubeController : MonoBehaviour
         var playerScript = activeRobot.GetComponent<PlayerController>();
         return playerScript.IsRobotCarryingObject();
     }
+    bool IsActiveRobotGrounded()
+    {
+        activeRobot = SwitchPlayer.GetActiveRobot();
+        var playerScript = activeRobot.GetComponent<PlayerController>();
+        return playerScript.IsGrounded();
+    }
     void FindCubePosition()
     {
         activeRobot = SwitchPlayer.GetActiveRobot();
@@ -243,20 +249,37 @@ public class CubeController : MonoBehaviour
         return placedOnGround /*|| placedOnCube || placedOnLaserCube*/;
     }
 
+    /*    bool IsRobotNearCube()
+        {
+            float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
+            Debug.Log("distance: " + distance);
+            return distance <= horizontalPickupDistance;
+        }*/
     bool IsRobotNearCube()
     {
-        float distance = Vector3.Distance(gameObject.transform.position, activeRobot.transform.position);
-        Debug.Log("distance: " + distance);
-        return distance <= pickupDistance;
-    }
+        Vector3 cubePosition = gameObject.transform.position;
+        Vector3 robotPosition = activeRobot.transform.position;
 
-/*    void CubeFalling()
-    {
-        if (isFalling && rb.velocity.y <= 0)
+        // Calculate the horizontal distance X-Z
+        float horizontalDistance = Vector3.Distance(new Vector3(cubePosition.x, 0, cubePosition.z), new Vector3(robotPosition.x, 0, robotPosition.z));
+
+        // Calculate the vertical distance
+        float verticalDistance = Mathf.Abs(cubePosition.y - robotPosition.y);
+
+
+        Debug.Log("Horizontal Distance: " + horizontalDistance);
+        Debug.Log("Vertical Distance: " + verticalDistance);
+
+        // Check if both the horizontal and vertical distances are within their respective pickup distances
+        return horizontalDistance <= horizontalPickupDistance && verticalDistance <= verticalPickupDistance;
+    }
+    /*    void CubeFalling()
         {
-            rb.AddForce(Vector3.down * fallingSpeed * Time.deltaTime, ForceMode.VelocityChange);
-        }
-    }*/
+            if (isFalling && rb.velocity.y <= 0)
+            {
+                rb.AddForce(Vector3.down * fallingSpeed * Time.deltaTime, ForceMode.VelocityChange);
+            }
+        }*/
 
 }
 
