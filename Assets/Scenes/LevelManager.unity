@@ -486,7 +486,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 686930264}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
   m_Name: 
@@ -540,7 +540,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_TargetDisplay: 0
 --- !u!224 &686930268
 RectTransform:
@@ -778,6 +778,9 @@ MonoBehaviour:
   - Level11
   - Level12
   - Level13
+  - Level14
+  - Level15
+  - Ending
   audioManager: {fileID: 1942048568}
   overlay: {fileID: 686930269}
   terminalInterface: {fileID: 339047535}

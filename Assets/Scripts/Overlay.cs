@@ -11,6 +11,7 @@ public class Overlay : MonoBehaviour
     void Start()
     {
         image = GetComponentInChildren<RawImage>();
+        image.canvasRenderer.SetAlpha(0);
     }
 
     public void StartFadeIn()
@@ -22,5 +23,19 @@ public class Overlay : MonoBehaviour
     {
         image.canvasRenderer.SetAlpha(0);
         image.CrossFadeAlpha(1f, fadeTime, false);
+    }
+
+    public void FadeToWhite()
+    {
+        image.color = Color.white;
+        image.canvasRenderer.SetAlpha(0f);
+        image.CrossFadeAlpha(1f, fadeTime*2, false);
+    }
+    public void FadeFromWhite()
+    {
+        Debug.Log("Fading back");
+        image.color = Color.white;
+        image.canvasRenderer.SetAlpha(1f);
+        image.CrossFadeAlpha(0f, fadeTime*2, false);
     }
 }

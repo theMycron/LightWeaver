@@ -32,7 +32,7 @@ public class NavigatebetweenScenes : MonoBehaviour
         //clickSound = GetComponent<AudioSource>();
 
         // if this is a new save, show "New Game" instead of "Continue"
-        if (levelManager.gameSave == null)
+        if (levelManager != null && levelManager.gameSave == null)
         {
             startButtonText.text = "New Game";
         }

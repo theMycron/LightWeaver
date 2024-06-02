@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Collectible : MonoBehaviour
+public class BigCollectible : MonoBehaviour
 {
     [SerializeField] private float animationSpeed;
+    [SerializeField] private float maxSize;
     private LevelManager levelManager;
     private bool collected = false;
     // Start is called before the first frame update
@@ -19,9 +20,11 @@ public class Collectible : MonoBehaviour
         {
             transform.localScale *= animationSpeed;
             // if it gets too small, destroy
-            if (transform.localScale.x < 0.01f)
+            if (transform.localScale.x > maxSize)
             {
-                Destroy(gameObject);
+                // end game
+                StartCoroutine(levelManager.EndGame());
+                collected = false;
             }
         }
     }
@@ -30,10 +33,8 @@ public class Collectible : MonoBehaviour
     {
         if (!collected && other.tag.StartsWith("Robot"))
         {
-            // play collection sound here
             collected = true;
-            if (levelManager != null)
-                levelManager.CollectCollectible();
+            levelManager.CollectCollectible();
         }
     }
 }

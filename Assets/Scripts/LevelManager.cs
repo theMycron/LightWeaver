@@ -81,6 +81,26 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(PlayLevel(level));
     }
 
+    public IEnumerator EndGame()
+    {
+        yield return StartCoroutine(FadeToWhite());
+        Debug.Log("FADED");
+        AsyncOperation ao = SceneManager.LoadSceneAsync("MainMenu", LoadSceneMode.Additive);
+        yield return ao;
+        Debug.Log("LOADED MENU");
+        yield return StartCoroutine(UnloadScene("HUD"));
+        Debug.Log("UNLOADED HUD");
+        if (currentLevel >= 0)
+            StartCoroutine(UnloadScene(levels[currentLevel]));
+        Debug.Log("UNLOADED LEVEL");
+        // take player to credits screen
+        NavigatebetweenScenes nav = FindAnyObjectByType<NavigatebetweenScenes>();
+        if (nav != null)
+            nav.SwitchMenu((int)NavigatebetweenScenes.Menus.Credits);
+        else Debug.Log("Nav not found :(");
+        yield return StartCoroutine(FadeFromWhite());
+    }
+
     private void ExitMainMenu()
     {
         StartCoroutine(UnloadScene("MainMenu"));
@@ -168,9 +188,14 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(overlay.fadeTime);
     }
 
-    private IEnumerator FadeIn()
+    private IEnumerator FadeToWhite()
     {
-        yield return new WaitForSeconds(1);
-        overlay.StartFadeIn();
+        overlay.FadeToWhite();
+        yield return new WaitForSeconds(overlay.fadeTime*2);
+    }
+    private IEnumerator FadeFromWhite()
+    {
+        overlay.FadeFromWhite();
+        yield return new WaitForSeconds(overlay.fadeTime*2);
     }
 }
