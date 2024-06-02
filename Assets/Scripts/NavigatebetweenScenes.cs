@@ -25,8 +25,12 @@ public class NavigatebetweenScenes : MonoBehaviour
         Credits = 4
     }
 
-    private void Start() {
+    private void Awake()
+    {
         currentMenu = mainMenu;
+    }
+
+    private void Start() {
         levelManager = FindAnyObjectByType<LevelManager>();
         audioManager = FindAnyObjectByType<AudioManager>();
         //clickSound = GetComponent<AudioSource>();

@@ -11,16 +11,19 @@ public class Overlay : MonoBehaviour
     void Start()
     {
         image = GetComponentInChildren<RawImage>();
+        image.color = Color.black;
         image.canvasRenderer.SetAlpha(0);
     }
 
     public void StartFadeIn()
     {
+        image.color = Color.black;
         image.canvasRenderer.SetAlpha(1f);
         image.CrossFadeAlpha(0, fadeTime, false);
     }
     public void StartFadeOut()
     {
+        image.color = Color.black;
         image.canvasRenderer.SetAlpha(0);
         image.CrossFadeAlpha(1f, fadeTime, false);
     }
