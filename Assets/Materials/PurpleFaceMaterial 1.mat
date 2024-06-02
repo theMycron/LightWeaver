@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FaceMaterial
+  m_Name: PurpleFaceMaterial 1
   m_Shader: {fileID: -6465566751694194690, guid: 4206af3769f495642a44d32603ec1e69,
     type: 3}
   m_Parent: {fileID: 0}
@@ -123,7 +123,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0
+    - _Smoothness: 1
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -133,7 +133,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BackColor: {r: 0.17307985, g: 1, b: 0, a: 0}
+    - _BackColor: {r: 0.7490196, g: 0.46666652, b: 0.9647059, a: 0}
     - _BaseColor: {r: 0.9063317, g: 0.9063317, b: 0.9063317, a: 1}
     - _Color: {r: 153, g: 153, b: 153, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}

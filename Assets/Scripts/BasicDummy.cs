@@ -34,6 +34,7 @@ public class BasicDummy : MonoBehaviour
         direction = new Vector2(transform.forward.x, transform.forward.z);
         // override default color
         texture.defaultColor = RobotTextureController.ROBOT_PURPLE;
+        texture.defaultFaceColor = FaceColors.PURPLE;
     }
 
     private void Update()

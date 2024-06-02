@@ -436,9 +436,13 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         switch (sender.colorEnum)
         {
             case LaserColors.red:
-                texture.SetRobotColor(RobotTextureController.ROBOT_RED); break;
+                texture.SetRobotColor(RobotTextureController.ROBOT_RED);
+                texture.SetFaceColor(FaceColors.RED);
+                break;
             case LaserColors.blue:
-                texture.SetRobotColor(RobotTextureController.ROBOT_BLUE); break;
+                texture.SetRobotColor(RobotTextureController.ROBOT_BLUE);
+                texture.SetFaceColor(FaceColors.BLUE);
+                break;
         }
     }
 
@@ -517,6 +521,7 @@ public class PlayerController : MonoBehaviour, IActivable, ILaserInteractable
         {
             anim.enabled = false;
             texture.SetRobotColor(RobotTextureController.ROBOT_GREY);
+            texture.SetFaceColor(FaceColors.BLACK);
         }
     }
 

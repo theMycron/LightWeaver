@@ -720,6 +720,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 6812283624848297073}
   m_SourcePrefab: {fileID: 100100000, guid: 366d6260754b90f43947b68b521550be, type: 3}
+--- !u!1 &97004356142239888 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2972594488341203669, guid: 366d6260754b90f43947b68b521550be,
+    type: 3}
+  m_PrefabInstance: {fileID: 6334200714312902075}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &400354831297870010 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3284881816485651199, guid: 366d6260754b90f43947b68b521550be,
@@ -865,6 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8993694809480805076}
+  moveDirection: {x: 0, y: 0}
   isActive: 0
   robotNumber: 0
   moveSpeed: 25
@@ -880,6 +887,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 704
   groundCheckDistance: 0.1
+  isControlling: 0
   startingPoint: {fileID: 4812377874262584539}
   robotLayer:
     serializedVersion: 2
@@ -897,6 +905,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e690b1f786b3269438457ab1f6f09b2a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  head: {fileID: 97004356142239888}
+  blueFaceMaterial: {fileID: 2100000, guid: 8690c83ee373d8f40b920bd2077b75d2, type: 2}
+  redFaceMaterial: {fileID: 2100000, guid: 82d01233bea28ec4a84bc74760270dac, type: 2}
+  purpleFaceMaterial: {fileID: 2100000, guid: 7d33f1e93ef487c43b030b3ba569acd9, type: 2}
+  blackFaceMaterial: {fileID: 2100000, guid: 625739bd18eeb38408f3900d3a2f8168, type: 2}
+  greenFaceMaterial: {fileID: 2100000, guid: 3d6566b1910a0174fa827129eb4d50d7, type: 2}
+  defaultColor: 0
 --- !u!114 &4565355514706575749
 MonoBehaviour:
   m_ObjectHideFlags: 0
