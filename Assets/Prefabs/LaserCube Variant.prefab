@@ -328,7 +328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isRaised: 0
-  cubeHeight: 0
+  cubeHeight: 3
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
