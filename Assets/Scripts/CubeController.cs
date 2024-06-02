@@ -242,7 +242,7 @@ public class CubeController : MonoBehaviour
 
     bool IsGrounded()
     {
-        Vector3 boxSize = new Vector3(3.0f, 3.0f, 3.0f); // Define the size of the box
+        Vector3 boxSize = new Vector3(cubeHeight, cubeHeight, cubeHeight); // Define the size of the box
         float boxHalfHeight = boxSize.y * 0.5f; // Half of the height of the box
         Vector3 boxCenter = transform.position; // The center of the box
 
