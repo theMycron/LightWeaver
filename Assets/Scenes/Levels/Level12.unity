@@ -12773,13 +12773,13 @@ PlayableDirector:
   m_GameObject: {fileID: 1539335154}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 79c60bb6a150e6f4a80d03e747564d7b, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: d53475890a409b1479bbdb1b4320ddff, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -2285801886507850122, guid: 79c60bb6a150e6f4a80d03e747564d7b, type: 2}
+  - key: {fileID: -6705014361366389572, guid: d53475890a409b1479bbdb1b4320ddff, type: 2}
     value: {fileID: 2111573748}
   m_ExposedReferences:
     m_References: []
@@ -18805,8 +18805,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageList:
-  - p:A red laser too?
-  - p:I wonder if i can get that shiny up there...
+  - p:I can't access this robot for some reason.
+  - p:It looks like it moves by itself.
 --- !u!4 &2111573750
 Transform:
   m_ObjectHideFlags: 0

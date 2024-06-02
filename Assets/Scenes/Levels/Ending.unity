@@ -7135,8 +7135,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   messageList:
-  - p:Hmmm.. How does this work?
-  - p:Looks like I can point the cubes up by pressing C.
+  - p:A lot of plutonium here...
+  - p:Wait.. Is that..?
+  - p:Oh.
+  - p:The Plutonium Marvel.
+  - p:Here goes nothing.
+  - p:If I just touch it...
+  - p:It will all be over.
+  - s:INTENDED ACTIONS NOT RECOMMENDED.
+  - s:SUGGESTION TO ALT F4.
+  - p:I'll ALT F4 you!
 --- !u!4 &522399501
 Transform:
   m_ObjectHideFlags: 0
@@ -30286,13 +30294,13 @@ PlayableDirector:
   m_GameObject: {fileID: 1814070892}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 256ed47ebcfac6f43a59e9cf95c9f0f5, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 8dab98dbaff35104987964bcf9211d32, type: 2}
   m_InitialState: 1
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: -7824848279097027540, guid: 256ed47ebcfac6f43a59e9cf95c9f0f5, type: 2}
+  - key: {fileID: 7366115408767396388, guid: 8dab98dbaff35104987964bcf9211d32, type: 2}
     value: {fileID: 522399499}
   m_ExposedReferences:
     m_References: []
@@ -34339,7 +34347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8330ae5ed421647429d73e7250aee995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationSpeed: 1.2
+  animationSpeed: 1.01
   maxSize: 100
 --- !u!1001 &2087695042
 PrefabInstance:
