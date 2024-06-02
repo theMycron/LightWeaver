@@ -61,7 +61,6 @@ public class BasicDummy : MonoBehaviour
 
     public void LaserCollide(Laser sender)
     {
-        if (hitByLaser) return;
         switch (sender.colorEnum)
         {
             case LaserColors.red:
@@ -70,6 +69,7 @@ public class BasicDummy : MonoBehaviour
                 SetDummyMovement(false);
                 break;
             case LaserColors.blue:
+                if (hitByLaser) return;
                 animator.enabled = false;
                 Debug.Log("Got hit by blue, gonna deactivate");
                 SetDummyMovement(false);
