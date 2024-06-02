@@ -9,7 +9,7 @@ public class FloorButton : MonoBehaviour
 {
 
     private Animator animator;
-    private GameObject triggeredBy; // this is so that only one object can activate the button at a time
+    private List<GameObject> triggeredByList;
     private Coroutine activationRoutine;
 
     // this is the list of gameobjects that will be activated by the receiver.
@@ -25,11 +25,13 @@ public class FloorButton : MonoBehaviour
     void Start()
     {
         animator = GetComponentInParent<Animator>();
+        triggeredByList = new List<GameObject>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (triggeredBy == null)
+        triggeredByList.RemoveAll(item => item == null);
+        if (triggeredByList.Count <= 0)
         {
             if (activationRoutine != null)
             {
@@ -57,15 +59,17 @@ public class FloorButton : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (triggeredBy != null) return;
+        triggeredByList.Add(other.gameObject);
         if (activationRoutine != null) return;
-        triggeredBy = other.gameObject;
         ToggleButton(true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (triggeredBy != other.gameObject) return;
+        if (triggeredByList.Contains(other.gameObject))
+            triggeredByList.Remove(other.gameObject);
+        else return;
+        if (triggeredByList.Count > 0) return;
         if (activationRoutine != null)
         {
             StopCoroutine(activationRoutine);
@@ -73,7 +77,6 @@ public class FloorButton : MonoBehaviour
             EnvSFX.instance.StopRiserSound();
             activationRoutine = null;
         }
-        triggeredBy = null;
         ToggleButton(false);
     }
 
