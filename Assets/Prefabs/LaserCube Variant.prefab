@@ -161,7 +161,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9177717087144540242}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: eb3cf1675c6acd44994289aac13be557, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -338,8 +338,8 @@ MonoBehaviour:
   strength: 75
   rotateSpeed: 6
   horizontalPickupDistance: 10
-  verticalPickupDistance: 7
-  cubeMassWhenPlaced: 1000
+  verticalPickupDistance: -1.4
+  cubeMassWhenPlaced: 1
 --- !u!54 &3014527623460407465
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -70,13 +70,12 @@ public class CubeController : MonoBehaviour
             Debug.DrawRay(rb.position, forceVector, Color.blue, 3);
             rb.AddForce(forceVector * strength);
         }
-        IsGrounded();
         if (isFalling && IsGrounded())
         {
             Debug.Log("cube is grounded");
             isFalling = false;
             rb.mass = cubeMassWhenPlaced;
-            rb.AddForce(transform.forward * 10f, ForceMode.Acceleration);
+            //rb.AddForce(transform.forward * 10f, ForceMode.Acceleration);
         }
 
         
@@ -266,14 +265,14 @@ public class CubeController : MonoBehaviour
         float horizontalDistance = Vector3.Distance(new Vector3(cubePosition.x, 0, cubePosition.z), new Vector3(robotPosition.x, 0, robotPosition.z));
 
         // Calculate the vertical distance
-        float verticalDistance = Mathf.Abs(cubePosition.y - robotPosition.y);
+        float verticalDistance = cubePosition.y - robotPosition.y;
 
 
         Debug.Log("Horizontal Distance: " + horizontalDistance);
         Debug.Log("Vertical Distance: " + verticalDistance);
 
         // Check if both the horizontal and vertical distances are within their respective pickup distances
-        return horizontalDistance <= horizontalPickupDistance && verticalDistance <= verticalPickupDistance;
+        return horizontalDistance <= horizontalPickupDistance && verticalDistance >= verticalPickupDistance;
     }
     /*    void CubeFalling()
         {
