@@ -12,9 +12,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject settings;
 
     private LevelManager levelManager;
+    private CanvasGroup hudCanvasGroup;
 
     private void Awake()
     {
+        hudCanvasGroup = hudDisplay.GetComponent<CanvasGroup>();
         levelManager = FindAnyObjectByType<LevelManager>();
     }
 
@@ -37,8 +39,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (!GameIsPaused) return; 
         pauseMenuUI.SetActive(false);
-        hudDisplay.SetActive(true);
-        ExitSettings();
+        ShowHUD(true);
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
@@ -47,7 +48,7 @@ public class PauseMenu : MonoBehaviour
     {
         if (GameIsPaused) return;
         pauseMenuUI.SetActive(true);
-        hudDisplay.SetActive(false);
+        ShowHUD(false);
         Time.timeScale = 0f;
         GameIsPaused = true;
     }
@@ -72,6 +73,17 @@ public class PauseMenu : MonoBehaviour
     {
         levelManager.RestartLevel();
         Resume();
+    }
+
+    private void ShowHUD(bool show)
+    {
+        if(show)
+        {
+            hudCanvasGroup.alpha = 1f;
+        } else
+        {
+            hudCanvasGroup.alpha = 0f;
+        }
     }
 
     // Method to resume the game from the settings menu

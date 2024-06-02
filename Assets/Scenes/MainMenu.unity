@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731703, g: 0.13414727, b: 0.121078506, a: 1}
+  m_IndirectSpecularColor: {r: 0.12731704, g: 0.13414727, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3263,20 +3263,17 @@ MonoBehaviour:
   m_text: 'Yousif Al-Hawaj
 
 
-    Fatima
+    Hasan Mohamed
 
 
-    Hassan zaki
+    Fatima Mahfoodh
 
 
-    Malik Yaseen
+    Malik
+    Yaseen
 
 
-    Yousif
-    Al-Hawaj
-
-
-    Tutor'
+    Dr. Haetham'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a8d0a2907ce9da4dbe19376d96a0c90, type: 2}
   m_sharedMaterial: {fileID: -630547897573068829, guid: 4a8d0a2907ce9da4dbe19376d96a0c90,
@@ -3520,19 +3517,16 @@ MonoBehaviour:
   m_text: 'Project manager
 
 
-    Animators
+    Programmer
 
 
-    Programmers
+    Programmer
 
 
     UI Design
 
 
-    Animation
-
-
-    Tutor'
+    Supervisor'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 4a8d0a2907ce9da4dbe19376d96a0c90, type: 2}
   m_sharedMaterial: {fileID: -630547897573068829, guid: 4a8d0a2907ce9da4dbe19376d96a0c90,

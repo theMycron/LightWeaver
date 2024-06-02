@@ -1,23 +1,22 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Collections.Generic;
+//using static System.Net.Mime.MediaTypeNames;
 
 public class PromptManager : MonoBehaviour
 {
     public GameObject promptPrefab;
-    public Transform[] promptPositions; // Array of Transform markers for static positions
+    //public Transform[] promptPositions; // Array of Transform markers for static positions
     public GameObject promptParent;
     private bool promptsAdded = false; // Flag to track if prompts have been added
+    [SerializeField] private GameObject grid;
 
     void Start()
     {
         if (!promptsAdded)
         {
-            GameObject prompt1 = AddPrompt("Drop Cube", PromptIcons.Drop, 0); // Pass index to select the position
-            GameObject prompt2 = AddPrompt("Pick Cube", PromptIcons.Pick, 1);
-            GameObject prompt3 = AddPrompt("Rotate Object", PromptIcons.Rotate, 2);
-            GameObject prompt4 = AddPrompt("Point laser", PromptIcons.Point, 3);
-
+            AddPrompt("Pick Cube", PromptIcons.Pick);
             promptsAdded = true;
         }
     }
@@ -37,30 +36,16 @@ public class PromptManager : MonoBehaviour
     public Sprite pointSprite; // Reference to the Point sprite in the Unity Inspector
     public Sprite rotateSprite; // Reference to the Rotate sprite in the Unity Inspector
 
-    public GameObject AddPrompt(string text, PromptIcons icon, int positionIndex)
+    public GameObject AddPrompt(string text, PromptIcons icon)
     {
-        if (string.IsNullOrEmpty(text) && icon == PromptIcons.None)
-        {
-            Debug.LogWarning("Both text and icon are empty. Skipping prompt creation.");
-            return null;
-        }
-
-        // Instantiate the new prompt as a child of promptParent
-        GameObject newPrompt = Instantiate(promptPrefab, promptParent.transform);
-
-        // Position the new prompt at the desired position
-        newPrompt.transform.position = promptPositions[positionIndex].position;
+        // add to grid
+        GameObject newPrompt = Instantiate(promptPrefab);
+        newPrompt.transform.SetParent(grid.transform);
 
         TextMeshProUGUI textMeshPro = newPrompt.GetComponentInChildren<TextMeshProUGUI>();
         if (textMeshPro != null)
         {
             textMeshPro.text = text;
-        }
-        else
-        {
-            Debug.LogError("TextMeshProUGUI component not found on the prompt prefab.");
-            Destroy(newPrompt); // Clean up the instantiated object if there's an error
-            return null;
         }
 
         Transform iconObject = newPrompt.transform.Find("icon");
@@ -119,7 +104,6 @@ public class PromptManager : MonoBehaviour
             Destroy(newPrompt); // Clean up the instantiated object if there's an error
             return null;
         }
-
         return newPrompt;
     }
 
