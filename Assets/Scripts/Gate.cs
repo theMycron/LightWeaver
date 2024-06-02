@@ -11,24 +11,19 @@ public class Gate : MonoBehaviour, IActivable
     [SerializeField]
     private int activationsRequired;
 
-    private Collider[] doorColliders;
+    private Collider staticCollider;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        doorColliders = new Collider[2];
-        doorColliders[0] = transform.GetChild(0).GetComponent<BoxCollider>();
-        doorColliders[1] = transform.GetChild(1).GetComponent<BoxCollider>();
+        staticCollider = transform.GetChild(5).GetComponent<BoxCollider>();
         animator.speed = 10f;
     }
 
 
     private void ToggleGateOpen(bool open)
     {
-        foreach (Collider collider in doorColliders)
-        {
-            collider.enabled = !open;
-        }
+        staticCollider.enabled = !open;
         animator.SetBool("isOpened", open);
         animator.speed = 1f;
     }
