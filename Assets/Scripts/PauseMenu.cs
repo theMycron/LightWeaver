@@ -40,6 +40,7 @@ public class PauseMenu : MonoBehaviour
         if (!GameIsPaused) return; 
         pauseMenuUI.SetActive(false);
         ShowHUD(true);
+        ExitSettings();
         Time.timeScale = 1f;
         GameIsPaused = false;
     }
