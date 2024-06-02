@@ -112,7 +112,7 @@ public class BasicDummy : MonoBehaviour
         bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 5, collisionMask);
         bool backwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, -transform.forward, out shoulderHit, 5, collisionMask);
 
-        return forwardKneeCheck && backwardKneeCheck && forwardshoulderCheck && backwardshoulderCheck;
+        return (forwardKneeCheck && backwardKneeCheck) || (forwardshoulderCheck && backwardshoulderCheck);
     }
 
     private bool CheckIfHitted()
@@ -122,13 +122,13 @@ public class BasicDummy : MonoBehaviour
 
         //Debug.DrawRay(shoulderLevel.transform.position, -transform.forward * 2f, Color.red, 30f);
         //Debug.DrawRay(kneesLevel.transform.position, -transform.forward * 2f, Color.blue, 30f);
-        //Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.red, 30f);
-        //Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 30f);
+        Debug.DrawRay(shoulderLevel.transform.position, transform.forward * 2f, Color.blue, 1f);
+        Debug.DrawRay(kneesLevel.transform.position, transform.forward * 2f, Color.blue, 1f);
 
         bool forwardKneeCheck = Physics.Raycast(kneesLevel.transform.position, transform.forward, out kneeHit, 2f, collisionMask);
         bool forwardshoulderCheck = Physics.Raycast(shoulderLevel.transform.position, transform.forward, out shoulderHit, 2f, collisionMask);
 
-        return forwardKneeCheck && forwardshoulderCheck;
+        return forwardKneeCheck || forwardshoulderCheck;
     }
 
     private void SetDummyMovement(bool isMoving)

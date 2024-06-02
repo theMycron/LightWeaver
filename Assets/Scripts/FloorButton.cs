@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FloorButton : MonoBehaviour
@@ -17,6 +19,7 @@ public class FloorButton : MonoBehaviour
     //private GameObject gate;
     [SerializeField]
     private float seconds;
+    private bool active;
 
     // Start is called before the first frame update
     void Start()
@@ -24,10 +27,24 @@ public class FloorButton : MonoBehaviour
         animator = GetComponentInParent<Animator>();
     }
 
+    private void FixedUpdate()
+    {
+        if (triggeredBy == null)
+        {
+            if (activationRoutine != null)
+            {
+                StopCoroutine(activationRoutine);
+                activationRoutine = null;
+            }
+            if (active)
+                ToggleButton(false);
+        }
+    }
 
     private void ToggleButton(bool toggle)
     {
         animator.SetBool("isObjectOver", toggle);
+        active = toggle;
         if (toggle)
         {
             activationRoutine = StartCoroutine(Wait(toggle));
