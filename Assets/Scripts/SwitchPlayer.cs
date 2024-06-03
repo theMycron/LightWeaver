@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 using static Cinemachine.CinemachineFreeLook;
+using System.Linq;
 
 public class SwitchPlayer : MonoBehaviour
 {
@@ -15,10 +16,9 @@ public class SwitchPlayer : MonoBehaviour
 
 
     static GameObject activeRobot; 
-
     private RobotHUD robotHUD;
 
-    int activeRobotIndex = 0; // Track the current active robot index
+    int activeRobotIndex = -1; // Track the current active robot index
 
     public int RobotCount { get { return robots.Length; } }
 
@@ -42,7 +42,7 @@ public class SwitchPlayer : MonoBehaviour
         robotHUD = FindAnyObjectByType<RobotHUD>();
         if (robotHUD != null )
             robotHUD.InitializeHUD(RobotCount);
-        ActivateRobot(activeRobotIndex);
+        ActivateRobot(0);
     }
 
     private void OnEnable()
@@ -88,20 +88,18 @@ public class SwitchPlayer : MonoBehaviour
 
     void SwitchToNextRobot()
     {
-        activeRobotIndex++;
-        if (activeRobotIndex >= robots.Length)
-            activeRobotIndex = 0;
-
-        ActivateRobot(activeRobotIndex);
+        int nextRobotIndex = activeRobotIndex + 1;
+        if (nextRobotIndex >= robots.Length)
+            nextRobotIndex = 0;
+        ActivateRobot(nextRobotIndex);
     }
 
     void SwitchToPreviousRobot()
     {
-        activeRobotIndex--;
-        if (activeRobotIndex < 0)
-            activeRobotIndex = robots.Length - 1;
-
-        ActivateRobot(activeRobotIndex);
+        int previousRobotIndex = activeRobotIndex - 1;
+        if (previousRobotIndex < 0)
+            previousRobotIndex = robots.Length - 1;
+        ActivateRobot(previousRobotIndex);
     }
 
     public void ActivateRobot(int robotNumber)
@@ -110,29 +108,31 @@ public class SwitchPlayer : MonoBehaviour
         {
             return;
         }
-        // Update the UI image of the selected robot
-        if (robotHUD != null)
-            robotHUD.UpdateRobotImage(robotNumber);
-        activeRobot = robots[robotNumber];
-        PlayerController script = activeRobot.GetComponent<PlayerController>();
-        
+
         // cant switch to robot if it is disabled
+        PlayerController script = robots[robotNumber].GetComponent<PlayerController>();
         if (!script.isActive)
         {
             return;
         }
 
-        if (robotNumber-1 == activeRobotIndex)
+        if (robotNumber == activeRobotIndex)
             return;
+
+        // Update the UI image of the selected robot
+        if (robotHUD != null)
+            robotHUD.UpdateRobotImage(robotNumber);
+
+        activeRobot = robots[robotNumber];
+
         if (EnvSFX.instance != null)
             EnvSFX.instance.PlayObjectSFX(EnvSFX.instance.robotSwitch);
 
-        activeRobotIndex = robotNumber-1;
+        activeRobotIndex = robotNumber;
         DisableAllRobots();
         SetCameraTarget();
         script.ChangeControlling(true);
         //activeRobot.tag = "ActiveRobot";
-        script.EnableInput();
 
     }
 
@@ -143,7 +143,6 @@ public class SwitchPlayer : MonoBehaviour
         {
             PlayerController script = robot.GetComponent<PlayerController>();
             script.ChangeControlling(false);
-            script.DisableInput();
             //robot.tag = "Undefined";
         }
     }

@@ -39,7 +39,8 @@ public class Laser : MonoBehaviour
         dummyGameObject = gameObject;
         lineRenderer = GetComponent<LineRenderer>();
         collisionEffectInstance = Instantiate(collisionEffect);
-        collisionEffect.SetActive(false);
+        collisionEffectInstance.transform.SetParent(gameObject.transform);
+        collisionEffectInstance.SetActive(false);
 
         //lineRenderer.startWidth = 0.5f;
         //lineRenderer.endWidth = 0.5f;
