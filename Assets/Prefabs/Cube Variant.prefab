@@ -194,7 +194,7 @@ MonoBehaviour:
   cubeHeight: 3
   groundLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 704
   cubeLayer:
     serializedVersion: 2
     m_Bits: 640
